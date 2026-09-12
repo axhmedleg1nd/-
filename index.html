@@ -5,69 +5,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Переводчик на «Цифирный»</title>
 <style>
-  * { box-sizing: border-box; }
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 15px;
-    background: #1e1e1e;
-    color: #eee;
-    min-height: 100vh;
-  }
-  h1 {
-    color: #4fc3f7;
-    font-size: 22px;
-    text-align: center;
-    margin: 10px 0 20px;
-  }
-  .row { margin-bottom: 18px; }
-  label {
-    display: block;
-    margin-bottom: 6px;
-    color: #4fc3f7;
-    font-weight: bold;
-    font-size: 15px;
-  }
-  textarea {
-    width: 100%;
-    height: 110px;
-    font-size: 16px;
-    padding: 12px;
-    background: #2d2d2d;
-    color: #eee;
-    border: 1px solid #444;
-    border-radius: 8px;
-    resize: vertical;
-    font-family: inherit;
-  }
-  textarea:focus {
-    outline: none;
-    border-color: #4fc3f7;
-  }
-  button {
-    background: #4fc3f7;
-    color: #000;
-    border: none;
-    padding: 14px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 8px;
-    width: 100%;
-    font-weight: bold;
-    transition: background 0.2s;
-  }
-  button:active { background: #29b6f6; }
-  .hint {
-    font-size: 13px;
-    color: #999;
-    margin-top: 20px;
-    line-height: 1.7;
-    background: #252525;
-    padding: 14px;
-    border-radius: 8px;
-  }
-  .hint b { color: #4fc3f7; }
+* { box-sizing: border-box; }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 15px;
+  background: #1e1e1e;
+  color: #eee;
+  min-height: 100vh;
+}
+h1 {
+  color: #4fc3f7;
+  font-size: 22px;
+  text-align: center;
+  margin: 10px 0 20px;
+}
+.row { margin-bottom: 18px; }
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: #4fc3f7;
+  font-weight: bold;
+  font-size: 15px;
+}
+textarea {
+  width: 100%;
+  height: 130px;
+  font-size: 16px;
+  padding: 12px;
+  background: #2d2d2d;
+  color: #eee;
+  border: 1px solid #444;
+  border-radius: 8px;
+  resize: vertical;
+  font-family: inherit;
+}
+textarea:focus {
+  outline: none;
+  border-color: #4fc3f7;
+}
+button {
+  background: #4fc3f7;
+  color: #000;
+  border: none;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  width: 100%;
+  font-weight: bold;
+}
+button:active { background: #29b6f6; }
+.hint {
+  font-size: 13px;
+  color: #999;
+  margin-top: 20px;
+  line-height: 1.7;
+  background: #252525;
+  padding: 14px;
+  border-radius: 8px;
+}
+.hint b { color: #4fc3f7; }
 </style>
 </head>
 <body>
@@ -76,20 +75,26 @@
 
 <div class="row">
   <label>Обычный текст:</label>
-  <textarea id="textInput" placeholder="Например: БРУЗА ХУДОЙ КРАСАВЧИК"></textarea>
+  <textarea id="textInput" placeholder="Например: Я РОБОТ НОМЕР 1488 67 69"></textarea>
   <button onclick="textToCode()">→ Перевести в код</button>
 </div>
 
 <div class="row">
   <label>Код T9:</label>
-  <textarea id="codeInput" placeholder="Например: 22*6*6666*33333*2#77*6666*3*55*44#444*6*2*66*2*222*777*4*444"></textarea>
+  <textarea id="codeInput" placeholder="Например: 9999#6*555*22*555*666#55*555*5*33*6#*1*1488#67#69"></textarea>
   <button onclick="codeToText()">→ Перевести в текст</button>
 </div>
 
 <div class="hint">
   <b>Раскладка:</b> 2=АБВГ, 3=ДЕЁЖЗ, 4=ИЙКЛ, 5=МНОП, 6=РСТУ, 7=ФХЦЧ, 8=ШЩЪЫ, 9=ЬЭЮЯ<br>
-  <b>Символы:</b> * = разделитель между буквами, # = пробел, + = точка, 1 = переключение буквы/цифры<br>
-  <b>Пример:</b> БРУЗА = 22*6*6666*33333*2
+  <b>Символы:</b>
+  * = разделитель, # = пробел, + = точка,<br>
+  % = восклицательный знак,<br>
+  ( или ) = вопросительный знак,<br>
+  [ = открывающая скобка, ] = закрывающая скобка<br>
+  <b>Заглавная буква:</b> √ перед буквой<br>
+  <b>CAPS:</b> слово или текст внутри { }<br>
+  <b>Цифры:</b> *1* — переключение в режим цифр, ещё раз *1* — обратно
 </div>
 
 <script>
@@ -111,43 +116,94 @@ for (const [key, letters] of Object.entries(LAYOUT)) {
   }
 }
 
+/* ================= ТЕКСТ → КОД ================= */
 function textToCode() {
-  const text = document.getElementById('textInput').value.toUpperCase();
+  const text = document.getElementById('textInput').value;
   let result = '';
   let digitMode = false;
   let lastWasLetter = false;
+  let capsMode = false;
 
   for (let i = 0; i < text.length; i++) {
     const ch = text[i];
 
+    // CAPS
+    if (ch === '{') { capsMode = true; continue; }
+    if (ch === '}') { capsMode = false; continue; }
+
+    // Пробел
     if (ch === ' ') {
       result += '#';
       lastWasLetter = false;
       continue;
     }
+
+    // Точка
     if (ch === '.') {
       result += '+';
       lastWasLetter = false;
       continue;
     }
+
+    // Восклицательный
+    if (ch === '!') {
+      result += '%';
+      lastWasLetter = false;
+      continue;
+    }
+
+    // Вопросительный
+    if (ch === '?') {
+      result += '(';
+      lastWasLetter = false;
+      continue;
+    }
+
+    // Открывающая скобка
+    if (ch === '(') {
+      result += '[';
+      lastWasLetter = false;
+      continue;
+    }
+
+    // Закрывающая скобка
+    if (ch === ')') {
+      result += ']';
+      lastWasLetter = false;
+      continue;
+    }
+
+    // ЦИФРЫ
     if (ch >= '0' && ch <= '9') {
       if (!digitMode) {
-        result += '1';
+        result += '*1*';
         digitMode = true;
       }
       result += ch;
       lastWasLetter = false;
       continue;
     }
-    if (CHAR_TO_CODE[ch]) {
+
+    // БУКВЫ
+    const upperCh = ch.toUpperCase();
+    if (CHAR_TO_CODE[upperCh]) {
+      // Закрываем цифровой режим
       if (digitMode) {
-        result += '1';
+        result += '*1*';
         digitMode = false;
       }
+
+      // Заглавная буква — √
+      if (capsMode || ch === upperCh) {
+        result += '√';
+      }
+
+      // Разделитель между буквами
       if (lastWasLetter) {
         result += '*';
       }
-      result += CHAR_TO_CODE[ch];
+
+      result += CHAR_TO_CODE[upperCh];
       lastWasLetter = true;
       continue;
     }
@@ -156,57 +212,93 @@ function textToCode() {
   document.getElementById('codeInput').value = result;
 }
 
+/* ================= КОД → ТЕКСТ ================= */
 function codeToText() {
   const code = document.getElementById('codeInput').value;
   let result = '';
   let digitMode = false;
+  let upperNext = false;
   let i = 0;
 
   while (i < code.length) {
     const ch = code[i];
 
-    if (ch === '1') {
+    // *1* — переключатель режима
+    if (ch === '*' && code[i + 1] === '1' && code[i + 2] === '*') {
       digitMode = !digitMode;
-      i++;
+      i += 3;
       continue;
     }
+
+    // # — пробел (режим НЕ меняет)
     if (ch === '#') {
       result += ' ';
       i++;
       continue;
     }
-    if (ch === '+') {
-      result += '.';
+
+    // √ — заглавная буква
+    if (ch === '√') {
+      upperNext = true;
       i++;
       continue;
     }
-    if (ch === '*') {
-      i++;
-      continue;
-    }
+
+    // Точка
+    if (ch === '+') { result += '.'; i++; continue; }
+
+    // Восклицательный
+    if (ch === '%') { result += '!'; i++; continue; }
+
+    // Вопросительный
+    if (ch === '(' || ch === ')') { result += '?'; i++; continue; }
+
+    // Скобки
+    if (ch === '[') { result += '('; i++; continue; }
+    if (ch === ']') { result += ')'; i++; continue; }
+
+    // ЦИФРЫ в цифровом режиме
     if (digitMode && ch >= '0' && ch <= '9') {
       result += ch;
       i++;
       continue;
     }
+
+    // Разделитель
+    if (ch === '*') { i++; continue; }
+
+    // БУКВЫ T9
     if (ch >= '2' && ch <= '9') {
       let j = i;
       while (j < code.length && code[j] === ch) j++;
       const count = j - i;
       const letters = LAYOUT[ch];
+
       if (count <= letters.length) {
-        result += letters[count - 1];
+        let letter = letters[count - 1];
+        if (upperNext) {
+          letter = letter.toUpperCase();
+          upperNext = false;
+        }
+        result += letter;
       } else {
         let remaining = count;
         while (remaining > 0) {
           const take = Math.min(remaining, letters.length);
-          result += letters[take - 1];
+          let letter = letters[take - 1];
+          if (upperNext) {
+            letter = letter.toUpperCase();
+            upperNext = false;
+          }
+          result += letter;
           remaining -= take;
         }
       }
+
       i = j;
       continue;
     }
+
     i++;
   }
 
