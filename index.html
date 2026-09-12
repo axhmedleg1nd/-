@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Переводчик T9</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 15px;
+    background: #1e1e1e;
+    color: #eee;
+    min-height: 100vh;
+  }
+  h1 {
+    color: #4fc3f7;
+    font-size: 22px;
+    text-align: center;
+    margin: 10px 0 20px;
+  }
+  .row { margin-bottom: 18px; }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    color: #4fc3f7;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  textarea {
+    width: 100%;
+    height: 110px;
+    font-size: 16px;
+    padding: 12px;
+    background: #2d2d2d;
+    color: #eee;
+    border: 1px solid #444;
+    border-radius: 8px;
+    resize: vertical;
+    font-family: inherit;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: #4fc3f7;
+  }
+  button {
+    background: #4fc3f7;
+    color: #000;
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 8px;
+    width: 100%;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  button:active { background: #29b6f6; }
+  .hint {
+    font-size: 13px;
+    color: #999;
+    margin-top: 20px;
+    line-height: 1.7;
+    background: #252525;
+    padding: 14px;
+    border-radius: 8px;
+  }
+  .hint b { color: #4fc3f7; }
+</style>
+</head>
+<body>
+
+<h1>📱 Переводчик T9</h1>
+
+<div class="row">
+  <label>Обычный текст:</label>
+  <textarea id="textInput" placeholder="Например: ПРИВЕТ МОЙ НОМЕР 79086032743."></textarea>
+  <button onclick="textToCode()">→ Перевести в код</button>
+</div>
+
+<div class="row">
+  <label>Код T9:</label>
+  <textarea id="codeInput" placeholder="Например: 5555*6*4*222*33*666#5*555*44#55*555*5*33*6#1#79086032743+"></textarea>
+  <button onclick="codeToText()">→ Перевести в текст</button>
+</div>
+
+<div class="hint">
+  <b>Раскладка:</b> 2=АБВГ, 3=ДЕЁЖЗ, 4=ИЙКЛ, 5=МНОП, 6=РСТУ, 7=ФХЦЧ, 8=ШЩЪЫ, 9=ЬЭЮЯ<br>
+  <b>Символы:</b> * = разделитель между буквами, # = пробел, + = точка, 1 = переключение буквы/цифры<br>
+  <b>Пример:</b> ПРИВЕТ. = 5555*6*4*222*33*666+
+</div>
+
+<script>
+const LAYOUT = {
+  '2': 'АБВГ',
+  '3': 'ДЕЁЖЗ',
+  '4': 'ИЙКЛ',
+  '5': 'МНОП',
+  '6': 'РСТУ',
+  '7': 'ФХЦЧ',
+  '8': 'ШЩЪЫ',
+  '9': 'ЬЭЮЯ'
+};
+
+const CHAR_TO_CODE = {};
+for (const [key, letters] of Object.entries(LAYOUT)) {
+  for (let i = 0; i < letters.length; i++) {
+    CHAR_TO_CODE[letters[i]] = key.repeat(i + 1);
+  }
+}
+
+function textToCode() {
+  const text = document.getElementById('textInput').value.toUpperCase();
+  let result = '';
+  let digitMode = false;
+  let lastWasLetter = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+
+    if (ch === ' ') {
+      result += '#';
+      lastWasLetter = false;
+      continue;
+    }
+    if (ch === '.') {
+      result += '+';
+      lastWasLetter = false;
+      continue;
+    }
+    if (ch >= '0' && ch <= '9') {
+      if (!digitMode) {
+        result += '1';
+        digitMode = true;
+      }
+      result += ch;
+      lastWasLetter = false;
+      continue;
+    }
+    if (CHAR_TO_CODE[ch]) {
+      if (digitMode) {
+        result += '1';
+        digitMode = false;
+      }
+      if (lastWasLetter) {
+        result += '*';
+      }
+      result += CHAR_TO_CODE[ch];
+      lastWasLetter = true;
+      continue;
+    }
+  }
+
+  document.getElementById('codeInput').value = result;
+}
+
+function codeToText() {
+  const code = document.getElementById('codeInput').value;
+  let result = '';
+  let digitMode = false;
+  let i = 0;
+
+  while (i < code.length) {
+    const ch = code[i];
+
+    if (ch === '1') {
+      digitMode = !digitMode;
+      i++;
+      continue;
+    }
+    if (ch === '#') {
+      result += ' ';
+      i++;
+      continue;
+    }
+    if (ch === '+') {
+      result += '.';
+      i++;
+      continue;
+    }
+    if (ch === '*') {
+      i++;
+      continue;
+    }
+    if (digitMode && ch >= '0' && ch <= '9') {
+      result += ch;
+      i++;
+      continue;
+    }
+    if (ch >= '2' && ch <= '9') {
+      let j = i;
+      while (j < code.length && code[j] === ch) j++;
+      const count = j - i;
+      const letters = LAYOUT[ch];
+      if (count <= letters.length) {
+        result += letters[count - 1];
+      } else {
+        let remaining = count;
+        while (remaining > 0) {
+          const take = Math.min(remaining, letters.length);
+          result += letters[take - 1];
+          remaining -= take;
+        }
+      }
+      i = j;
+      continue;
+    }
+    i++;
+  }
+
+  document.getElementById('textInput').value = result;
+}
+</script>
+
+</body>
+</html>
