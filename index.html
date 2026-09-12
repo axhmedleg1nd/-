@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Переводчик T9</title>
+<title>Переводчик на «Цифирный»</title>
 <style>
   * { box-sizing: border-box; }
   body {
@@ -72,24 +72,24 @@
 </head>
 <body>
 
-<h1>📱 Переводчик T9</h1>
+<h1>📱 Переводчик на «Цифирный»</h1>
 
 <div class="row">
   <label>Обычный текст:</label>
-  <textarea id="textInput" placeholder="Например: ПРИВЕТ МОЙ НОМЕР 79086032743."></textarea>
+  <textarea id="textInput" placeholder="Например: БРУЗА ХУДОЙ КРАСАВЧИК"></textarea>
   <button onclick="textToCode()">→ Перевести в код</button>
 </div>
 
 <div class="row">
   <label>Код T9:</label>
-  <textarea id="codeInput" placeholder="Например: 5555*6*4*222*33*666#5*555*44#55*555*5*33*6#1#79086032743+"></textarea>
+  <textarea id="codeInput" placeholder="Например: 22*6*6666*33333*2#77*6666*3*55*44#444*6*2*66*2*222*777*4*444"></textarea>
   <button onclick="codeToText()">→ Перевести в текст</button>
 </div>
 
 <div class="hint">
   <b>Раскладка:</b> 2=АБВГ, 3=ДЕЁЖЗ, 4=ИЙКЛ, 5=МНОП, 6=РСТУ, 7=ФХЦЧ, 8=ШЩЪЫ, 9=ЬЭЮЯ<br>
   <b>Символы:</b> * = разделитель между буквами, # = пробел, + = точка, 1 = переключение буквы/цифры<br>
-  <b>Пример:</b> ПРИВЕТ. = 5555*6*4*222*33*666+
+  <b>Пример:</b> БРУЗА = 22*6*6666*33333*2
 </div>
 
 <script>
