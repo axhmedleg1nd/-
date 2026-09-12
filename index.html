@@ -75,13 +75,13 @@ button:active { background: #29b6f6; }
 
 <div class="row">
   <label>Обычный текст:</label>
-  <textarea id="textInput" placeholder="Например: Я РОБОТ НОМЕР 1488 67 69"></textarea>
+  <textarea id="textInput" placeholder="Например: Я люблю Фурри"></textarea>
   <button onclick="textToCode()">→ Перевести в код</button>
 </div>
 
 <div class="row">
   <label>Код T9:</label>
-  <textarea id="codeInput" placeholder="Например: 9999#6*555*22*555*666#55*555*5*33*6#*1*1488#67#69"></textarea>
+  <textarea id="codeInput" placeholder="Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4"></textarea>
   <button onclick="codeToText()">→ Перевести в текст</button>
 </div>
 
@@ -92,8 +92,10 @@ button:active { background: #29b6f6; }
   % = восклицательный знак,<br>
   ( или ) = вопросительный знак,<br>
   [ = открывающая скобка, ] = закрывающая скобка<br>
-  <b>Заглавная буква:</b> √ перед буквой<br>
-  <b>CAPS:</b> слово или текст внутри { }<br>
+  <b>√ = инверсия регистра:</b>
+  вне CAPS — делает букву ЗАГЛАВНОЙ,<br>
+  внутри { } — делает букву строчной.<br>
+  <b>{ } = CAPS:</b> всё внутри заглавное<br>
   <b>Цифры:</b> *1* — переключение в режим цифр, ещё раз *1* — обратно
 </div>
 
@@ -127,9 +129,19 @@ function textToCode() {
   for (let i = 0; i < text.length; i++) {
     const ch = text[i];
 
-    // CAPS
-    if (ch === '{') { capsMode = true; continue; }
-    if (ch === '}') { capsMode = false; continue; }
+    // CAPS — сами символы { } тоже сохраняем в коде
+    if (ch === '{') {
+      result += '{';
+      capsMode = true;
+      lastWasLetter = false;
+      continue;
+    }
+    if (ch === '}') {
+      result += '}';
+      capsMode = false;
+      lastWasLetter = false;
+      continue;
+    }
 
     // Пробел
     if (ch === ' ') {
@@ -193,8 +205,17 @@ function textToCode() {
         digitMode = false;
       }
 
-      // Заглавная буква — √
-      if (capsMode || ch === upperCh) {
+      // Определяем: буква заглавная?
+      const isCapital = ch !== ch.toLowerCase();
+
+      // Нужен ли √?
+      // Вне CAPS: √ нужен для заглавной
+      // В CAPS: √ нужен для строчной
+      let needShift = false;
+      if (!capsMode && isCapital) needShift = true;
+      if (capsMode && !isCapital) needShift = true;
+
+      if (needShift) {
         result += '√';
       }
 
@@ -217,7 +238,8 @@ function codeToText() {
   const code = document.getElementById('codeInput').value;
   let result = '';
   let digitMode = false;
-  let upperNext = false;
+  let capsMode = false;
+  let shiftNext = false;
   let i = 0;
 
   while (i < code.length) {
@@ -230,16 +252,32 @@ function codeToText() {
       continue;
     }
 
-    // # — пробел (режим НЕ меняет)
+    // # — пробел
     if (ch === '#') {
       result += ' ';
       i++;
       continue;
     }
 
-    // √ — заглавная буква
+    // { — CAPS вкл
+    if (ch === '{') {
+      result += '{';
+      capsMode = true;
+      i++;
+      continue;
+    }
+
+    // } — CAPS выкл
+    if (ch === '}') {
+      result += '}';
+      capsMode = false;
+      i++;
+      continue;
+    }
+
+    // √ — шифт
     if (ch === '√') {
-      upperNext = true;
+      shiftNext = true;
       i++;
       continue;
     }
@@ -274,24 +312,28 @@ function codeToText() {
       const count = j - i;
       const letters = LAYOUT[ch];
 
+      let lettersOut = [];
       if (count <= letters.length) {
-        let letter = letters[count - 1];
-        if (upperNext) {
-          letter = letter.toUpperCase();
-          upperNext = false;
-        }
-        result += letter;
+        lettersOut.push(letters[count - 1]);
       } else {
         let remaining = count;
         while (remaining > 0) {
           const take = Math.min(remaining, letters.length);
-          let letter = letters[take - 1];
-          if (upperNext) {
-            letter = letter.toUpperCase();
-            upperNext = false;
-          }
-          result += letter;
+          lettersOut.push(letters[take - 1]);
           remaining -= take;
+        }
+      }
+
+      for (let letter of lettersOut) {
+        let isUpper = capsMode;
+        if (shiftNext) {
+          isUpper = !isUpper;
+          shiftNext = false;
+        }
+        if (isUpper) {
+          result += letter.toUpperCase();
+        } else {
+          result += letter.toLowerCase();
         }
       }
 
