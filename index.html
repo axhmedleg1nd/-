@@ -320,6 +320,61 @@ body.theme-ocean .ocean-bubbles { display: block; }
   100% { transform: translateY(-115vh) translateX(20px); opacity: 0; }
 }
 
+.ocean-sealife {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+body.theme-ocean .ocean-sealife { display: block; }
+.ocean-sealife span {
+  position: absolute;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0.6;
+}
+.ocean-sealife span.swim-right {
+  animation-name: swimRight;
+  transform: scaleX(-1);
+}
+.ocean-sealife span.swim-left {
+  animation-name: swimLeft;
+}
+@keyframes swimRight {
+  from { left: -10%; }
+  to { left: 110%; }
+}
+@keyframes swimLeft {
+  from { left: 110%; }
+  to { left: -10%; }
+}
+
+.ocean-seaweed {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  height: 60px;
+}
+body.theme-ocean .ocean-seaweed { display: block; }
+.ocean-seaweed span {
+  position: absolute;
+  bottom: 0;
+  font-size: 26px;
+  opacity: 0.55;
+  animation: seaweedSway 3.5s ease-in-out infinite alternate;
+}
+@keyframes seaweedSway {
+  0% { transform: rotate(-6deg); }
+  100% { transform: rotate(6deg); }
+}
+
 body {
   font-family: var(--font);
   margin: 0;
@@ -668,6 +723,8 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 <div class="bg-decor deco-ocean" style="top:90%; left:14%;">🫧</div>
 <div class="bg-decor deco-ocean" style="top:45%; left:42%;">🌊</div>
 <div class="ocean-bubbles" id="oceanBubbles"></div>
+<div class="ocean-sealife" id="oceanSealife"></div>
+<div class="ocean-seaweed" id="oceanSeaweed"></div>
 
 <div class="header-bar">
   <h1>📱 Переводчик на «Цифирный»</h1>
@@ -702,6 +759,9 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
         </div>
         <div class="theme-option lang-option" data-lang="bass" onclick="setLang('bass'); closeMenu();">
           <span>Bass</span><span class="check">✓</span>
+        </div>
+        <div class="theme-option lang-option" data-lang="mogger" onclick="setLang('mogger'); closeMenu();">
+          <span>MOGGерский <span class="wip-tag">(в разработке)</span></span><span class="check">✓</span>
         </div>
       </div>
 
@@ -749,14 +809,11 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 
 <div class="modal-overlay" id="whatsNewModal" onclick="closeWhatsNewModal(event)">
   <div class="modal-card" onclick="event.stopPropagation()">
-    <h2>🆕 Что нового в BETA 0.0.6</h2>
+    <h2>🆕 Что нового в BETA 0.0.8</h2>
     <p>
-      💩 Новая тема «Какахи» — всё коричневое, с дождём из какашек<br>
-      🌊 Новая тема «Океан» — голубая, с пузырьками и волнами<br>
-      💰 Тема «Мелстройность» переименована в «Богатый»<br>
-      😎 Тема «Захир» получила дерзкий фон с котами в очках<br>
-      🐱 Розовая тема дополнена милыми котиками на фоне<br>
-      ✍️ Обновлены примеры для языков Муринский и Bass
+      🐟 В теме «Океан» рыбы и другие обитатели теперь плывут мордой вперёд по направлению движения<br>
+      🈶 Язык переименован в «MOGGерский», приписки теперь на английском (CHAD, LTN, MTN, HTN, TRUE HAMMAM, SUB-5), у городов корень меняется на MOGG с учётом падежей<br>
+      📋 Список «Что нового» теперь показывает изменения только последней версии
     </p>
     <button class="action-btn" onclick="closeWhatsNewModal()">Закрыть</button>
   </div>
@@ -826,7 +883,16 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
   Обратный перевод местами неточен: щ/ш и ы/и/й совпадают.
 </div>
 
-<div class="version-tag">BETA 0.0.6</div>
+<div class="hint hint-panel" data-hint="mogger" style="display:none;">
+  <b>🚧 Язык в разработке, правила ещё дорабатываются.</b><br><br>
+  <b>Приписки (теперь на английском):</b> SUB-5, LTN, MTN, HTN, CHAD, TRUE HAMMAM.<br><br>
+  <b>Скрытые приписки в словах:</b> если внутри обычного слова прячется приписка, эта часть переводится и становится английской ЗАГЛАВНОЙ — например, «чадо» → «CHADо».<br><br>
+  <b>Целые слова:</b> некоторые слова заменяются целиком, например «хаммам» → «TRUE HAMMAM».<br><br>
+  <b>Города:</b> у известных городов корень заменяется на MOGG (с сохранением падежного окончания) — например, «в Москве» → «в MOGGскве». Список городов пока небольшой, будет пополняться.<br><br>
+  <i>Пример:</i> Мое чадо едет в хаммам в Москве → Мое CHADо едет в TRUE HAMMAM в MOGGскве
+</div>
+
+<div class="version-tag">BETA 0.0.8</div>
 
 <div class="toast" id="toast"></div>
 
@@ -991,6 +1057,92 @@ function textToMurin(text) {
   }).join('');
 }
 
+/* ================= MOGGЕРСКИЙ (в разработке) ================= */
+// целые слова, которые заменяются полностью
+const MOGGER_WORDS = {
+  'хаммам': 'TRUE HAMMAM',
+  'саб': 'SUB-5'
+};
+// короткие приписки, которые ищем спрятанными ВНУТРИ обычных слов
+const MOGGER_HIDDEN = [
+  { ru: 'чад', en: 'CHAD' },
+  { ru: 'лтн', en: 'LTN' },
+  { ru: 'мтн', en: 'MTN' },
+  { ru: 'хтн', en: 'HTN' }
+];
+// города: корень слова заменяется на MOGG, падежное окончание сохраняется
+const MOGGER_CITY_NAMES = [
+  'москва', 'санкт-петербург', 'питер', 'новосибирск', 'екатеринбург', 'казань',
+  'нижний новгород', 'челябинск', 'самара', 'омск', 'ростов-на-дону', 'уфа',
+  'красноярск', 'воронеж', 'пермь', 'волгоград'
+];
+function moggCityStem(name) {
+  return name.length > 4 ? name.slice(0, -2) : name.slice(0, -1);
+}
+const MOGGER_CITIES = MOGGER_CITY_NAMES
+  .map(name => ({ name, stem: moggCityStem(name) }))
+  .sort((a, b) => b.stem.length - a.stem.length);
+
+function moggifyStem(stem) {
+  return 'MOGG' + stem.slice(2);
+}
+
+function moggerWord(token) {
+  const m = token.match(/^([^а-яёА-ЯЁ]*)([а-яёА-ЯЁ]+)([^а-яёА-ЯЁ]*)$/);
+  if (!m) return token;
+  const [, prefix, core, suffix] = m;
+  const lower = core.toLowerCase();
+
+  if (Object.prototype.hasOwnProperty.call(MOGGER_WORDS, lower)) {
+    return prefix + MOGGER_WORDS[lower] + suffix;
+  }
+
+  const city = MOGGER_CITIES.find(c => lower.startsWith(c.stem));
+  if (city) {
+    const leftover = core.slice(city.stem.length);
+    return prefix + moggifyStem(city.stem) + leftover + suffix;
+  }
+
+  for (const hidden of MOGGER_HIDDEN) {
+    const idx = lower.indexOf(hidden.ru);
+    if (idx !== -1) {
+      const before = core.slice(0, idx);
+      const after = core.slice(idx + hidden.ru.length);
+      return prefix + before + hidden.en + after + suffix;
+    }
+  }
+
+  return token;
+}
+
+function textToMogger(text) {
+  return text.split(/(\s+)/).map(token => {
+    if (token === '' || /^\s+$/.test(token)) return token;
+    return moggerWord(token);
+  }).join('');
+}
+
+const MOGGER_CITY_REV = MOGGER_CITIES
+  .map(c => ({ moggStem: moggifyStem(c.stem), origStem: c.stem }))
+  .sort((a, b) => b.moggStem.length - a.moggStem.length);
+
+function moggerToText(text) {
+  let result = text;
+  MOGGER_CITY_REV.forEach(({ moggStem, origStem }) => {
+    const re = new RegExp(moggStem, 'gi');
+    result = result.replace(re, origStem);
+  });
+  Object.entries(MOGGER_WORDS).forEach(([ru, en]) => {
+    const re = new RegExp(en.replace(/[-]/g, '\\-'), 'gi');
+    result = result.replace(re, ru);
+  });
+  MOGGER_HIDDEN.forEach(({ ru, en }) => {
+    const re = new RegExp(en, 'g');
+    result = result.replace(re, ru);
+  });
+  return result;
+}
+
 /* ================= ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА ================= */
 let currentLang = 't9';
 
@@ -1088,11 +1240,12 @@ function murinToText(text) {
   }).join('');
 }
 
-const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:' };
+const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:', mogger: 'MOGGерский:' };
 const LANG_PLACEHOLDERS = {
   t9: 'Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4',
   murin: 'Например: Ч люблю фуррость',
-  bass: 'Например: ya lyublyu furri'
+  bass: 'Например: ya lyublyu furri',
+  mogger: 'Например: Мое CHADо едет в TRUE HAMMAM в MOGGскве'
 };
 
 function setLang(lang) {
@@ -1113,6 +1266,7 @@ function translateForward() {
   if (currentLang === 't9') result = computeT9(text);
   else if (currentLang === 'murin') result = textToMurin(text);
   else if (currentLang === 'bass') result = textToBass(text);
+  else if (currentLang === 'mogger') result = textToMogger(text);
   document.getElementById('codeInput').value = result;
 }
 
@@ -1122,6 +1276,7 @@ function reverseTranslate() {
   if (currentLang === 't9') result = computeT9Reverse(code);
   else if (currentLang === 'murin') result = murinToText(code);
   else if (currentLang === 'bass') result = bassToText(code);
+  else if (currentLang === 'mogger') result = moggerToText(code);
   document.getElementById('textInput').value = result;
 }
 
@@ -1393,8 +1548,41 @@ function buildZahirCats() {
   }
 }
 
+function buildOceanSealife() {
+  const container = document.getElementById('oceanSealife');
+  if (!container || container.childElementCount) return;
+  const creatures = ['🐟', '🐠', '🐡', '🦈', '🐬', '🐙', '🦑', '🦀', '🐢', '🪼', '🐳'];
+  for (let i = 0; i < 22; i++) {
+    const span = document.createElement('span');
+    span.textContent = creatures[Math.floor(Math.random() * creatures.length)];
+    const goingRight = Math.random() < 0.5;
+    span.className = goingRight ? 'swim-right' : 'swim-left';
+    span.style.top = (35 + Math.random() * 58) + '%';
+    span.style.fontSize = (16 + Math.random() * 22) + 'px';
+    span.style.animationDuration = (10 + Math.random() * 18) + 's';
+    span.style.animationDelay = (Math.random() * -20) + 's';
+    container.appendChild(span);
+  }
+}
+
+function buildOceanSeaweed() {
+  const container = document.getElementById('oceanSeaweed');
+  if (!container || container.childElementCount) return;
+  const plants = ['🌿', '🪸', '🌱', '🪨'];
+  for (let i = 0; i < 16; i++) {
+    const span = document.createElement('span');
+    span.textContent = plants[Math.floor(Math.random() * plants.length)];
+    span.style.left = (i * (100 / 16) + Math.random() * 3) + '%';
+    span.style.fontSize = (20 + Math.random() * 16) + 'px';
+    span.style.animationDelay = (Math.random() * -3.5) + 's';
+    container.appendChild(span);
+  }
+}
+
 buildPoopRain();
 buildOceanBubbles();
+buildOceanSealife();
+buildOceanSeaweed();
 buildZahirCats();
 
 (function initTheme() {
@@ -1404,4 +1592,4 @@ buildZahirCats();
 </script>
 
 </body>
-</html>
+      </html>
