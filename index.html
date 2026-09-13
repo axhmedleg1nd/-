@@ -475,6 +475,15 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
   white-space: normal;
 }
 .toast.show { opacity: 1; }
+
+.version-tag {
+  text-align: center;
+  font-size: 11px;
+  opacity: 0.5;
+  margin: 18px 0 4px;
+  position: relative;
+  z-index: 1;
+}
 </style>
 </head>
 <body>
@@ -529,7 +538,7 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
           <span>‹ Назад</span>
         </div>
         <div class="theme-option lang-option active" data-lang="t9" onclick="setLang('t9'); closeMenu();">
-          <span>T9 код</span><span class="check">✓</span>
+          <span>Циферный</span><span class="check">✓</span>
         </div>
         <div class="theme-option lang-option" data-lang="murin" onclick="setLang('murin'); closeMenu();">
           <span>Муринский</span><span class="check">✓</span>
@@ -586,7 +595,7 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 </div>
 
 <div class="row">
-  <label id="outputLabel">Код T9:</label>
+  <label id="outputLabel">Циферный код:</label>
   <textarea id="codeInput" placeholder="Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4"></textarea>
   <div class="btn-group">
     <button class="action-btn" id="reverseBtn" onclick="reverseTranslate()">→ Перевести в текст</button>
@@ -612,10 +621,15 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 <div class="hint hint-panel" data-hint="murin" style="display:none;">
   <b>Правило:</b> к существительным добавляется суффикс «-ость»
   (кот → котость, диван → диваность).<br>
+  Слова на «-льно» меняют окончание на «-лды» (нормально → нормалды).<br>
   Глаголы, предлоги, местоимения и союзы не меняются.<br><br>
   <b>Исключения:</b><br>
   я → ч<br>
-  кто → кто (без изменений)<br>
+  кто → кьо<br>
+  жена → жинка<br>
+  сын → сыр<br>
+  дочь → доч<br>
+  хорошо → хорошо (без изменений)<br>
   батя → батч<br>
   дед → дод / додус (случайно)<br>
   друг → друн / друнность (случайно)<br>
@@ -627,11 +641,14 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
   <b>Алфавит:</b><br>
   а=a, б=b, в=v, г=g, д=d, е=e, ё=yo, ж=zh, з=z, и=i, й=i,<br>
   к=k, л=l, м=m, н=n, о=o, п=p, р=r, с=s, т=t, у=u, ф=f,<br>
-  х=kh, ц=c, ч=ch, ш=sh, щ=sh, ъ=(опускается), ы=i, ь=(опускается),<br>
+  х=kh, ц=c, ч=ch, ш=sh, щ=sh', ъ=(опускается), ы=i, ь=',<br>
   э=e, ю=yu, я=ya<br><br>
   Заглавная буква — заглавная замена целиком (Ю → YU, Ж → ZH).<br>
+  Мягкий знак и «щ» дают апостроф: например, sh'uka, t'elephon.<br>
   Обратный перевод местами неточен: щ/ш и ы/и/й совпадают.
 </div>
+
+<div class="version-tag">BETA 0.0.5</div>
 
 <div class="toast" id="toast"></div>
 
@@ -695,8 +712,8 @@ function computeT9(text) {
 const BASS_MAP = {
   'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ё':'yo', 'ж':'zh', 'з':'z',
   'и':'i', 'й':'i', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o', 'п':'p', 'р':'r',
-  'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'х':'kh', 'ц':'c', 'ч':'ch', 'ш':'sh', 'щ':'sh',
-  'ъ':'', 'ы':'i', 'ь':'', 'э':'e', 'ю':'yu', 'я':'ya'
+  'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'х':'kh', 'ц':'c', 'ч':'ch', 'ш':'sh', 'щ':"sh'",
+  'ъ':'', 'ы':'i', 'ь':"'", 'э':'e', 'ю':'yu', 'я':'ya'
 };
 
 function textToBass(text) {
@@ -718,7 +735,10 @@ function textToBass(text) {
 
 /* ================= МУРИНСКИЙ ================= */
 const MURIN_EXCEPTIONS = {
-  'кто': 'кто',
+  'кто': 'кьо',
+  'жена': 'жинка',
+  'сын': 'сыр',
+  'дочь': 'доч',
   'батя': 'батч',
   'чекунец': 'чекунец',
   'чекушка': 'чекушка'
@@ -733,7 +753,7 @@ const MURIN_SKIP_WORDS = new Set([
   'свой','своя','своё','свои','наш','наша','наше','наши','ваш','ваша','ваше','ваши',
   'его','её','их','есть','был','была','было','были','будет','будут','буду','будешь',
   'будем','будете','чтобы','если','когда','где','куда','откуда','почему','потому',
-  'зачем','также','тоже','только','уже','ещё','еще','очень','всё','все','весь','вся',
+  'зачем','также','тоже','только','уже','ещё','еще','очень','хорошо','всё','все','весь','вся',
   'всю','ну','вот','ведь','мол','пусть','пускай','давай','давайте',
   'меня','мне','мной','тебя','тебе','тобой','него','нему','ему','ним','им',
   'неё','ней','ею','ей','нас','нам','нами','вас','вам','вами','них','ними'
@@ -772,6 +792,8 @@ function murinWord(token) {
   } else if (MURIN_SKIP_WORDS.has(lower) || isMurinVerbLike(lower)) {
     resultCore = core;
     return prefix + resultCore + suffix;
+  } else if (lower.length > 4 && lower.endsWith('льно')) {
+    resultCore = lower.slice(0, -4) + 'лды';
   } else {
     resultCore = applyOst(lower);
   }
@@ -795,16 +817,29 @@ function textToMurin(text) {
 let currentLang = 't9';
 
 /* ================= BASS: обратный перевод ================= */
+const BASS_THREE_REV = { "sh'": 'щ' };
 const BASS_TWO_REV = { yo:'ё', zh:'ж', kh:'х', ch:'ч', sh:'ш', yu:'ю', ya:'я' };
 const BASS_ONE_REV = {
   a:'а', b:'б', v:'в', g:'г', d:'д', e:'е', z:'з', i:'и', k:'к', l:'л',
-  m:'м', n:'н', o:'о', p:'п', r:'р', s:'с', t:'т', u:'у', f:'ф', c:'ц'
+  m:'м', n:'н', o:'о', p:'п', r:'р', s:'с', t:'т', u:'у', f:'ф', c:'ц',
+  "'":'ь'
 };
 
 function bassToText(text) {
   let result = '';
   let i = 0;
   while (i < text.length) {
+    const three = text.substr(i, 3).toLowerCase();
+    if (BASS_THREE_REV[three]) {
+      const original = text.substr(i, 3);
+      const lettersOnly = original.replace(/'/g, '');
+      const isUpper = lettersOnly.length > 0 &&
+        lettersOnly === lettersOnly.toUpperCase() &&
+        lettersOnly !== lettersOnly.toLowerCase();
+      result += isUpper ? BASS_THREE_REV[three].toUpperCase() : BASS_THREE_REV[three];
+      i += 3;
+      continue;
+    }
     const two = text.substr(i, 2).toLowerCase();
     if (BASS_TWO_REV[two]) {
       const original = text.substr(i, 2);
@@ -835,7 +870,11 @@ const MURIN_REVERSE_EXCEPTIONS = {
   'друн': 'друг',
   'друнность': 'друг',
   'батч': 'батя',
+  'кьо': 'кто',
   'кто': 'кто',
+  'жинка': 'жена',
+  'сыр': 'сын',
+  'доч': 'дочь',
   'чекунец': 'чекунец',
   'чекушка': 'чекушка'
 };
@@ -849,6 +888,8 @@ function murinWordReverse(token) {
 
   if (Object.prototype.hasOwnProperty.call(MURIN_REVERSE_EXCEPTIONS, lower)) {
     resultCore = MURIN_REVERSE_EXCEPTIONS[lower];
+  } else if (lower.endsWith('лды') && lower.length > 3) {
+    resultCore = lower.slice(0, -3) + 'льно';
   } else if (lower.endsWith('ость') && lower.length > 4) {
     resultCore = lower.slice(0, -4);
   } else {
@@ -869,7 +910,7 @@ function murinToText(text) {
   }).join('');
 }
 
-const LANG_LABELS = { t9: 'Код T9:', murin: 'Мурянский:', bass: 'Bass:' };
+const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:' };
 const LANG_PLACEHOLDERS = {
   t9: 'Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4',
   murin: 'Например: Ч пришел с работость и погладил котость',
@@ -1125,4 +1166,4 @@ document.addEventListener('click', function(e) {
 </script>
 
 </body>
-  </html>
+</html>
