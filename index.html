@@ -760,6 +760,9 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
         <div class="theme-option lang-option" data-lang="bass" onclick="setLang('bass'); closeMenu();">
           <span>Bass</span><span class="check">✓</span>
         </div>
+        <div class="theme-option lang-option" data-lang="pikmi" onclick="setLang('pikmi'); closeMenu();">
+          <span>Пикми</span><span class="check">✓</span>
+        </div>
         <div class="theme-option lang-option" data-lang="mogger" onclick="setLang('mogger'); closeMenu();">
           <span>MOGGерский <span class="wip-tag">(в разработке)</span></span><span class="check">✓</span>
         </div>
@@ -809,8 +812,9 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 
 <div class="modal-overlay" id="whatsNewModal" onclick="closeWhatsNewModal(event)">
   <div class="modal-card" onclick="event.stopPropagation()">
-    <h2>🆕 Что нового в BETA 0.0.8</h2>
+    <h2>🆕 Что нового в BETA 0.0.9</h2>
     <p>
+      🥺 Добавлен новый язык «Пикми»: после каждого предложения ставятся смайлики в зависимости от настроения (грусть/извинение или радость), а одно случайное слово из каждых 10 «заикается»<br>
       🐟 В теме «Океан» рыбы и другие обитатели теперь плывут мордой вперёд по направлению движения<br>
       🈶 Язык переименован в «MOGGерский», приписки теперь на английском (CHAD, LTN, MTN, HTN, TRUE HAMMAM, SUB-5), у городов корень меняется на MOGG с учётом падежей<br>
       📋 Список «Что нового» теперь показывает изменения только последней версии
@@ -883,6 +887,16 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
   Обратный перевод местами неточен: щ/ш и ы/и/й совпадают.
 </div>
 
+<div class="hint hint-panel" data-hint="pikmi" style="display:none;">
+  <b>🥺 Пикми — это не шифр, а «озвучка» настроения текста.</b><br><br>
+  После каждого предложения добавляется пачка смайликов (в случайном порядке, всякий раз разных):<br>
+  — если в предложении есть вина, извинение, жалость или грусть → 🤒😖🤧😔😩😫😿<br>
+  — во всех остальных случаях (радость, дерзость и т.д.) → 💕💖💗💞🥰😍🥺☺️🤭🫣😝😹😻😼😽🙀😺😸💘💝💓<br><br>
+  Также из каждых 10 слов текста одно случайное «заикается» — первая буква повторяется 5 раз через дефис
+  (пример: «п-п-п-п-п-писюняра»).<br><br>
+  <i>Перевод в обратную сторону тут приблизительный: смайлики и заикание просто убираются, распознать точное исходное настроение автоматически нельзя.</i>
+</div>
+
 <div class="hint hint-panel" data-hint="mogger" style="display:none;">
   <b>🚧 Язык в разработке, правила ещё дорабатываются.</b><br><br>
   <b>Приписки (теперь на английском):</b> SUB-5, LTN, MTN, HTN, CHAD, TRUE HAMMAM.<br><br>
@@ -892,7 +906,7 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
   <i>Пример:</i> Мое чадо едет в хаммам в Москве → Мое CHADо едет в TRUE HAMMAM в MOGGскве
 </div>
 
-<div class="version-tag">BETA 0.0.8</div>
+<div class="version-tag">BETA 0.0.9</div>
 
 <div class="toast" id="toast"></div>
 
@@ -1055,6 +1069,86 @@ function textToMurin(text) {
     if (token === '' || /^\s+$/.test(token)) return token;
     return murinWord(token);
   }).join('');
+}
+
+/* ================= ПИКМИ ================= */
+// смайлики для предложений с виной / извинением / жалостью / грустью
+const PIKMI_SAD_EMOJI = ['🤒', '😖', '🤧', '😔', '😩', '😫', '😿'];
+// смайлики для всего остального (радость, дерзость и т.п.)
+const PIKMI_HAPPY_EMOJI = [
+  '💕', '💖', '💗', '💞', '🥰', '😍', '🥺', '☺️', '🤭', '🫣',
+  '😝', '😹', '😻', '😼', '😽', '🙀', '😺', '😸', '💘', '💝', '💓'
+];
+
+// ключевые слова/корни: вина, извинение, жалость, грусть
+const PIKMI_SAD_REGEX = /(винова|извин|прост[ияи]|прощени|жал[ьк]|сожале|грустн|грущу|груст|плач|плак|обид|стыдн|расстро|печал|тоск|сорри|унылоТ|жалею|жалеет|жалеешь|тяжело на душе|больно)/i;
+
+function pikmiShuffledEmojiString(pool) {
+  const count = 3 + Math.floor(Math.random() * 3); // 3–5 смайликов
+  const arr = pool.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.slice(0, count).join('');
+}
+
+function pikmiStutterWord(word) {
+  const m = word.match(/[а-яёА-ЯЁa-zA-Z]/);
+  if (!m) return word;
+  const letter = m[0].toLowerCase();
+  return (letter + '-').repeat(5) + word;
+}
+
+// разбивает текст на предложения, сохраняя знаки препинания в конце
+function pikmiSplitSentences(text) {
+  const parts = text.match(/[^.!?…]+[.!?…]*|\s+$/g);
+  return parts ? parts.filter(p => p.length > 0) : [text];
+}
+
+function textToPikmi(text) {
+  const sentences = pikmiSplitSentences(text);
+
+  let globalWordCount = 0;
+  let stutterTargetInChunk = Math.floor(Math.random() * 10);
+
+  const translatedSentences = sentences.map(sentence => {
+    if (/^\s+$/.test(sentence)) return sentence;
+
+    const isSad = PIKMI_SAD_REGEX.test(sentence);
+
+    const tokens = sentence.split(/(\s+)/);
+    const newTokens = tokens.map(tok => {
+      if (tok === '' || /^\s+$/.test(tok)) return tok;
+
+      const indexInChunk = globalWordCount % 10;
+      const shouldStutter = indexInChunk === stutterTargetInChunk;
+      globalWordCount++;
+      if (indexInChunk === 9) {
+        stutterTargetInChunk = Math.floor(Math.random() * 10);
+      }
+
+      return shouldStutter ? pikmiStutterWord(tok) : tok;
+    });
+
+    const emojis = pikmiShuffledEmojiString(isSad ? PIKMI_SAD_EMOJI : PIKMI_HAPPY_EMOJI);
+    return newTokens.join('') + ' ' + emojis;
+  });
+
+  return translatedSentences.join(' ').replace(/\s+/g, ' ').trim();
+}
+
+// приблизительный обратный перевод: убираем заикание и смайлики пикми
+const PIKMI_ALL_EMOJI_REGEX = new RegExp(
+  '[' + [...PIKMI_SAD_EMOJI, ...PIKMI_HAPPY_EMOJI].join('') + ']',
+  'gu'
+);
+
+function pikmiToText(text) {
+  let result = text.replace(PIKMI_ALL_EMOJI_REGEX, '');
+  // убираем заикание вида "п-п-п-п-п-слово" -> "слово"
+  result = result.replace(/(?:[а-яёА-ЯЁa-zA-Z]-){5}([а-яёА-ЯЁa-zA-Z]\S*)/g, '$1');
+  return result.replace(/\s+/g, ' ').trim();
 }
 
 /* ================= MOGGЕРСКИЙ (в разработке) ================= */
@@ -1240,11 +1334,12 @@ function murinToText(text) {
   }).join('');
 }
 
-const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:', mogger: 'MOGGерский:' };
+const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:', pikmi: 'Пикми:', mogger: 'MOGGерский:' };
 const LANG_PLACEHOLDERS = {
   t9: 'Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4',
   murin: 'Например: Ч люблю фуррость',
   bass: 'Например: ya lyublyu furri',
+  pikmi: 'Например: бруза настоящий п-п-п-п-п-писюняра 🥺☺️🤭🫣😝',
   mogger: 'Например: Мое CHADо едет в TRUE HAMMAM в MOGGскве'
 };
 
@@ -1266,6 +1361,7 @@ function translateForward() {
   if (currentLang === 't9') result = computeT9(text);
   else if (currentLang === 'murin') result = textToMurin(text);
   else if (currentLang === 'bass') result = textToBass(text);
+  else if (currentLang === 'pikmi') result = textToPikmi(text);
   else if (currentLang === 'mogger') result = textToMogger(text);
   document.getElementById('codeInput').value = result;
 }
@@ -1276,6 +1372,7 @@ function reverseTranslate() {
   if (currentLang === 't9') result = computeT9Reverse(code);
   else if (currentLang === 'murin') result = murinToText(code);
   else if (currentLang === 'bass') result = bassToText(code);
+  else if (currentLang === 'pikmi') result = pikmiToText(code);
   else if (currentLang === 'mogger') result = moggerToText(code);
   document.getElementById('textInput').value = result;
 }
