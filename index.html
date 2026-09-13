@@ -196,6 +196,130 @@ body.theme-zahir {
   100% { background-position: 0% 50%; }
 }
 
+/* коты в очках + подписи по фону для Захира */
+.zahir-cats {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+body.theme-zahir .zahir-cats { display: block; }
+.zahir-cats span {
+  position: absolute;
+  font-weight: bold;
+  font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+  color: rgba(255,255,255,0.28);
+  text-shadow: 0 0 8px rgba(255,0,200,0.35);
+  white-space: nowrap;
+}
+
+/* ===== КАКАХИ ===== */
+body.theme-poop {
+  --bg-color: #4a2f18;
+  --bg-gradient: linear-gradient(160deg, #6b4423 0%, #4a2f18 45%, #3e2412 100%);
+  --text: #f5e6d3;
+  --accent: #c68642;
+  --card-bg: rgba(62, 36, 18, 0.75);
+  --card-border: #8b5a2b;
+  --input-bg: #3e2412;
+  --input-border: #6b4423;
+  --placeholder: #b08968;
+  --btn-primary-bg: linear-gradient(135deg, #a0682f, #6b4423);
+  --btn-primary-text: #fff;
+  --btn-primary-shadow: #3e2412;
+  --btn-secondary-bg: #5c3a1e;
+  --btn-secondary-text: #f5e6d3;
+  --btn-secondary-shadow: #3e2412;
+  --btn-danger-bg: #6b2f1a;
+  --btn-danger-text: #fff;
+  --btn-danger-shadow: #3e1810;
+  --toast-bg: linear-gradient(135deg, #a0682f, #6b4423);
+  --toast-text: #fff;
+  --font: Arial, sans-serif;
+  --row-radius: 14px;
+  --decor-display: block;
+  --title-glow: 0 0 6px #000, 0 0 10px #6b4423;
+}
+body.theme-poop .row::before { content: "💩"; position: absolute; top: -10px; right: 10px; font-size: 18px; }
+
+.poop-rain {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+body.theme-poop .poop-rain { display: block; }
+.poop-rain span {
+  position: absolute;
+  top: -40px;
+  font-size: 24px;
+  opacity: 0.55;
+  animation-name: poopFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes poopFall {
+  0% { transform: translateY(-10vh) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* ===== ОКЕАН ===== */
+body.theme-ocean {
+  --bg-color: #d0f0fc;
+  --bg-gradient: linear-gradient(160deg, #e6f9ff 0%, #b3e5fc 45%, #81d4fa 100%);
+  --text: #01579b;
+  --accent: #0288d1;
+  --card-bg: rgba(255,255,255,0.55);
+  --card-border: #4fc3f7;
+  --input-bg: #f0fbff;
+  --input-border: #81d4fa;
+  --placeholder: #7fb3d5;
+  --btn-primary-bg: linear-gradient(135deg, #4fc3f7, #0288d1);
+  --btn-primary-text: #fff;
+  --btn-primary-shadow: #01579b;
+  --btn-secondary-bg: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+  --btn-secondary-text: #0288d1;
+  --btn-secondary-shadow: #4fc3f7;
+  --btn-danger-bg: linear-gradient(135deg, #4dd0e1, #0097a7);
+  --btn-danger-text: #fff;
+  --btn-danger-shadow: #006064;
+  --toast-bg: linear-gradient(135deg, #4fc3f7, #0288d1);
+  --toast-text: #fff;
+  --font: Arial, sans-serif;
+  --row-radius: 16px;
+  --decor-display: block;
+  --title-glow: 0 0 6px #fff, 0 0 12px #81d4fa;
+}
+body.theme-ocean .row::before { content: "🌊"; position: absolute; top: -10px; right: 10px; font-size: 18px; }
+
+.ocean-bubbles {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+body.theme-ocean .ocean-bubbles { display: block; }
+.ocean-bubbles span {
+  position: absolute;
+  bottom: -60px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(129,212,250,0.25));
+  box-shadow: 0 0 6px rgba(255,255,255,0.5);
+  animation-name: bubbleRise;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+}
+@keyframes bubbleRise {
+  0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+  100% { transform: translateY(-115vh) translateX(20px); opacity: 0; }
+}
+
 body {
   font-family: var(--font);
   margin: 0;
@@ -220,7 +344,9 @@ body {
 }
 body.theme-pink .bg-decor.deco-pink,
 body.theme-melstroy .bg-decor.deco-melstroy,
-body.theme-zahir .bg-decor.deco-zahir {
+body.theme-zahir .bg-decor.deco-zahir,
+body.theme-poop .bg-decor.deco-poop,
+body.theme-ocean .bg-decor.deco-ocean {
   display: var(--decor-display);
 }
 
@@ -493,6 +619,12 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 <div class="bg-decor deco-pink" style="top:45%; right:5%;">🐱</div>
 <div class="bg-decor deco-pink" style="top:75%; right:10%;">💖</div>
 <div class="bg-decor deco-pink" style="top:60%; left:8%;">🌷</div>
+<div class="bg-decor deco-pink" style="top:15%; right:14%;">🐈</div>
+<div class="bg-decor deco-pink" style="top:35%; left:4%;">😻</div>
+<div class="bg-decor deco-pink" style="top:88%; left:30%;">🐾</div>
+<div class="bg-decor deco-pink" style="top:20%; left:40%;">🐱</div>
+<div class="bg-decor deco-pink" style="top:65%; right:35%;">🐈‍⬛</div>
+<div class="bg-decor deco-pink" style="top:80%; left:60%;">🐾</div>
 
 <!-- грязный фото-коллаж для мелстройности -->
 <div class="melstroy-collage">
@@ -514,6 +646,28 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 <div class="bg-decor deco-zahir" style="top:55%; left:4%;">🍌</div>
 <div class="bg-decor deco-zahir" style="top:78%; right:10%;">🎉</div>
 <div class="bg-decor deco-zahir" style="top:90%; left:12%;">💃</div>
+<div class="bg-decor deco-zahir" style="top:18%; left:35%;">😎</div>
+<div class="bg-decor deco-zahir" style="top:65%; left:45%;">😼</div>
+
+<!-- дерзкий фон-коллаж для Захира: коты в очках + подписи -->
+<div class="zahir-cats" id="zahirCats"></div>
+
+<!-- декор для какахи -->
+<div class="bg-decor deco-poop" style="top:12%; left:10%;">🤢</div>
+<div class="bg-decor deco-poop" style="top:35%; right:8%;">🤮</div>
+<div class="bg-decor deco-poop" style="top:60%; left:6%;">👃</div>
+<div class="bg-decor deco-poop" style="top:80%; right:14%;">💨</div>
+<div class="bg-decor deco-poop" style="top:25%; left:45%;">🪰</div>
+<div class="poop-rain" id="poopRain"></div>
+
+<!-- декор для океана -->
+<div class="bg-decor deco-ocean" style="top:10%; left:6%;">🌊</div>
+<div class="bg-decor deco-ocean" style="top:32%; right:6%;">🐬</div>
+<div class="bg-decor deco-ocean" style="top:55%; left:4%;">🐚</div>
+<div class="bg-decor deco-ocean" style="top:78%; right:10%;">🐠</div>
+<div class="bg-decor deco-ocean" style="top:90%; left:14%;">🫧</div>
+<div class="bg-decor deco-ocean" style="top:45%; left:42%;">🌊</div>
+<div class="ocean-bubbles" id="oceanBubbles"></div>
 
 <div class="header-bar">
   <h1>📱 Переводчик на «Цифирный»</h1>
@@ -527,6 +681,9 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
         </div>
         <div class="theme-option" onclick="showPanel('theme')">
           <span>🎨 Смена темы</span><span class="arrow">›</span>
+        </div>
+        <div class="theme-option" onclick="openWhatsNewModal()">
+          <span>🆕 Что нового?</span>
         </div>
         <div class="theme-option support-option" onclick="openSupportModal()">
           <span>💝 Поддержать авторов</span>
@@ -559,10 +716,16 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
           <span>2. Розовая</span><span class="check">✓</span>
         </div>
         <div class="theme-option" data-theme="melstroy" onclick="selectTheme('melstroy')">
-          <span>3. Мелстройность</span><span class="check">✓</span>
+          <span>3. Богатый</span><span class="check">✓</span>
         </div>
         <div class="theme-option" data-theme="zahir" onclick="selectTheme('zahir')">
           <span>4. Захир <span class="wip-tag">(в разработке)</span></span><span class="check">✓</span>
+        </div>
+        <div class="theme-option" data-theme="poop" onclick="selectTheme('poop')">
+          <span>5. Какахи 💩</span><span class="check">✓</span>
+        </div>
+        <div class="theme-option" data-theme="ocean" onclick="selectTheme('ocean')">
+          <span>6. Океан 🌊</span><span class="check">✓</span>
         </div>
       </div>
 
@@ -581,6 +744,21 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
     </p>
     <button class="action-btn btn-secondary" onclick="copyCardNumber()" style="margin-bottom:10px;">Скопировать номер карты</button>
     <button class="action-btn" onclick="closeSupportModal()">Закрыть</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="whatsNewModal" onclick="closeWhatsNewModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <h2>🆕 Что нового в BETA 0.0.6</h2>
+    <p>
+      💩 Новая тема «Какахи» — всё коричневое, с дождём из какашек<br>
+      🌊 Новая тема «Океан» — голубая, с пузырьками и волнами<br>
+      💰 Тема «Мелстройность» переименована в «Богатый»<br>
+      😎 Тема «Захир» получила дерзкий фон с котами в очках<br>
+      🐱 Розовая тема дополнена милыми котиками на фоне<br>
+      ✍️ Обновлены примеры для языков Муринский и Bass
+    </p>
+    <button class="action-btn" onclick="closeWhatsNewModal()">Закрыть</button>
   </div>
 </div>
 
@@ -648,7 +826,7 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
   Обратный перевод местами неточен: щ/ш и ы/и/й совпадают.
 </div>
 
-<div class="version-tag">BETA 0.0.5</div>
+<div class="version-tag">BETA 0.0.6</div>
 
 <div class="toast" id="toast"></div>
 
@@ -913,8 +1091,8 @@ function murinToText(text) {
 const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:' };
 const LANG_PLACEHOLDERS = {
   t9: 'Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4',
-  murin: 'Например: Ч пришел с работость и погладил котость',
-  bass: 'Например: ya prishel s raboti i pogladil kota'
+  murin: 'Например: Ч люблю фуррость',
+  bass: 'Например: ya lyublyu furri'
 };
 
 function setLang(lang) {
@@ -1108,13 +1286,15 @@ async function copyField(id) {
 }
 
 /* ================= МЕНЮ ТЕМ ================= */
-const THEME_CLASSES = ['theme-pink', 'theme-melstroy', 'theme-zahir'];
+const THEME_CLASSES = ['theme-pink', 'theme-melstroy', 'theme-zahir', 'theme-poop', 'theme-ocean'];
 
 function applyTheme(theme) {
   document.body.classList.remove(...THEME_CLASSES);
   if (theme === 'pink') document.body.classList.add('theme-pink');
   if (theme === 'melstroy') document.body.classList.add('theme-melstroy');
   if (theme === 'zahir') document.body.classList.add('theme-zahir');
+  if (theme === 'poop') document.body.classList.add('theme-poop');
+  if (theme === 'ocean') document.body.classList.add('theme-ocean');
 
   document.querySelectorAll('.theme-option[data-theme]').forEach(opt => {
     opt.classList.toggle('active', opt.dataset.theme === theme);
@@ -1153,11 +1333,69 @@ function closeSupportModal(e) {
   document.getElementById('supportModal').classList.remove('open');
 }
 
+function openWhatsNewModal() {
+  closeMenu();
+  document.getElementById('whatsNewModal').classList.add('open');
+}
+function closeWhatsNewModal(e) {
+  document.getElementById('whatsNewModal').classList.remove('open');
+}
+
 // закрывать меню при клике вне его
 document.addEventListener('click', function(e) {
   const wrap = document.querySelector('.theme-menu-wrap');
   if (!wrap.contains(e.target)) closeMenu();
 });
+
+/* ================= ДЕКОР: генерация дождя, пузырьков и котов ================= */
+function buildPoopRain() {
+  const container = document.getElementById('poopRain');
+  if (!container || container.childElementCount) return;
+  const emojis = ['💩', '💩', '💩', '🤢', '💨'];
+  for (let i = 0; i < 28; i++) {
+    const span = document.createElement('span');
+    span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    span.style.left = Math.random() * 100 + '%';
+    span.style.fontSize = (16 + Math.random() * 18) + 'px';
+    span.style.animationDuration = (4 + Math.random() * 6) + 's';
+    span.style.animationDelay = (Math.random() * 8) + 's';
+    container.appendChild(span);
+  }
+}
+
+function buildOceanBubbles() {
+  const container = document.getElementById('oceanBubbles');
+  if (!container || container.childElementCount) return;
+  for (let i = 0; i < 24; i++) {
+    const span = document.createElement('span');
+    const size = 8 + Math.random() * 26;
+    span.style.left = Math.random() * 100 + '%';
+    span.style.width = size + 'px';
+    span.style.height = size + 'px';
+    span.style.animationDuration = (5 + Math.random() * 7) + 's';
+    span.style.animationDelay = (Math.random() * 8) + 's';
+    container.appendChild(span);
+  }
+}
+
+function buildZahirCats() {
+  const container = document.getElementById('zahirCats');
+  if (!container || container.childElementCount) return;
+  const phrases = ['Мяууу🥵', 'Муррр😈', '😎🐱', '😼🕶️', 'Мяууу🥵', '😎🐈‍⬛', 'Муррр😈', '😻🕶️'];
+  for (let i = 0; i < 18; i++) {
+    const span = document.createElement('span');
+    span.textContent = phrases[i % phrases.length];
+    span.style.top = Math.random() * 100 + '%';
+    span.style.left = Math.random() * 90 + '%';
+    span.style.fontSize = (14 + Math.random() * 16) + 'px';
+    span.style.transform = 'rotate(' + (Math.random() * 40 - 20) + 'deg)';
+    container.appendChild(span);
+  }
+}
+
+buildPoopRain();
+buildOceanBubbles();
+buildZahirCats();
 
 (function initTheme() {
   const saved = localStorage.getItem('translatorTheme') || 'standard';
