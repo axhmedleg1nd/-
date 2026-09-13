@@ -44,6 +44,11 @@ textarea:focus {
   outline: none;
   border-color: #4fc3f7;
 }
+.btn-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
 button {
   background: #4fc3f7;
   color: #000;
@@ -52,11 +57,20 @@ button {
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 8px;
   width: 100%;
   font-weight: bold;
 }
 button:active { background: #29b6f6; }
+.btn-secondary {
+  background: #3a3a3a;
+  color: #eee;
+}
+.btn-secondary:active { background: #4a4a4a; }
+.btn-danger {
+  background: #4a2a2a;
+  color: #eee;
+}
+.btn-danger:active { background: #5a3535; }
 .hint {
   font-size: 13px;
   color: #999;
@@ -67,6 +81,25 @@ button:active { background: #29b6f6; }
   border-radius: 8px;
 }
 .hint b { color: #4fc3f7; }
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4fc3f7;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  z-index: 100;
+}
+.toast.show {
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -76,13 +109,21 @@ button:active { background: #29b6f6; }
 <div class="row">
   <label>Обычный текст:</label>
   <textarea id="textInput" placeholder="Например: Я люблю Фурри"></textarea>
-  <button onclick="textToCode()">→ Перевести в код</button>
+  <div class="btn-group">
+    <button onclick="textToCode()">→ Перевести в код</button>
+    <button class="btn-secondary" onclick="copyField('textInput')">📋 Копировать</button>
+    <button class="btn-danger" onclick="clearAll()">🗑 Очистить</button>
+  </div>
 </div>
 
 <div class="row">
   <label>Код T9:</label>
   <textarea id="codeInput" placeholder="Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4"></textarea>
-  <button onclick="codeToText()">→ Перевести в текст</button>
+  <div class="btn-group">
+    <button onclick="codeToText()">→ Перевести в текст</button>
+    <button class="btn-secondary" onclick="copyField('codeInput')">📋 Копировать</button>
+    <button class="btn-danger" onclick="clearAll()">🗑 Очистить</button>
+  </div>
 </div>
 
 <div class="hint">
@@ -98,6 +139,8 @@ button:active { background: #29b6f6; }
   <b>{ } = CAPS:</b> всё внутри заглавное<br>
   <b>Цифры:</b> *1* — переключение в режим цифр, ещё раз *1* — обратно
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script>
 const LAYOUT = {
@@ -345,6 +388,38 @@ function codeToText() {
   }
 
   document.getElementById('textInput').value = result;
+}
+
+/* ================= ОЧИСТКА / КОПИРОВАНИЕ ================= */
+function clearAll() {
+  document.getElementById('textInput').value = '';
+  document.getElementById('codeInput').value = '';
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove('show'), 1200);
+}
+
+async function copyField(id) {
+  const field = document.getElementById(id);
+  const value = field.value;
+  if (!value) {
+    showToast('Нечего копировать');
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(value);
+    showToast('Скопировано!');
+  } catch (e) {
+    // fallback для старых браузеров / отсутствия разрешений
+    field.select();
+    document.execCommand('copy');
+    showToast('Скопировано!');
+  }
 }
 </script>
 
