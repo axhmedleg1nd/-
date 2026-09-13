@@ -6,96 +6,251 @@
 <title>Переводчик на «Цифирный»</title>
 <style>
 * { box-sizing: border-box; }
+
+/* ===== ТЁМНАЯ ТЕМА (по умолчанию) ===== */
+:root {
+  --bg: #1e1e1e;
+  --bg-gradient: none;
+  --text: #eee;
+  --accent: #4fc3f7;
+  --accent-dark: #29b6f6;
+  --card-bg: #252525;
+  --card-border: #444;
+  --input-bg: #2d2d2d;
+  --input-border: #444;
+  --placeholder: #888;
+  --btn-primary-bg: #4fc3f7;
+  --btn-primary-text: #000;
+  --btn-primary-shadow: #29b6f6;
+  --btn-secondary-bg: #3a3a3a;
+  --btn-secondary-text: #eee;
+  --btn-secondary-shadow: #2a2a2a;
+  --btn-danger-bg: #4a2a2a;
+  --btn-danger-text: #eee;
+  --btn-danger-shadow: #331c1c;
+  --toast-bg: #4fc3f7;
+  --toast-text: #000;
+  --font: Arial, sans-serif;
+  --row-radius: 8px;
+  --decor-display: none;
+}
+
+/* ===== РОЗОВАЯ ТЕМА ===== */
+body.theme-pink {
+  --bg: #ffc1e3;
+  --bg-gradient: linear-gradient(160deg, #ffd6ec 0%, #ffc1e3 40%, #ffb3da 100%);
+  --text: #7a2e55;
+  --accent: #e6399b;
+  --accent-dark: #d1428e;
+  --card-bg: rgba(255,255,255,0.55);
+  --card-border: #ff9fd1;
+  --input-bg: #fff0f8;
+  --input-border: #ffb3da;
+  --placeholder: #d98fbd;
+  --btn-primary-bg: linear-gradient(135deg, #ff9fd1, #ff6fb5);
+  --btn-primary-text: #fff;
+  --btn-primary-shadow: #e6399b;
+  --btn-secondary-bg: linear-gradient(135deg, #fff0f8, #ffd6ec);
+  --btn-secondary-text: #e6399b;
+  --btn-secondary-shadow: #ff9fd1;
+  --btn-danger-bg: linear-gradient(135deg, #ffb3da, #ff85c1);
+  --btn-danger-text: #fff;
+  --btn-danger-shadow: #d1428e;
+  --toast-bg: linear-gradient(135deg, #ff9fd1, #e6399b);
+  --toast-text: #fff;
+  --font: 'Comic Sans MS', 'Segoe UI', sans-serif;
+  --row-radius: 18px;
+  --decor-display: block;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--font);
   margin: 0;
   padding: 15px;
-  background: #1e1e1e;
-  color: #eee;
+  background: var(--bg-gradient) , var(--bg);
+  background-color: var(--bg);
+  color: var(--text);
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  transition: background 0.4s, color 0.4s;
 }
+
+/* фоновые декорации только для розовой темы */
+.bg-decor {
+  position: fixed;
+  font-size: 22px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+  filter: drop-shadow(0 0 2px #fff);
+  display: var(--decor-display);
+}
+
+/* ===== переключатель тем ===== */
+.theme-toggle {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 50px;
+  padding: 6px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  transition: transform 0.15s;
+}
+.theme-toggle:active {
+  transform: scale(0.94);
+}
+
 h1 {
-  color: #4fc3f7;
+  color: var(--accent);
   font-size: 22px;
   text-align: center;
-  margin: 10px 0 20px;
+  margin: 10px 60px 20px;
+  position: relative;
+  z-index: 1;
 }
-.row { margin-bottom: 18px; }
+body.theme-pink h1 {
+  text-shadow: 0 0 6px #fff, 0 0 12px #ffb3da;
+}
+
+.row {
+  margin-bottom: 20px;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: var(--row-radius);
+  padding: 14px;
+  position: relative;
+  z-index: 1;
+  transition: background 0.4s, border-color 0.4s;
+}
+body.theme-pink .row {
+  box-shadow: 0 0 0 3px #fff inset, 0 4px 14px rgba(230, 57, 155, 0.25);
+}
+body.theme-pink .row::before {
+  content: "✨";
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  font-size: 18px;
+}
+body.theme-pink .row::after {
+  content: "✨";
+  position: absolute;
+  bottom: -10px;
+  left: 10px;
+  font-size: 18px;
+}
+
 label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-bottom: 6px;
-  color: #4fc3f7;
+  color: var(--accent);
   font-weight: bold;
   font-size: 15px;
 }
+
 textarea {
   width: 100%;
   height: 130px;
   font-size: 16px;
   padding: 12px;
-  background: #2d2d2d;
-  color: #eee;
-  border: 1px solid #444;
-  border-radius: 8px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
   resize: vertical;
   font-family: inherit;
+  transition: background 0.4s, border-color 0.4s, color 0.4s;
+}
+textarea::placeholder {
+  color: var(--placeholder);
 }
 textarea:focus {
   outline: none;
-  border-color: #4fc3f7;
+  border-color: var(--accent);
 }
+body.theme-pink textarea:focus {
+  box-shadow: 0 0 8px #ff9fd1;
+}
+
 .btn-group {
   display: flex;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
-button {
-  background: #4fc3f7;
-  color: #000;
+
+button.action-btn {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   border: none;
   padding: 14px;
-  font-size: 16px;
-  border-radius: 8px;
+  font-size: 15px;
+  border-radius: 10px;
   cursor: pointer;
   width: 100%;
   font-weight: bold;
+  box-shadow: 0 3px 0 var(--btn-primary-shadow), 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.1s, background 0.4s;
 }
-button:active { background: #29b6f6; }
+button.action-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--btn-primary-shadow);
+}
+
 .btn-secondary {
-  background: #3a3a3a;
-  color: #eee;
+  background: var(--btn-secondary-bg) !important;
+  color: var(--btn-secondary-text) !important;
+  box-shadow: 0 3px 0 var(--btn-secondary-shadow), 0 4px 8px rgba(0,0,0,0.1) !important;
 }
-.btn-secondary:active { background: #4a4a4a; }
+
 .btn-danger {
-  background: #4a2a2a;
-  color: #eee;
+  background: var(--btn-danger-bg) !important;
+  color: var(--btn-danger-text) !important;
+  box-shadow: 0 3px 0 var(--btn-danger-shadow), 0 4px 8px rgba(0,0,0,0.15) !important;
 }
-.btn-danger:active { background: #5a3535; }
+
 .hint {
   font-size: 13px;
-  color: #999;
-  margin-top: 20px;
-  line-height: 1.7;
-  background: #252525;
-  padding: 14px;
-  border-radius: 8px;
+  color: var(--text);
+  opacity: 0.85;
+  margin-top: 22px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  padding: 16px;
+  border-radius: 16px;
+  border: 2px dashed var(--card-border);
+  position: relative;
+  z-index: 1;
 }
-.hint b { color: #4fc3f7; }
+.hint b { color: var(--accent); }
+
 .toast {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: #4fc3f7;
-  color: #000;
-  padding: 10px 20px;
-  border-radius: 8px;
+  background: var(--toast-bg);
+  color: var(--toast-text);
+  padding: 10px 22px;
+  border-radius: 20px;
   font-weight: bold;
   font-size: 14px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s;
   z-index: 100;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 .toast.show {
   opacity: 1;
@@ -104,15 +259,27 @@ button:active { background: #29b6f6; }
 </head>
 <body>
 
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+
+<!-- декоративные разбросанные эмодзи (видны только в розовой теме) -->
+<div class="bg-decor" style="top:5%; left:6%;">🌸</div>
+<div class="bg-decor" style="top:12%; right:8%;">🐾</div>
+<div class="bg-decor" style="top:30%; left:3%;">💎</div>
+<div class="bg-decor" style="top:45%; right:5%;">🐱</div>
+<div class="bg-decor" style="top:60%; left:8%;">🌷</div>
+<div class="bg-decor" style="top:75%; right:10%;">💖</div>
+<div class="bg-decor" style="top:88%; left:12%;">✨</div>
+<div class="bg-decor" style="top:20%; left:45%;">🎀</div>
+
 <h1>📱 Переводчик на «Цифирный»</h1>
 
 <div class="row">
   <label>Обычный текст:</label>
   <textarea id="textInput" placeholder="Например: Я люблю Фурри"></textarea>
   <div class="btn-group">
-    <button onclick="textToCode()">→ Перевести в код</button>
-    <button class="btn-secondary" onclick="copyField('textInput')">📋 Копировать</button>
-    <button class="btn-danger" onclick="clearAll()">🗑 Очистить</button>
+    <button class="action-btn" onclick="textToCode()">→ Перевести в код</button>
+    <button class="action-btn btn-secondary" onclick="copyField('textInput')">📋 Копировать</button>
+    <button class="action-btn btn-danger" onclick="clearAll()">🗑 Очистить</button>
   </div>
 </div>
 
@@ -120,9 +287,9 @@ button:active { background: #29b6f6; }
   <label>Код T9:</label>
   <textarea id="codeInput" placeholder="Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4"></textarea>
   <div class="btn-group">
-    <button onclick="codeToText()">→ Перевести в текст</button>
-    <button class="btn-secondary" onclick="copyField('codeInput')">📋 Копировать</button>
-    <button class="btn-danger" onclick="clearAll()">🗑 Очистить</button>
+    <button class="action-btn" onclick="codeToText()">→ Перевести в текст</button>
+    <button class="action-btn btn-secondary" onclick="copyField('codeInput')">📋 Копировать</button>
+    <button class="action-btn btn-danger" onclick="clearAll()">🗑 Очистить</button>
   </div>
 </div>
 
@@ -172,7 +339,6 @@ function textToCode() {
   for (let i = 0; i < text.length; i++) {
     const ch = text[i];
 
-    // CAPS — сами символы { } тоже сохраняем в коде
     if (ch === '{') {
       result += '{';
       capsMode = true;
@@ -186,49 +352,42 @@ function textToCode() {
       continue;
     }
 
-    // Пробел
     if (ch === ' ') {
       result += '#';
       lastWasLetter = false;
       continue;
     }
 
-    // Точка
     if (ch === '.') {
       result += '+';
       lastWasLetter = false;
       continue;
     }
 
-    // Восклицательный
     if (ch === '!') {
       result += '%';
       lastWasLetter = false;
       continue;
     }
 
-    // Вопросительный
     if (ch === '?') {
       result += '(';
       lastWasLetter = false;
       continue;
     }
 
-    // Открывающая скобка
     if (ch === '(') {
       result += '[';
       lastWasLetter = false;
       continue;
     }
 
-    // Закрывающая скобка
     if (ch === ')') {
       result += ']';
       lastWasLetter = false;
       continue;
     }
 
-    // ЦИФРЫ
     if (ch >= '0' && ch <= '9') {
       if (!digitMode) {
         result += '*1*';
@@ -239,21 +398,15 @@ function textToCode() {
       continue;
     }
 
-    // БУКВЫ
     const upperCh = ch.toUpperCase();
     if (CHAR_TO_CODE[upperCh]) {
-      // Закрываем цифровой режим
       if (digitMode) {
         result += '*1*';
         digitMode = false;
       }
 
-      // Определяем: буква заглавная?
       const isCapital = ch !== ch.toLowerCase();
 
-      // Нужен ли √?
-      // Вне CAPS: √ нужен для заглавной
-      // В CAPS: √ нужен для строчной
       let needShift = false;
       if (!capsMode && isCapital) needShift = true;
       if (capsMode && !isCapital) needShift = true;
@@ -262,7 +415,6 @@ function textToCode() {
         result += '√';
       }
 
-      // Разделитель между буквами
       if (lastWasLetter) {
         result += '*';
       }
@@ -288,21 +440,18 @@ function codeToText() {
   while (i < code.length) {
     const ch = code[i];
 
-    // *1* — переключатель режима
     if (ch === '*' && code[i + 1] === '1' && code[i + 2] === '*') {
       digitMode = !digitMode;
       i += 3;
       continue;
     }
 
-    // # — пробел
     if (ch === '#') {
       result += ' ';
       i++;
       continue;
     }
 
-    // { — CAPS вкл
     if (ch === '{') {
       result += '{';
       capsMode = true;
@@ -310,7 +459,6 @@ function codeToText() {
       continue;
     }
 
-    // } — CAPS выкл
     if (ch === '}') {
       result += '}';
       capsMode = false;
@@ -318,37 +466,29 @@ function codeToText() {
       continue;
     }
 
-    // √ — шифт
     if (ch === '√') {
       shiftNext = true;
       i++;
       continue;
     }
 
-    // Точка
     if (ch === '+') { result += '.'; i++; continue; }
 
-    // Восклицательный
     if (ch === '%') { result += '!'; i++; continue; }
 
-    // Вопросительный
     if (ch === '(' || ch === ')') { result += '?'; i++; continue; }
 
-    // Скобки
     if (ch === '[') { result += '('; i++; continue; }
     if (ch === ']') { result += ')'; i++; continue; }
 
-    // ЦИФРЫ в цифровом режиме
     if (digitMode && ch >= '0' && ch <= '9') {
       result += ch;
       i++;
       continue;
     }
 
-    // Разделитель
     if (ch === '*') { i++; continue; }
 
-    // БУКВЫ T9
     if (ch >= '2' && ch <= '9') {
       let j = i;
       while (j < code.length && code[j] === ch) j++;
@@ -415,12 +555,35 @@ async function copyField(id) {
     await navigator.clipboard.writeText(value);
     showToast('Скопировано!');
   } catch (e) {
-    // fallback для старых браузеров / отсутствия разрешений
     field.select();
     document.execCommand('copy');
     showToast('Скопировано!');
   }
 }
+
+/* ================= ТЕМЫ ================= */
+function applyTheme(theme) {
+  const btn = document.getElementById('themeToggle');
+  if (theme === 'pink') {
+    document.body.classList.add('theme-pink');
+    btn.textContent = '☀️';
+  } else {
+    document.body.classList.remove('theme-pink');
+    btn.textContent = '🌙';
+  }
+  localStorage.setItem('translatorTheme', theme);
+}
+
+function toggleTheme() {
+  const isPink = document.body.classList.contains('theme-pink');
+  applyTheme(isPink ? 'dark' : 'pink');
+}
+
+// восстановить сохранённую тему при загрузке
+(function initTheme() {
+  const saved = localStorage.getItem('translatorTheme') || 'dark';
+  applyTheme(saved);
+})();
 </script>
 
 </body>
