@@ -63,7 +63,56 @@ body.theme-pink {
   --title-glow: 0 0 6px #fff, 0 0 12px #ffb3da;
 }
 
-/* ===== МЕЛСТРОЙНОСТЬ (грязный грайм-стиль) ===== */
+/* ===== ТСУНДЕРЕ ===== */
+body.theme-tsundere {
+  --bg-color: #ffb6c1;
+  --bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+  --text: #8b0000;
+  --accent: #ff1493;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: #ff69b4;
+  --input-bg: rgba(255, 240, 245, 0.8);
+  --input-border: #ff1493;
+  --placeholder: #db7093;
+  --btn-primary-bg: linear-gradient(135deg, #ff1493, #c71585);
+  --btn-primary-text: #fff;
+  --btn-primary-shadow: #8b008b;
+  --btn-secondary-bg: #ffe4e1;
+  --btn-secondary-text: #c71585;
+  --btn-secondary-shadow: #ffb6c1;
+  --btn-danger-bg: #dc143c;
+  --btn-danger-text: #fff;
+  --btn-danger-shadow: #8b0000;
+  --toast-bg: #ff1493;
+  --toast-text: #fff;
+  --font: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+  --row-radius: 20px;
+  --decor-display: block;
+  --title-glow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+}
+
+.tsundere-cats {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+body.theme-tsundere .tsundere-cats { display: block; }
+.tsundere-cats span {
+  position: absolute;
+  font-size: 30px;
+  opacity: 0.7;
+  animation: floatTsundere 6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 5px rgba(255, 20, 147, 0.5));
+}
+@keyframes floatTsundere {
+  0% { transform: translateY(0) rotate(-10deg) scale(1); }
+  100% { transform: translateY(-30px) rotate(10deg) scale(1.1); }
+}
+
+/* ===== МЕЛСТРОЙНОСТЬ ===== */
 body.theme-melstroy {
   --bg-color: #100d08;
   --bg-gradient: radial-gradient(circle at 30% 10%, #3a2f0a 0%, #100d08 55%),
@@ -92,74 +141,7 @@ body.theme-melstroy {
   --title-glow: 1px 1px 0 #000, 0 0 10px #d4af0055;
 }
 
-/* грязная текстура поверх фона: царапины/пятна через шумовой SVG-фильтр */
-body.theme-melstroy::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-}
-
-/* потёки грязи/краски по краям экрана */
-body.theme-melstroy::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 8% 100%, rgba(0,0,0,0.6) 0%, transparent 30%),
-    radial-gradient(circle at 92% 0%, rgba(0,0,0,0.55) 0%, transparent 28%),
-    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 12%, transparent 88%, rgba(0,0,0,0.45) 100%);
-}
-
-body.theme-melstroy h1,
-body.theme-melstroy .row,
-body.theme-melstroy .hint {
-  position: relative;
-  z-index: 1;
-}
-
-body.theme-melstroy .row {
-  border-style: solid;
-  border-width: 2px;
-  box-shadow: 0 0 0 1px #000 inset, 0 6px 14px rgba(0,0,0,0.6);
-  filter: contrast(1.05) saturate(0.9);
-}
-
-body.theme-melstroy textarea {
-  filter: contrast(1.05);
-}
-
-body.theme-melstroy button.action-btn {
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  filter: contrast(1.1) saturate(0.85);
-}
-
-/* фото-коллаж мемов, вмонтированный грязно и криво */
-.melstroy-collage {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-body.theme-melstroy .melstroy-collage { display: block; }
-.melstroy-collage img {
-  position: absolute;
-  filter: grayscale(0.55) sepia(0.35) contrast(1.15) brightness(0.75);
-  opacity: 0.4;
-  border: 3px solid rgba(0,0,0,0.5);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-}
-
-/* ===== ЗАХИР (дискотечно-угарная) ===== */
+/* ===== ЗАХИР ===== */
 body.theme-zahir {
   --bg-color: #1a0033;
   --bg-gradient: linear-gradient(120deg, #ff00c8, #7b2ff7, #00e5ff, #ffee00);
@@ -185,34 +167,17 @@ body.theme-zahir {
   --row-radius: 20px;
   --decor-display: block;
   --title-glow: 0 0 10px #ff00c8, 0 0 20px #00ffe1;
-}
-body.theme-zahir {
   background-size: 300% 300%;
   animation: zahirShift 8s ease infinite;
 }
-@keyframes zahirShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+@keyframes zahirShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-/* коты в очках + подписи по фону для Захира */
-.zahir-cats {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
+.zahir-cats { display: none; position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 body.theme-zahir .zahir-cats { display: block; }
 .zahir-cats span {
-  position: absolute;
-  font-weight: bold;
-  font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
-  color: rgba(255,255,255,0.28);
-  text-shadow: 0 0 8px rgba(255,0,200,0.35);
-  white-space: nowrap;
+  position: absolute; font-weight: bold; font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+  color: rgba(255,255,255,0.8); text-shadow: 0 0 8px rgba(255,0,200,0.8); white-space: nowrap;
+  animation: floatTsundere 4s ease-in-out infinite alternate;
 }
 
 /* ===== КАКАХИ ===== */
@@ -244,28 +209,13 @@ body.theme-poop {
 }
 body.theme-poop .row::before { content: "💩"; position: absolute; top: -10px; right: 10px; font-size: 18px; }
 
-.poop-rain {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
+.poop-rain { display: none; position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 body.theme-poop .poop-rain { display: block; }
 .poop-rain span {
-  position: absolute;
-  top: -40px;
-  font-size: 24px;
-  opacity: 0.55;
-  animation-name: poopFall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  position: absolute; top: -40px; font-size: 26px; opacity: 0.7;
+  animation-name: poopFall; animation-timing-function: linear; animation-iteration-count: infinite;
 }
-@keyframes poopFall {
-  0% { transform: translateY(-10vh) rotate(0deg); }
-  100% { transform: translateY(110vh) rotate(360deg); }
-}
+@keyframes poopFall { 0% { transform: translateY(-10vh) rotate(0deg); } 100% { transform: translateY(110vh) rotate(360deg); } }
 
 /* ===== ОКЕАН ===== */
 body.theme-ocean {
@@ -296,292 +246,101 @@ body.theme-ocean {
 }
 body.theme-ocean .row::before { content: "🌊"; position: absolute; top: -10px; right: 10px; font-size: 18px; }
 
-.ocean-bubbles {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
+.ocean-bubbles { display: none; position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 body.theme-ocean .ocean-bubbles { display: block; }
 .ocean-bubbles span {
-  position: absolute;
-  bottom: -60px;
-  border-radius: 50%;
+  position: absolute; bottom: -60px; border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(129,212,250,0.25));
-  box-shadow: 0 0 6px rgba(255,255,255,0.5);
-  animation-name: bubbleRise;
-  animation-timing-function: ease-in;
-  animation-iteration-count: infinite;
+  box-shadow: 0 0 6px rgba(255,255,255,0.5); animation-name: bubbleRise; animation-timing-function: ease-in; animation-iteration-count: infinite;
 }
-@keyframes bubbleRise {
-  0% { transform: translateY(0) translateX(0); opacity: 0.8; }
-  100% { transform: translateY(-115vh) translateX(20px); opacity: 0; }
-}
+@keyframes bubbleRise { 0% { transform: translateY(0) translateX(0); opacity: 0.8; } 100% { transform: translateY(-115vh) translateX(20px); opacity: 0; } }
 
-.ocean-sealife {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
+.ocean-sealife { display: none; position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 body.theme-ocean .ocean-sealife { display: block; }
-.ocean-sealife span {
-  position: absolute;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  opacity: 0.6;
-}
-.ocean-sealife span.swim-right {
-  animation-name: swimRight;
-  transform: scaleX(-1);
-}
-.ocean-sealife span.swim-left {
-  animation-name: swimLeft;
-}
-@keyframes swimRight {
-  from { left: -10%; }
-  to { left: 110%; }
-}
-@keyframes swimLeft {
-  from { left: 110%; }
-  to { left: -10%; }
-}
+.ocean-sealife span { position: absolute; font-size: 28px; animation-timing-function: linear; animation-iteration-count: infinite; opacity: 0.85; }
+.ocean-sealife span.swim-right { animation-name: swimRight; transform: scaleX(-1); }
+.ocean-sealife span.swim-left { animation-name: swimLeft; transform: none; }
+@keyframes swimRight { from { left: -10%; } to { left: 110%; } }
+@keyframes swimLeft { from { left: 110%; } to { left: -10%; } }
 
-.ocean-seaweed {
-  display: none;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  height: 60px;
-}
+.ocean-seaweed { display: none; position: fixed; left: 0; right: 0; bottom: -6px; z-index: 0; pointer-events: none; overflow: hidden; height: 70px; }
 body.theme-ocean .ocean-seaweed { display: block; }
-.ocean-seaweed span {
-  position: absolute;
-  bottom: 0;
-  font-size: 26px;
-  opacity: 0.55;
-  animation: seaweedSway 3.5s ease-in-out infinite alternate;
-}
-@keyframes seaweedSway {
-  0% { transform: rotate(-6deg); }
-  100% { transform: rotate(6deg); }
-}
+.ocean-seaweed span { position: absolute; bottom: 0; font-size: 32px; opacity: 0.75; transform-origin: bottom center; animation: seaweedSway 3.5s ease-in-out infinite alternate; }
+@keyframes seaweedSway { 0% { transform: rotate(-10deg); } 100% { transform: rotate(10deg); } }
 
 body {
-  font-family: var(--font);
-  margin: 0;
-  padding: 15px;
-  background: var(--bg-gradient), var(--bg-color);
-  background-color: var(--bg-color);
-  color: var(--text);
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
+  font-family: var(--font); margin: 0; padding: 15px;
+  background: var(--bg-gradient), var(--bg-color); background-color: var(--bg-color);
+  color: var(--text); min-height: 100vh; position: relative; overflow-x: hidden;
   transition: background 0.4s, color 0.4s;
 }
 
-.bg-decor {
-  position: fixed;
-  font-size: 22px;
-  opacity: 0.35;
-  pointer-events: none;
-  z-index: 0;
-  filter: drop-shadow(0 0 2px #fff);
-  display: none;
-}
-body.theme-pink .bg-decor.deco-pink,
-body.theme-melstroy .bg-decor.deco-melstroy,
-body.theme-zahir .bg-decor.deco-zahir,
-body.theme-poop .bg-decor.deco-poop,
-body.theme-ocean .bg-decor.deco-ocean {
-  display: var(--decor-display);
-}
+.bg-decor { position: fixed; font-size: 22px; opacity: 0.35; pointer-events: none; z-index: 0; filter: drop-shadow(0 0 2px #fff); display: none; }
+body.theme-pink .bg-decor.deco-pink, body.theme-melstroy .bg-decor.deco-melstroy,
+body.theme-zahir .bg-decor.deco-zahir, body.theme-poop .bg-decor.deco-poop,
+body.theme-ocean .bg-decor.deco-ocean { display: var(--decor-display); }
 
-/* ===== шапка: заголовок + меню тем ===== */
-.header-bar {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 8px;
-  position: relative;
-  z-index: 5;
-}
+.header-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; position: relative; z-index: 5; margin-bottom: 10px; }
 
-/* ===== меню тем (3 точки) ===== */
-.theme-menu-wrap {
-  position: relative;
-  flex-shrink: 0;
-  margin-top: 4px;
-}
+.theme-menu-wrap { position: relative; flex-shrink: 0; }
 .theme-dots {
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  font-size: 20px;
-  cursor: pointer;
-  color: var(--text);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--card-bg); border: 2px solid var(--card-border); border-radius: 50%;
+  width: 42px; height: 42px; font-size: 20px; cursor: pointer; color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
 }
 .theme-dropdown {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  z-index: 9999;
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: 12px;
-  min-width: 220px;
-  max-width: 260px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  display: none;
-  backdrop-filter: blur(4px);
+  position: absolute; top: 50px; right: 0; z-index: 9999;
+  background: var(--card-bg); border: 2px solid var(--card-border); border-radius: 12px;
+  min-width: 220px; max-width: 260px; overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35); display: none; backdrop-filter: blur(4px);
 }
 .theme-dropdown.open { display: block; }
 .theme-option {
-  padding: 12px 16px;
-  font-size: 14px;
-  color: var(--text);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  padding: 17px 16px; font-size: 14px; color: var(--text); cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
   border-bottom: 1px solid rgba(128,128,128,0.2);
 }
 .theme-option:last-child { border-bottom: none; }
 .theme-option:active { opacity: 0.7; }
 .theme-option .check { opacity: 0; flex-shrink: 0; }
 .theme-option.active .check { opacity: 1; color: var(--accent); }
-.theme-option .arrow {
-  opacity: 0.5;
-  font-size: 16px;
-}
-.back-option {
-  color: var(--accent);
-  font-weight: bold;
-  opacity: 0.85;
-}
-.wip-tag {
-  font-size: 11px;
-  opacity: 0.6;
-  font-weight: normal;
-}
-.support-option {
-  color: var(--accent);
-  font-weight: bold;
-  border-top: 2px solid var(--card-border);
-}
-
-.wip-badge {
-  display: none;
-  text-align: center;
-  font-size: 12px;
-  color: var(--text);
-  opacity: 0.8;
-  background: var(--card-bg);
-  border: 1px dashed var(--card-border);
-  border-radius: 10px;
-  padding: 6px 10px;
-  margin: -6px 0 14px;
-}
-body.theme-zahir .wip-badge { display: block; }
+.theme-option .arrow { opacity: 0.5; font-size: 16px; }
+.back-option { color: var(--accent); font-weight: bold; opacity: 0.85; }
+.support-option { color: var(--accent); font-weight: bold; border-top: 2px solid var(--card-border); }
+.tsundere-option { color: #ff1493; font-weight: bold; background: rgba(255, 182, 193, 0.2); }
 
 .modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  z-index: 10000;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+  z-index: 10000; align-items: center; justify-content: center; padding: 20px;
 }
 .modal-overlay.open { display: flex; }
 .modal-card {
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: 16px;
-  padding: 22px;
-  max-width: 340px;
-  width: 100%;
-  color: var(--text);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  background: var(--card-bg); border: 2px solid var(--card-border); border-radius: 16px;
+  padding: 22px; max-width: 360px; width: 100%; color: var(--text); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-.modal-card h2 {
-  color: var(--accent);
-  font-size: 18px;
-  margin: 0 0 12px;
-}
-.modal-card p {
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 0 0 18px;
-}
-.modal-card .action-btn {
-  width: 100%;
-}
+.modal-card h2 { color: var(--accent); font-size: 18px; margin: 0 0 12px; }
+.modal-card p { font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
 
-h1 {
-  color: var(--accent);
-  font-size: 22px;
-  text-align: center;
-  margin: 10px 0 20px;
-  flex: 1;
-  min-width: 0;
-  text-shadow: var(--title-glow);
-}
+h1 { color: var(--accent); font-size: 22px; text-align: center; margin: 0; flex: 1; text-shadow: var(--title-glow); }
 
 .row {
-  margin-bottom: 20px;
-  background: var(--card-bg);
-  border: 2px solid var(--card-border);
-  border-radius: var(--row-radius);
-  padding: 14px;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 18px; background: var(--card-bg); border: 2px solid var(--card-border);
+  border-radius: var(--row-radius); padding: 14px; position: relative; z-index: 1;
   transition: background 0.4s, border-color 0.4s;
 }
 body.theme-pink .row::before { content: "✨"; position: absolute; top: -10px; right: 10px; font-size: 18px; }
 body.theme-pink .row::after { content: "✨"; position: absolute; bottom: -10px; left: 10px; font-size: 18px; }
 body.theme-melstroy .row::before { content: "💰"; position: absolute; top: -10px; right: 10px; font-size: 18px; }
 body.theme-zahir .row::before { content: "🎉"; position: absolute; top: -10px; right: 10px; font-size: 18px; }
+body.theme-tsundere .row::before { content: "😡"; position: absolute; top: -10px; right: 10px; font-size: 18px; }
+body.theme-tsundere .row::after { content: "🎀"; position: absolute; bottom: -10px; left: 10px; font-size: 18px; }
 
-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 6px;
-  color: var(--accent);
-  font-weight: bold;
-  font-size: 15px;
-}
+label { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; color: var(--accent); font-weight: bold; font-size: 15px; }
 
 textarea {
-  width: 100%;
-  height: 130px;
-  font-size: 16px;
-  padding: 12px;
-  background: var(--input-bg);
-  color: var(--text);
-  border: 1px solid var(--input-border);
-  border-radius: 12px;
-  resize: vertical;
-  font-family: inherit;
-  transition: background 0.4s, border-color 0.4s, color 0.4s;
+  width: 100%; height: 110px; font-size: 16px; padding: 12px; background: var(--input-bg);
+  color: var(--text); border: 1px solid var(--input-border); border-radius: 12px;
+  resize: vertical; font-family: inherit; transition: background 0.4s, border-color 0.4s, color 0.4s;
 }
 textarea::placeholder { color: var(--placeholder); }
 textarea:focus { outline: none; border-color: var(--accent); }
@@ -589,145 +348,63 @@ textarea:focus { outline: none; border-color: var(--accent); }
 .btn-group { display: flex; gap: 8px; margin-top: 10px; }
 
 button.action-btn {
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
-  border: none;
-  padding: 10px 6px;
-  font-size: 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  flex: 1 1 0;
-  min-width: 0;
-  width: auto;
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  text-align: center;
-  font-weight: bold;
+  background: var(--btn-primary-bg); color: var(--btn-primary-text); border: none;
+  padding: 10px 8px; font-size: 14px; border-radius: 10px; cursor: pointer;
+  flex: 1; text-align: center; font-weight: bold;
   box-shadow: 0 3px 0 var(--btn-primary-shadow), 0 4px 8px rgba(0,0,0,0.15);
   transition: transform 0.1s, background 0.4s;
 }
 button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--btn-primary-shadow); }
 
-.btn-secondary {
-  background: var(--btn-secondary-bg) !important;
-  color: var(--btn-secondary-text) !important;
-  box-shadow: 0 3px 0 var(--btn-secondary-shadow), 0 4px 8px rgba(0,0,0,0.1) !important;
-}
-.btn-danger {
-  background: var(--btn-danger-bg) !important;
-  color: var(--btn-danger-text) !important;
-  box-shadow: 0 3px 0 var(--btn-danger-shadow), 0 4px 8px rgba(0,0,0,0.15) !important;
-}
+.btn-secondary { background: var(--btn-secondary-bg) !important; color: var(--btn-secondary-text) !important; box-shadow: 0 3px 0 var(--btn-secondary-shadow), 0 4px 8px rgba(0,0,0,0.1) !important; }
+.btn-danger { background: var(--btn-danger-bg) !important; color: var(--btn-danger-text) !important; box-shadow: 0 3px 0 var(--btn-danger-shadow), 0 4px 8px rgba(0,0,0,0.15) !important; }
 
 .hint {
-  font-size: 13px;
-  color: var(--text);
-  opacity: 0.85;
-  margin-top: 22px;
-  line-height: 1.8;
-  background: var(--card-bg);
-  padding: 16px;
-  border-radius: 16px;
-  border: 2px dashed var(--card-border);
-  position: relative;
-  z-index: 1;
+  font-size: 13px; color: var(--text); opacity: 0.85; margin-top: 18px; line-height: 1.8;
+  background: var(--card-bg); padding: 14px; border-radius: 16px; border: 2px dashed var(--card-border);
+  position: relative; z-index: 1;
 }
 .hint b { color: var(--accent); }
 
 .toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--toast-bg);
-  color: var(--toast-text);
-  padding: 10px 22px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 14px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s;
-  z-index: 100;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  max-width: 88vw;
-  text-align: center;
-  white-space: normal;
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--toast-bg); color: var(--toast-text); padding: 10px 22px; border-radius: 20px;
+  font-weight: bold; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.2); max-width: 88vw; text-align: center;
 }
 .toast.show { opacity: 1; }
 
-.version-tag {
-  text-align: center;
-  font-size: 11px;
-  opacity: 0.5;
-  margin: 18px 0 4px;
-  position: relative;
-  z-index: 1;
-}
+.version-tag { text-align: center; font-size: 11px; opacity: 0.5; margin: 18px 0 4px; position: relative; z-index: 1; }
 </style>
 </head>
 <body>
 
-<!-- декор для розовой -->
+<!-- Декор для розоватой темы -->
 <div class="bg-decor deco-pink" style="top:5%; left:6%;">🌸</div>
 <div class="bg-decor deco-pink" style="top:45%; right:5%;">🐱</div>
 <div class="bg-decor deco-pink" style="top:75%; right:10%;">💖</div>
-<div class="bg-decor deco-pink" style="top:60%; left:8%;">🌷</div>
-<div class="bg-decor deco-pink" style="top:15%; right:14%;">🐈</div>
-<div class="bg-decor deco-pink" style="top:35%; left:4%;">😻</div>
-<div class="bg-decor deco-pink" style="top:88%; left:30%;">🐾</div>
-<div class="bg-decor deco-pink" style="top:20%; left:40%;">🐱</div>
-<div class="bg-decor deco-pink" style="top:65%; right:35%;">🐈‍⬛</div>
-<div class="bg-decor deco-pink" style="top:80%; left:60%;">🐾</div>
 
-<!-- грязный фото-коллаж для мелстройности -->
-<div class="melstroy-collage">
-  <img src="img/1000049680.jpg" style="width:130px; top:2%; left:-4%; transform:rotate(-14deg);">
-  <img src="img/1000049681.jpg" style="width:110px; top:8%; right:-3%; transform:rotate(10deg);">
-  <img src="img/1000049682.jpg" style="width:140px; top:38%; left:-5%; transform:rotate(8deg);">
-  <img src="img/1000049683.jpg" style="width:150px; top:30%; right:-6%; transform:rotate(-9deg);">
-  <img src="img/1000049684.jpg" style="width:120px; bottom:16%; left:-3%; transform:rotate(13deg);">
-  <img src="img/1000049685.jpg" style="width:100px; bottom:4%; right:-2%; transform:rotate(-11deg);">
-  <img src="img/1000049686.jpg" style="width:135px; bottom:-3%; left:20%; transform:rotate(6deg);">
-  <img src="img/1000049687.jpg" style="width:115px; top:-3%; left:38%; transform:rotate(-6deg);">
-</div>
-<div class="bg-decor deco-melstroy" style="top:8%; left:5%; z-index:1;">💰</div>
-<div class="bg-decor deco-melstroy" style="top:25%; right:6%; z-index:1;">🔥</div>
+<!-- Декор темы Тсундере -->
+<div class="tsundere-cats" id="tsundereCats"></div>
 
-<!-- декор для захира -->
+<!-- Декор Захир -->
 <div class="bg-decor deco-zahir" style="top:10%; left:6%;">🕺</div>
-<div class="bg-decor deco-zahir" style="top:30%; right:6%;">🦄</div>
-<div class="bg-decor deco-zahir" style="top:55%; left:4%;">🍌</div>
-<div class="bg-decor deco-zahir" style="top:78%; right:10%;">🎉</div>
-<div class="bg-decor deco-zahir" style="top:90%; left:12%;">💃</div>
-<div class="bg-decor deco-zahir" style="top:18%; left:35%;">😎</div>
-<div class="bg-decor deco-zahir" style="top:65%; left:45%;">😼</div>
-
-<!-- дерзкий фон-коллаж для Захира: коты в очках + подписи -->
 <div class="zahir-cats" id="zahirCats"></div>
 
-<!-- декор для какахи -->
+<!-- Декор Какахи -->
 <div class="bg-decor deco-poop" style="top:12%; left:10%;">🤢</div>
-<div class="bg-decor deco-poop" style="top:35%; right:8%;">🤮</div>
-<div class="bg-decor deco-poop" style="top:60%; left:6%;">👃</div>
-<div class="bg-decor deco-poop" style="top:80%; right:14%;">💨</div>
-<div class="bg-decor deco-poop" style="top:25%; left:45%;">🪰</div>
 <div class="poop-rain" id="poopRain"></div>
 
-<!-- декор для океана -->
+<!-- Декор Океан -->
 <div class="bg-decor deco-ocean" style="top:10%; left:6%;">🌊</div>
-<div class="bg-decor deco-ocean" style="top:32%; right:6%;">🐬</div>
-<div class="bg-decor deco-ocean" style="top:55%; left:4%;">🐚</div>
-<div class="bg-decor deco-ocean" style="top:78%; right:10%;">🐠</div>
-<div class="bg-decor deco-ocean" style="top:90%; left:14%;">🫧</div>
-<div class="bg-decor deco-ocean" style="top:45%; left:42%;">🌊</div>
 <div class="ocean-bubbles" id="oceanBubbles"></div>
 <div class="ocean-sealife" id="oceanSealife"></div>
 <div class="ocean-seaweed" id="oceanSeaweed"></div>
 
+<!-- Шапка -->
 <div class="header-bar">
-  <h1>📱 Переводчик на «Цифирный»</h1>
+  <button class="theme-dots" id="musicToggleBtn" onclick="toggleBackgroundMusic()" title="Включить/Выключить музыку">🎵</button>
+  <h1>📱 Переводчик</h1>
   <div class="theme-menu-wrap">
     <button class="theme-dots" id="themeDots" onclick="toggleMenu()">⋮</button>
     <div class="theme-dropdown" id="themeDropdown">
@@ -738,6 +415,9 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
         </div>
         <div class="theme-option" onclick="showPanel('theme')">
           <span>🎨 Смена темы</span><span class="arrow">›</span>
+        </div>
+        <div class="theme-option tsundere-option" onclick="activateTsundereMode()">
+          <span>🌸 Тсундере (Тема+Язык)</span>
         </div>
         <div class="theme-option" onclick="openWhatsNewModal()">
           <span>🆕 Что нового?</span>
@@ -764,7 +444,13 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
           <span>Пикми</span><span class="check">✓</span>
         </div>
         <div class="theme-option lang-option" data-lang="mogger" onclick="setLang('mogger'); closeMenu();">
-          <span>MOGGерский <span class="wip-tag">(в разработке)</span></span><span class="check">✓</span>
+          <span>MOGGерский</span><span class="check">✓</span>
+        </div>
+        <div class="theme-option lang-option" data-lang="binary" onclick="setLang('binary'); closeMenu();">
+          <span>Двоичный</span><span class="check">✓</span>
+        </div>
+        <div class="theme-option lang-option" data-lang="aaaa" onclick="setLang('aaaa'); closeMenu();">
+          <span>ААААААА</span><span class="check">✓</span>
         </div>
       </div>
 
@@ -782,7 +468,7 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
           <span>3. Богатый</span><span class="check">✓</span>
         </div>
         <div class="theme-option" data-theme="zahir" onclick="selectTheme('zahir')">
-          <span>4. Захир <span class="wip-tag">(в разработке)</span></span><span class="check">✓</span>
+          <span>4. Захир</span><span class="check">✓</span>
         </div>
         <div class="theme-option" data-theme="poop" onclick="selectTheme('poop')">
           <span>5. Какахи 💩</span><span class="check">✓</span>
@@ -796,295 +482,349 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
   </div>
 </div>
 
-<div class="wip-badge">🚧 Тема «Захир» ещё в разработке</div>
+<!-- Исходный текст -->
+<div class="row">
+  <label for="textInput">✏️ Исходный текст:</label>
+  <textarea id="textInput" placeholder="Введите текст для перевода..."></textarea>
+  <div class="btn-group">
+    <button class="action-btn" onclick="translateForward()">Перевести ⬇️</button>
+    <button class="action-btn btn-danger" onclick="clearAll()">Очистить 🧹</button>
+    <button class="action-btn btn-secondary" onclick="copyField('textInput')">Копировать 📋</button>
+  </div>
+</div>
 
+<!-- Результат / Код -->
+<div class="row">
+  <label for="codeInput"><span id="outputLabel">Циферный код:</span></label>
+  <textarea id="codeInput" placeholder="Результат перевода или код..."></textarea>
+  <div class="btn-group">
+    <button class="action-btn" onclick="reverseTranslate()">Обратно ⬆️</button>
+    <button class="action-btn btn-danger" onclick="clearAll()">Очистить 🧹</button>
+    <button class="action-btn btn-secondary" onclick="copyField('codeInput')">Копировать 📋</button>
+  </div>
+</div>
+
+<!-- Правила языков (Hints) -->
+<div class="hint hint-panel" data-hint="t9">
+  <b>📱 Правила Циферного T9:</b><br>
+  • <b>Кнопки:</b> 2=АБВГ, 3=ДЕЁЖЗ, 4=ИЙКЛ, 5=МНОП, 6=РСТУ, 7=ФХЦЧ, 8=ШЩЪЫ, 9=ЬЭЮЯ<br>
+  • <b>Символы:</b> <code>#</code> — пробел, <code>*</code> — разделитель повторных букв с одной кнопки.<br>
+  • <b>Регистр и цифры:</b> <code>√</code> — переключение заглавной буквы, <code>*1*</code> — ввод цифр.<br>
+  • <b>Знаки препинания:</b> <code>+</code> = <code>.</code>, <code>%</code> = <code>!</code>, <code>(</code> = <code>?</code>
+</div>
+<div class="hint hint-panel" data-hint="murin" style="display:none;">
+  <b>🏢 Правила Муринского языка (Бурмалда):</b><br>
+  • <b>Словарные замены:</b> «я» → «ч», «друг» → «друн», «папа»/«батя» → «батч», «дед» → «дод», «сын» → «сыр», «кто» → «кьо», «учитель» → «учиха», «физрук» → «физрун», «туман» → «фог», «кот» → «котость», «собака» → «собака-бурмалдака», «заяц» → «заяц-бурмалдаяц».<br>
+  • <b>Суффиксы:</b> К остальным существительным прибавляется суффикс <b>«-ность»</b> (со сбросом конечной гласной/«й»): «стене» → «стенность», а к словам на согласную суффикс «-ность» добавляется напрямую: «паук» → «паукность».<br>
+  • <b>Исключения:</b> к глаголам (пришёл, гуляет, буду) и словам вроде «хорошо» суффикс не добавляется.
+</div>
+<div class="hint hint-panel" data-hint="bass" style="display:none;">
+  <b>🔊 Правила Bass (Транслит):</b><br>
+  • Алфавит: <code>ц=c</code>, <code>щ=sh'</code>, <code>ь='</code>, <code>й=i</code>, <code>ж=zh</code>, <code>х=kh</code>, <code>ч=ch</code>, <code>ш=sh</code>, <code>ё=yo</code>, <code>ю=yu</code>, <code>я=ya</code>.<br>
+  • Полная транслитерация с сохранением заглавных букв.
+</div>
+<div class="hint hint-panel" data-hint="pikmi" style="display:none;">
+  <b>🥺 Правила Пикми:</b><br>
+  • Превращение слов в уменьшительно-ласкательные (<i>«кот»</i> → <i>«котик»</i>).<br>
+  • Заикание в начале случайных слов (<code>п-приветик</code>), растягивание гласных (<code>приветииик</code>), милые вставки между словами (<i>ня, мур~</i>), тильды <code>~~</code> и изобилие милых эмодзи!
+</div>
+<div class="hint hint-panel" data-hint="mogger" style="display:none;">
+  <b>🗿 Правила MOGGерского языка:</b><br>
+  • Автоматическая замена названий городов и обращений (<i>«Москва»</i> → <i>«MOGGсква»</i>, <i>«парень»</i> → <i>«Mogger»</i>).<br>
+  • Каждая фраза получает статус верховного самца <b>[MOGGED]</b>.
+</div>
+<div class="hint hint-panel" data-hint="tsundere" style="display:none;">
+  <b>🌸 Правила Тсундере:</b><br>
+  • Превращает обычный текст в эмоциональные фразы с заиканием и милой агрессией!<br>
+  • Больше словарных замен, случайное заикание у любых слов и множество разных тсундере-концовок (<i>«Не то чтобы мне это нравилось! 😤»</i>).<br>
+  • <b>🎵 Своя музыка:</b> положите файл <code>tsundere-music.mp3</code> (или <code>.ogg</code>) рядом с <code>index.html</code> в репозитории — заиграет автоматически при включённой музыке.
+</div>
+<div class="hint hint-panel" data-hint="binary" style="display:none;">
+  <b>0️⃣1️⃣ Правила Двоичного кода:</b><br>
+  • Каждый символ кодируется 8-битным байтом в UTF-8 (кириллица занимает 2 байта на букву).<br>
+  • Байты разделяются пробелом.<br>
+  • Обратный перевод собирает байты обратно в UTF-8 текст.
+</div>
+<div class="hint hint-panel" data-hint="aaaa" style="display:none;">
+  <b>🅰️ Правила языка «ААААААА»:</b><br>
+  • Между случайными словами по всему тексту (а не только в конце предложений) вставляются серии из буквы «А» случайной длины (от 1 до 10).<br>
+  • Количество таких вставок в тексте не ограничено.<br>
+  • Обратный перевод удаляет «слова», целиком состоящие из заглавной буквы «А».
+</div>
+
+<!-- Модальное окно "Что нового?" -->
+<div class="modal-overlay" id="whatsNewModal" onclick="closeWhatsNewModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <h2>🆕 Что нового в BETA 0.1.0?</h2>
+    <p>• <b>🏢 Муринский язык:</b> Полная поддержка словарных замен (ч, друн, батч, дод, сыр, фог, бурмалда) + -ность!<br>
+       • <b>🔊 Обновленный Bass:</b> Использование точного алфавита (ц=c, щ=sh', ь=', й=i).<br>
+       • <b>🌸 Режим Тсундере:</b> Особый переводчик + стильное оформление!<br>
+       • <b>🎵 Процедурная музыка:</b> Синтез фоновой музыки под текущую тему.<br>
+       • <b>🌊 Тема «Океан»:</b> Анимированные рыбки, пузыри, водоросли и подводная музыка.<br>
+       • <b>💩 Тема «Какахи»:</b> Настоящий дождь из какашек!
+    </p>
+    <button class="action-btn" onclick="closeWhatsNewModal()">Понятно 👍</button>
+  </div>
+</div>
+
+<!-- Модальное окно поддержки -->
 <div class="modal-overlay" id="supportModal" onclick="closeSupportModal(event)">
   <div class="modal-card" onclick="event.stopPropagation()">
     <h2>💝 Поддержать авторов</h2>
-    <p id="supportModalText">
-      💳 Карта Сбербанк:<br>
-      <b>2202 2084 9642 9649</b>
-    </p>
-    <button class="action-btn btn-secondary" onclick="copyCardNumber()" style="margin-bottom:10px;">Скопировать номер карты</button>
-    <button class="action-btn" onclick="closeSupportModal()">Закрыть</button>
+    <p>Если вам нравится наше приложение, вы можете поддержать разработку переводом на карту:<br><br>
+    <b style="font-size:16px; letter-spacing:1px; color:var(--accent);">2202 2084 9642 9649</b></p>
+    <div style="display:flex; gap:8px; flex-direction:column;">
+      <button class="action-btn" onclick="copyCardNumber()">Скопировать номер карты 💳</button>
+      <button class="action-btn btn-secondary" onclick="closeSupportModal()">Закрыть</button>
+    </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="whatsNewModal" onclick="closeWhatsNewModal(event)">
-  <div class="modal-card" onclick="event.stopPropagation()">
-    <h2>🆕 Что нового в BETA 0.0.9</h2>
-    <p>
-      🥺 Добавлен новый язык «Пикми»: после каждого предложения ставятся смайлики в зависимости от настроения (грусть/извинение или радость), а одно случайное слово из каждых 10 «заикается»<br>
-      🐟 В теме «Океан» рыбы и другие обитатели теперь плывут мордой вперёд по направлению движения<br>
-      🈶 Язык переименован в «MOGGерский», приписки теперь на английском (CHAD, LTN, MTN, HTN, TRUE HAMMAM, SUB-5), у городов корень меняется на MOGG с учётом падежей<br>
-      📋 Список «Что нового» теперь показывает изменения только последней версии
-    </p>
-    <button class="action-btn" onclick="closeWhatsNewModal()">Закрыть</button>
-  </div>
-</div>
-
-<div class="row">
-  <label>Обычный текст:</label>
-  <textarea id="textInput" placeholder="Например: Я люблю Фурри"></textarea>
-  <div class="btn-group">
-    <button class="action-btn" onclick="translateForward()">→ Перевести</button>
-    <button class="action-btn btn-secondary" onclick="copyField('textInput')">Копировать</button>
-    <button class="action-btn btn-danger" onclick="clearAll()">🗑 Очистить</button>
-  </div>
-</div>
-
-<div class="row">
-  <label id="outputLabel">Циферный код:</label>
-  <textarea id="codeInput" placeholder="Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4"></textarea>
-  <div class="btn-group">
-    <button class="action-btn" id="reverseBtn" onclick="reverseTranslate()">→ Перевести в текст</button>
-    <button class="action-btn btn-secondary" onclick="copyField('codeInput')">Копировать</button>
-    <button class="action-btn btn-danger" onclick="clearAll()">🗑 Очистить</button>
-  </div>
-</div>
-
-<div class="hint hint-panel" data-hint="t9">
-  <b>Раскладка:</b> 2=АБВГ, 3=ДЕЁЖЗ, 4=ИЙКЛ, 5=МНОП, 6=РСТУ, 7=ФХЦЧ, 8=ШЩЪЫ, 9=ЬЭЮЯ<br>
-  <b>Символы:</b>
-  * = разделитель, # = пробел, + = точка,<br>
-  % = восклицательный знак,<br>
-  ( или ) = вопросительный знак,<br>
-  [ = открывающая скобка, ] = закрывающая скобка<br>
-  <b>√ = инверсия регистра:</b>
-  вне CAPS — делает букву ЗАГЛАВНОЙ,<br>
-  внутри { } — делает букву строчной.<br>
-  <b>{ } = CAPS:</b> всё внутри заглавное<br>
-  <b>Цифры:</b> *1* — переключение в режим цифр, ещё раз *1* — обратно
-</div>
-
-<div class="hint hint-panel" data-hint="murin" style="display:none;">
-  <b>Правило:</b> к существительным добавляется суффикс «-ость»
-  (кот → котость, диван → диваность).<br>
-  Слова на «-льно» меняют окончание на «-лды» (нормально → нормалды).<br>
-  Глаголы, предлоги, местоимения и союзы не меняются.<br><br>
-  <b>Исключения:</b><br>
-  я → ч<br>
-  кто → кьо<br>
-  жена → жинка<br>
-  сын → сыр<br>
-  дочь → доч<br>
-  хорошо → хорошо (без изменений)<br>
-  батя → батч<br>
-  дед → дод / додус (случайно)<br>
-  друг → друн / друнность (случайно)<br>
-  чекунец, чекушка → без изменений<br><br>
-  <i>Определение «это существительное или нет» — приблизительное (по списку служебных слов и типичным окончаниям), не настоящая грамматика.</i>
-</div>
-
-<div class="hint hint-panel" data-hint="bass" style="display:none;">
-  <b>Алфавит:</b><br>
-  а=a, б=b, в=v, г=g, д=d, е=e, ё=yo, ж=zh, з=z, и=i, й=i,<br>
-  к=k, л=l, м=m, н=n, о=o, п=p, р=r, с=s, т=t, у=u, ф=f,<br>
-  х=kh, ц=c, ч=ch, ш=sh, щ=sh', ъ=(опускается), ы=i, ь=',<br>
-  э=e, ю=yu, я=ya<br><br>
-  Заглавная буква — заглавная замена целиком (Ю → YU, Ж → ZH).<br>
-  Мягкий знак и «щ» дают апостроф: например, sh'uka, t'elephon.<br>
-  Обратный перевод местами неточен: щ/ш и ы/и/й совпадают.
-</div>
-
-<div class="hint hint-panel" data-hint="pikmi" style="display:none;">
-  <b>🥺 Пикми — это не шифр, а «озвучка» настроения текста.</b><br><br>
-  После каждого предложения добавляется пачка смайликов (в случайном порядке, всякий раз разных):<br>
-  — если в предложении есть вина, извинение, жалость или грусть → 🤒😖🤧😔😩😫😿<br>
-  — во всех остальных случаях (радость, дерзость и т.д.) → 💕💖💗💞🥰😍🥺☺️🤭🫣😝😹😻😼😽🙀😺😸💘💝💓<br><br>
-  Также из каждых 10 слов текста одно случайное «заикается» — первая буква повторяется 5 раз через дефис
-  (пример: «п-п-п-п-п-писюняра»).<br><br>
-  <i>Перевод в обратную сторону тут приблизительный: смайлики и заикание просто убираются, распознать точное исходное настроение автоматически нельзя.</i>
-</div>
-
-<div class="hint hint-panel" data-hint="mogger" style="display:none;">
-  <b>🚧 Язык в разработке, правила ещё дорабатываются.</b><br><br>
-  <b>Приписки (теперь на английском):</b> SUB-5, LTN, MTN, HTN, CHAD, TRUE HAMMAM.<br><br>
-  <b>Скрытые приписки в словах:</b> если внутри обычного слова прячется приписка, эта часть переводится и становится английской ЗАГЛАВНОЙ — например, «чадо» → «CHADо».<br><br>
-  <b>Целые слова:</b> некоторые слова заменяются целиком, например «хаммам» → «TRUE HAMMAM».<br><br>
-  <b>Города:</b> у известных городов корень заменяется на MOGG (с сохранением падежного окончания) — например, «в Москве» → «в MOGGскве». Список городов пока небольшой, будет пополняться.<br><br>
-  <i>Пример:</i> Мое чадо едет в хаммам в Москве → Мое CHADо едет в TRUE HAMMAM в MOGGскве
-</div>
-
-<div class="version-tag">BETA 0.0.9</div>
-
+<div class="version-tag">BETA 0.1.0</div>
 <div class="toast" id="toast"></div>
 
+<!--
+  МУЗЫКА ДЛЯ ТЕМЫ ТСУНДЕРЕ:
+  Чтобы подставить свою музыку — просто положите файл рядом с index.html
+  в репозитории на GitHub и назовите его ровно так:
+    tsundere-music.mp3   (или)   tsundere-music.ogg
+  Можно оставить оба файла сразу — браузер сам выберет поддерживаемый.
+  Если файла нет — при включении темы Тсундере просто ничего не заиграет
+  (в остальных темах по-прежнему звучит встроенная синтезированная музыка).
+-->
+<audio id="tsundereAudio" loop preload="none">
+  <source src="tsundere-music.mp3" type="audio/mpeg">
+  <source src="tsundere-music.ogg" type="audio/ogg">
+</audio>
+
 <script>
-const LAYOUT = {
-  '2': 'АБВГ', '3': 'ДЕЁЖЗ', '4': 'ИЙКЛ', '5': 'МНОП',
-  '6': 'РСТУ', '7': 'ФХЦЧ', '8': 'ШЩЪЫ', '9': 'ЬЭЮЯ'
-};
+/* ================= АУДИО И ЗВУКИ (СИНТЕЗАТОР WEBAUDIO) ================= */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-const CHAR_TO_CODE = {};
-for (const [key, letters] of Object.entries(LAYOUT)) {
-  for (let i = 0; i < letters.length; i++) {
-    CHAR_TO_CODE[letters[i]] = key.repeat(i + 1);
-  }
+function playClickSound() {
+  try {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
+    gain.gain.setValueAtTime(0.13, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.05);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.05);
+  } catch (e) {}
 }
 
-function computeT9(text) {
-  let result = '';
-  let digitMode = false;
-  let lastWasLetter = false;
-  let capsMode = false;
+let bgMusicInterval = null;
+let isMusicPlaying = false;
+const tsundereAudioEl = document.getElementById('tsundereAudio');
 
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-
-    if (ch === '{') { result += '{'; capsMode = true; lastWasLetter = false; continue; }
-    if (ch === '}') { result += '}'; capsMode = false; lastWasLetter = false; continue; }
-    if (ch === ' ') { result += '#'; lastWasLetter = false; continue; }
-    if (ch === '.') { result += '+'; lastWasLetter = false; continue; }
-    if (ch === '!') { result += '%'; lastWasLetter = false; continue; }
-    if (ch === '?') { result += '('; lastWasLetter = false; continue; }
-    if (ch === '(') { result += '['; lastWasLetter = false; continue; }
-    if (ch === ')') { result += ']'; lastWasLetter = false; continue; }
-
-    if (ch >= '0' && ch <= '9') {
-      if (!digitMode) { result += '*1*'; digitMode = true; }
-      result += ch;
-      lastWasLetter = false;
-      continue;
-    }
-
-    const upperCh = ch.toUpperCase();
-    if (CHAR_TO_CODE[upperCh]) {
-      if (digitMode) { result += '*1*'; digitMode = false; }
-      const isCapital = ch !== ch.toLowerCase();
-      let needShift = false;
-      if (!capsMode && isCapital) needShift = true;
-      if (capsMode && !isCapital) needShift = true;
-      if (needShift) result += '√';
-      if (lastWasLetter) result += '*';
-      result += CHAR_TO_CODE[upperCh];
-      lastWasLetter = true;
-      continue;
-    }
+// если файл tsundere-music.mp3/ogg отсутствует в репозитории — молча предупреждаем один раз
+tsundereAudioEl.addEventListener('error', () => {
+  if (isMusicPlaying && (localStorage.getItem('translatorTheme') || 'standard') === 'tsundere') {
+    showToast('⚠️ Добавьте tsundere-music.mp3 (или .ogg) рядом с index.html', 3000);
   }
+}, true);
 
-  return result;
-}
-
-/* ================= BASS (транслит) ================= */
-const BASS_MAP = {
-  'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ё':'yo', 'ж':'zh', 'з':'z',
-  'и':'i', 'й':'i', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o', 'п':'p', 'р':'r',
-  'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'х':'kh', 'ц':'c', 'ч':'ch', 'ш':'sh', 'щ':"sh'",
-  'ъ':'', 'ы':'i', 'ь':"'", 'э':'e', 'ю':'yu', 'я':'ya'
+const MELODIES = {
+  ocean: [261.63, 329.63, 392.00, 493.88, 392.00, 329.63, 440.00, 329.63],
+  melstroy: [130.81, 164.81, 196.00, 164.81, 130.81, 146.83],
+  zahir: [440.00, 554.37, 659.25, 830.61, 659.25, 554.37],
+  standard: [329.63, 392.00, 440.00, 523.25, 440.00, 392.00]
 };
 
-function textToBass(text) {
-  let result = '';
-  for (const ch of text) {
-    const lower = ch.toLowerCase();
-    if (Object.prototype.hasOwnProperty.call(BASS_MAP, lower)) {
-      let mapped = BASS_MAP[lower];
-      if (ch !== lower && mapped.length > 0) {
-        mapped = mapped.toUpperCase();
+// на теме Тсундере вместо синтезатора играет настоящий аудиофайл (см. <audio id="tsundereAudio">)
+function playTsundereAudioFile() {
+  try {
+    tsundereAudioEl.currentTime = 0;
+    const playPromise = tsundereAudioEl.play();
+    if (playPromise && playPromise.catch) {
+      playPromise.catch(() => {
+        showToast('⚠️ Добавьте tsundere-music.mp3 (или .ogg) рядом с index.html', 3000);
+      });
+    }
+  } catch (e) {}
+}
+
+function startBgSynthMusic() {
+  stopBgSynthMusic();
+  if (!isMusicPlaying) return;
+
+  const currentTheme = localStorage.getItem('translatorTheme') || 'standard';
+  if (currentTheme === 'tsundere') {
+    playTsundereAudioFile();
+    return;
+  }
+
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  let step = 0;
+  bgMusicInterval = setInterval(() => {
+    const theme = localStorage.getItem('translatorTheme') || 'standard';
+    const notes = MELODIES[theme] || MELODIES.standard;
+    const freq = notes[step % notes.length];
+    const isOcean = (theme === 'ocean');
+    const noteLength = isOcean ? 0.55 : 0.35;
+
+    try {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = isOcean ? 'sine' : (theme === 'tsundere' ? 'triangle' : 'square');
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+      if (isOcean) {
+        // лёгкое "подводное" покачивание высоты тона
+        osc.frequency.linearRampToValueAtTime(freq * 0.985, audioCtx.currentTime + noteLength);
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.Q.setValueAtTime(3, audioCtx.currentTime);
+        filter.frequency.setValueAtTime(1400, audioCtx.currentTime);
+        filter.frequency.linearRampToValueAtTime(350, audioCtx.currentTime + noteLength);
+
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + noteLength);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+      } else {
+        gain.gain.setValueAtTime(0.07, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + noteLength);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
       }
-      result += mapped;
-    } else {
-      result += ch;
-    }
-  }
-  return result;
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + noteLength);
+    } catch(e) {}
+
+    step++;
+  }, 450);
 }
 
-/* ================= МУРИНСКИЙ ================= */
-const MURIN_EXCEPTIONS = {
-  'кто': 'кьо',
-  'жена': 'жинка',
-  'сын': 'сыр',
-  'дочь': 'доч',
-  'батя': 'батч',
-  'чекунец': 'чекунец',
-  'чекушка': 'чекушка'
+function stopBgSynthMusic() {
+  if (bgMusicInterval) {
+    clearInterval(bgMusicInterval);
+    bgMusicInterval = null;
+  }
+  if (tsundereAudioEl && !tsundereAudioEl.paused) {
+    tsundereAudioEl.pause();
+  }
+}
+
+function toggleBackgroundMusic() {
+  playClickSound();
+  isMusicPlaying = !isMusicPlaying;
+  const btn = document.getElementById('musicToggleBtn');
+  if (isMusicPlaying) {
+    btn.style.borderColor = 'var(--accent)';
+    startBgSynthMusic();
+    showToast('🎵 Музыка включена');
+  } else {
+    btn.style.borderColor = 'var(--card-border)';
+    stopBgSynthMusic();
+    showToast('🔇 Музыка выключена');
+  }
+}
+
+function playMusicForCurrentTheme() {
+  if (isMusicPlaying) startBgSynthMusic();
+}
+
+/* ================= ТСУНДЕРЕ ================= */
+const TSUNDERE_WORDS = {
+  'тупой': 'дурачок', 'тупая': 'дурочка', 'дурак': 'дурачок', 'дура': 'дурочка',
+  'идиот': 'б-бака', 'привет': 'ч-чего тебе надо?', 'спасибо': 'с-спасибо... но не думай ничего такого!',
+  'пожалуйста': 'п-пожалуйста, только отвяжись', 'я': 'я-я', 'ты': 'т-ты',
+  'люблю': 'л-люблю... то есть нет! Забудь!', 'нравишься': 'н-нравишься... б-бака!',
+  'скучал': 'с-скучал... совсем чуть-чуть!', 'скучала': 'с-скучала... совсем чуть-чуть!',
+  'красивый': 'н-неплохой на вид, вот и всё', 'красивая': 'н-неплохая на вид, вот и всё',
+  'хорошо': 'х-хорошо, но не зазнавайся', 'пока': 'п-пока... не то чтобы я расстроена',
+  'да': 'д-да, и что с того?!', 'нет': 'н-нет! И даже не думай!',
+  'помоги': 'п-помогу, только потому что деваться некуда', 'извини': 'и-извини... но ты сам виноват!'
 };
 
-// короткие слова-исключения (служебные части речи) — суффикс не добавляется
-const MURIN_SKIP_WORDS = new Set([
-  'и','с','на','в','о','об','у','к','от','до','из','по','за','для','без','под','над',
-  'при','через','между','но','а','да','же','ли','бы','не','ни','что','как','это',
-  'тот','эта','эти','этот','я','ты','он','она','оно','мы','вы','они','кто','который',
-  'которая','которое','которые','мой','моя','моё','мои','твой','твоя','твоё','твои',
-  'свой','своя','своё','свои','наш','наша','наше','наши','ваш','ваша','ваше','ваши',
-  'его','её','их','есть','был','была','было','были','будет','будут','буду','будешь',
-  'будем','будете','чтобы','если','когда','где','куда','откуда','почему','потому',
-  'зачем','также','тоже','только','уже','ещё','еще','очень','хорошо','всё','все','весь','вся',
-  'всю','ну','вот','ведь','мол','пусть','пускай','давай','давайте',
-  'меня','мне','мной','тебя','тебе','тобой','него','нему','ему','ним','им',
-  'неё','ней','ею','ей','нас','нам','нами','вас','вам','вами','них','ними'
-]);
+const TSUNDERE_ENDINGS = [
+  ' ! хммф😖😡', '... Б-бака! ~~', '... Не то чтобы мне это нравилось! 😤',
+  ' ! И вообще, не смотри на меня так! 😳', '... Т-ты вообще ничего не понимаешь! 😠',
+  ' ! Ч-что уставился?! 💢', '... Это вообще не для тебя было! 🙄',
+  ' ! В-вот ещё, буду я перед тобой стараться! 😤🎀', '... Н-не привыкай, ладно?! 😳',
+  ' ! Только не воображай себе лишнего! 😾'
+];
 
-function isMurinVerbLike(word) {
-  if (/(ть|тся|ться)$/.test(word)) return true;
-  if (word.length > 2 && /(л|ла|ло|ли)$/.test(word)) return true;
-  if (word.length > 3 && /(ешь|ете|ишь|ите|ют|ят|ем|им|ют)$/.test(word)) return true;
-  return false;
+function maybeStutter(word) {
+  if (word.length < 2) return word;
+  if (Math.random() < 0.25) {
+    const firstLetter = word[0];
+    return firstLetter + '-' + word;
+  }
+  return word;
 }
 
-function applyOst(word) {
-  const vowels = 'аяоёуюэеиы';
-  if (vowels.includes(word[word.length - 1])) {
-    return word.slice(0, -1) + 'ость';
-  }
-  return word + 'ость';
-}
-
-function murinWord(token) {
-  const m = token.match(/^([^а-яёА-ЯЁ]*)([а-яёА-ЯЁ]+)([^а-яёА-ЯЁ]*)$/);
-  if (!m) return token;
-  const [, prefix, core, suffix] = m;
-  const lower = core.toLowerCase();
-
-  let resultCore;
-  if (lower === 'я') {
-    resultCore = 'ч';
-  } else if (lower === 'дед') {
-    resultCore = Math.random() < 0.5 ? 'дод' : 'додус';
-  } else if (lower === 'друг') {
-    resultCore = Math.random() < 0.5 ? 'друн' : 'друнность';
-  } else if (Object.prototype.hasOwnProperty.call(MURIN_EXCEPTIONS, lower)) {
-    resultCore = MURIN_EXCEPTIONS[lower];
-  } else if (MURIN_SKIP_WORDS.has(lower) || isMurinVerbLike(lower)) {
-    resultCore = core;
-    return prefix + resultCore + suffix;
-  } else if (lower.length > 4 && lower.endsWith('льно')) {
-    resultCore = lower.slice(0, -4) + 'лды';
-  } else {
-    resultCore = applyOst(lower);
-  }
-
-  const firstOrig = core.charAt(0);
-  if (firstOrig === firstOrig.toUpperCase() && firstOrig !== firstOrig.toLowerCase()) {
-    resultCore = resultCore.charAt(0).toUpperCase() + resultCore.slice(1);
-  }
-
-  return prefix + resultCore + suffix;
-}
-
-function textToMurin(text) {
-  return text.split(/(\s+)/).map(token => {
+function textToTsundere(text) {
+  if (!text.trim()) return '';
+  let result = text.split(/(\s+)/).map(token => {
     if (token === '' || /^\s+$/.test(token)) return token;
-    return murinWord(token);
+    const cleanToken = token.replace(/[.,!?]/g, '').toLowerCase();
+    if (TSUNDERE_WORDS[cleanToken]) {
+      let replacement = TSUNDERE_WORDS[cleanToken];
+      if (token[0] === token[0].toUpperCase()) {
+        replacement = replacement.charAt(0).toUpperCase() + replacement.slice(1);
+      }
+      return token.replace(new RegExp(cleanToken, 'i'), replacement);
+    }
+    return maybeStutter(token);
   }).join('');
+
+  const randomEnding = TSUNDERE_ENDINGS[Math.floor(Math.random() * TSUNDERE_ENDINGS.length)];
+  return result.trim() + randomEnding;
+}
+
+function tsundereToText(text) {
+  let result = text;
+  TSUNDERE_ENDINGS.forEach(ending => { result = result.replace(ending, ''); });
+  Object.keys(TSUNDERE_WORDS).forEach(key => {
+    const val = TSUNDERE_WORDS[key];
+    const re = new RegExp(val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    result = result.replace(re, key);
+  });
+  // убираем случайное заикание в начале слов, например "п-привет" -> "привет"
+  result = result.split(/(\s+)/).map(tok => {
+    const m = tok.match(/^([а-яёА-ЯЁ])-([а-яёА-ЯЁ].*)$/);
+    if (m && m[2].toLowerCase().startsWith(m[1].toLowerCase())) return m[2];
+    return tok;
+  }).join('');
+  return result.trim();
+}
+
+function activateTsundereMode() {
+  playClickSound();
+  setLang('tsundere');
+  selectTheme('tsundere');
+  closeMenu();
 }
 
 /* ================= ПИКМИ ================= */
-// смайлики для предложений с виной / извинением / жалостью / грустью
-const PIKMI_SAD_EMOJI = ['🤒', '😖', '🤧', '😔', '😩', '😫', '😿'];
-// смайлики для всего остального (радость, дерзость и т.п.)
-const PIKMI_HAPPY_EMOJI = [
-  '💕', '💖', '💗', '💞', '🥰', '😍', '🥺', '☺️', '🤭', '🫣',
-  '😝', '😹', '😻', '😼', '😽', '🙀', '😺', '😸', '💘', '💝', '💓'
-];
-
-// ключевые слова/корни: вина, извинение, жалость, грусть
-const PIKMI_SAD_REGEX = /(винова|извин|прост[ияи]|прощени|жал[ьк]|сожале|грустн|грущу|груст|плач|плак|обид|стыдн|расстро|печал|тоск|сорри|унылоТ|жалею|жалеет|жалеешь|тяжело на душе|больно)/i;
+const PIKMI_HAPPY_EMOJI = ['💕', '💖', '💗', '💞', '🥰', '😍', '🥺', '☺️', '🤭', '🫣', '✨', '🎀', '🌸', '🌷', '🍓', '🧸', '🍬', '⭐'];
+const PIKMI_DIMINUTIVES = {
+  'кот': 'котик', 'собака': 'собачка', 'дом': 'домик', 'солнце': 'солнышко',
+  'привет': 'приветик', 'хорошо': 'хорошечненько', 'спасибо': 'спасибочки',
+  'пока': 'поки-поки', 'да': 'дась', 'нет': 'неть',
+  'друг': 'дружочек', 'подруга': 'подружечка', 'мама': 'мамочка', 'папа': 'папочка',
+  'цветок': 'цветочек', 'звезда': 'звёздочка', 'сердце': 'сердечко', 'рука': 'ручка',
+  'нога': 'ножка', 'еда': 'едулька', 'вода': 'водичка', 'чай': 'чаёк',
+  'книга': 'книжечка', 'машина': 'машинка', 'телефон': 'телефончик', 'работа': 'работёнка',
+  'сон': 'сонюшка', 'утро': 'утречко', 'вечер': 'вечерок', 'ночь': 'ночка'
+};
+const PIKMI_INTERJECTIONS = ['ня~', 'мур~', 'хихи~', 'уииии~', 'кья~', 'пыщь~'];
+const PIKMI_ENDING_PHRASES = [' ~~ ', ' мур-мур ~ ', ' хихи ~ ', ' тык-тык ~ ', ' *обнимашки* ~ '];
 
 function pikmiShuffledEmojiString(pool) {
-  const count = 3 + Math.floor(Math.random() * 3); // 3–5 смайликов
+  const count = 3 + Math.floor(Math.random() * 3);
   const arr = pool.slice();
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -1093,300 +833,105 @@ function pikmiShuffledEmojiString(pool) {
   return arr.slice(0, count).join('');
 }
 
-function pikmiStutterWord(word) {
-  const m = word.match(/[а-яёА-ЯЁa-zA-Z]/);
-  if (!m) return word;
-  const letter = m[0].toLowerCase();
-  return (letter + '-').repeat(5) + word;
-}
-
-// разбивает текст на предложения, сохраняя знаки препинания в конце
-function pikmiSplitSentences(text) {
-  const parts = text.match(/[^.!?…]+[.!?…]*|\s+$/g);
-  return parts ? parts.filter(p => p.length > 0) : [text];
+function pikmiElongateVowels(word) {
+  // растягивает последнюю гласную буквы слова, чтобы было милее: "привет" -> "привееет"
+  const vowels = 'аеёиоуыэюя';
+  for (let i = word.length - 1; i >= 0; i--) {
+    const ch = word[i];
+    if (vowels.includes(ch.toLowerCase())) {
+      const repeat = 2 + Math.floor(Math.random() * 3);
+      return word.slice(0, i) + ch.repeat(repeat) + word.slice(i + 1);
+    }
+  }
+  return word;
 }
 
 function textToPikmi(text) {
-  const sentences = pikmiSplitSentences(text);
+  if (!text.trim()) return '';
+  const tokens = text.split(/(\s+)/);
+  let result = tokens.map(tok => {
+    if (!tok.trim()) return tok;
+    let clean = tok.replace(/[.,!?]/g, '').toLowerCase();
+    let word = tok;
+    if (PIKMI_DIMINUTIVES[clean]) {
+      let repl = PIKMI_DIMINUTIVES[clean];
+      if (tok[0] === tok[0].toUpperCase()) repl = repl.charAt(0).toUpperCase() + repl.slice(1);
+      word = tok.replace(new RegExp(clean, 'i'), repl);
+    }
+    if (Math.random() < 0.25) word = pikmiElongateVowels(word);
+    if (Math.random() < 0.3) word = word[0] + '-' + word;
+    if (Math.random() < 0.15) {
+      const interjection = PIKMI_INTERJECTIONS[Math.floor(Math.random() * PIKMI_INTERJECTIONS.length)];
+      word = word + ' ' + interjection;
+    }
+    return word;
+  }).join('');
 
-  let globalWordCount = 0;
-  let stutterTargetInChunk = Math.floor(Math.random() * 10);
-
-  const translatedSentences = sentences.map(sentence => {
-    if (/^\s+$/.test(sentence)) return sentence;
-
-    const isSad = PIKMI_SAD_REGEX.test(sentence);
-
-    const tokens = sentence.split(/(\s+)/);
-    const newTokens = tokens.map(tok => {
-      if (tok === '' || /^\s+$/.test(tok)) return tok;
-
-      const indexInChunk = globalWordCount % 10;
-      const shouldStutter = indexInChunk === stutterTargetInChunk;
-      globalWordCount++;
-      if (indexInChunk === 9) {
-        stutterTargetInChunk = Math.floor(Math.random() * 10);
-      }
-
-      return shouldStutter ? pikmiStutterWord(tok) : tok;
-    });
-
-    const emojis = pikmiShuffledEmojiString(isSad ? PIKMI_SAD_EMOJI : PIKMI_HAPPY_EMOJI);
-    return newTokens.join('') + ' ' + emojis;
-  });
-
-  return translatedSentences.join(' ').replace(/\s+/g, ' ').trim();
+  const ending = PIKMI_ENDING_PHRASES[Math.floor(Math.random() * PIKMI_ENDING_PHRASES.length)];
+  return result.trim() + ending + pikmiShuffledEmojiString(PIKMI_HAPPY_EMOJI);
 }
-
-// приблизительный обратный перевод: убираем заикание и смайлики пикми
-const PIKMI_ALL_EMOJI_REGEX = new RegExp(
-  '[' + [...PIKMI_SAD_EMOJI, ...PIKMI_HAPPY_EMOJI].join('') + ']',
-  'gu'
-);
 
 function pikmiToText(text) {
-  let result = text.replace(PIKMI_ALL_EMOJI_REGEX, '');
-  // убираем заикание вида "п-п-п-п-п-слово" -> "слово"
-  result = result.replace(/(?:[а-яёА-ЯЁa-zA-Z]-){5}([а-яёА-ЯЁa-zA-Z]\S*)/g, '$1');
-  return result.replace(/\s+/g, ' ').trim();
-}
-
-/* ================= MOGGЕРСКИЙ (в разработке) ================= */
-// целые слова, которые заменяются полностью
-const MOGGER_WORDS = {
-  'хаммам': 'TRUE HAMMAM',
-  'саб': 'SUB-5'
-};
-// короткие приписки, которые ищем спрятанными ВНУТРИ обычных слов
-const MOGGER_HIDDEN = [
-  { ru: 'чад', en: 'CHAD' },
-  { ru: 'лтн', en: 'LTN' },
-  { ru: 'мтн', en: 'MTN' },
-  { ru: 'хтн', en: 'HTN' }
-];
-// города: корень слова заменяется на MOGG, падежное окончание сохраняется
-const MOGGER_CITY_NAMES = [
-  'москва', 'санкт-петербург', 'питер', 'новосибирск', 'екатеринбург', 'казань',
-  'нижний новгород', 'челябинск', 'самара', 'омск', 'ростов-на-дону', 'уфа',
-  'красноярск', 'воронеж', 'пермь', 'волгоград'
-];
-function moggCityStem(name) {
-  return name.length > 4 ? name.slice(0, -2) : name.slice(0, -1);
-}
-const MOGGER_CITIES = MOGGER_CITY_NAMES
-  .map(name => ({ name, stem: moggCityStem(name) }))
-  .sort((a, b) => b.stem.length - a.stem.length);
-
-function moggifyStem(stem) {
-  return 'MOGG' + stem.slice(2);
-}
-
-function moggerWord(token) {
-  const m = token.match(/^([^а-яёА-ЯЁ]*)([а-яёА-ЯЁ]+)([^а-яёА-ЯЁ]*)$/);
-  if (!m) return token;
-  const [, prefix, core, suffix] = m;
-  const lower = core.toLowerCase();
-
-  if (Object.prototype.hasOwnProperty.call(MOGGER_WORDS, lower)) {
-    return prefix + MOGGER_WORDS[lower] + suffix;
-  }
-
-  const city = MOGGER_CITIES.find(c => lower.startsWith(c.stem));
-  if (city) {
-    const leftover = core.slice(city.stem.length);
-    return prefix + moggifyStem(city.stem) + leftover + suffix;
-  }
-
-  for (const hidden of MOGGER_HIDDEN) {
-    const idx = lower.indexOf(hidden.ru);
-    if (idx !== -1) {
-      const before = core.slice(0, idx);
-      const after = core.slice(idx + hidden.ru.length);
-      return prefix + before + hidden.en + after + suffix;
-    }
-  }
-
-  return token;
-}
-
-function textToMogger(text) {
-  return text.split(/(\s+)/).map(token => {
-    if (token === '' || /^\s+$/.test(token)) return token;
-    return moggerWord(token);
-  }).join('');
-}
-
-const MOGGER_CITY_REV = MOGGER_CITIES
-  .map(c => ({ moggStem: moggifyStem(c.stem), origStem: c.stem }))
-  .sort((a, b) => b.moggStem.length - a.moggStem.length);
-
-function moggerToText(text) {
   let result = text;
-  MOGGER_CITY_REV.forEach(({ moggStem, origStem }) => {
-    const re = new RegExp(moggStem, 'gi');
-    result = result.replace(re, origStem);
-  });
-  Object.entries(MOGGER_WORDS).forEach(([ru, en]) => {
-    const re = new RegExp(en.replace(/[-]/g, '\\-'), 'gi');
-    result = result.replace(re, ru);
-  });
-  MOGGER_HIDDEN.forEach(({ ru, en }) => {
-    const re = new RegExp(en, 'g');
-    result = result.replace(re, ru);
-  });
-  return result;
-}
-
-/* ================= ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА ================= */
-let currentLang = 't9';
-
-/* ================= BASS: обратный перевод ================= */
-const BASS_THREE_REV = { "sh'": 'щ' };
-const BASS_TWO_REV = { yo:'ё', zh:'ж', kh:'х', ch:'ч', sh:'ш', yu:'ю', ya:'я' };
-const BASS_ONE_REV = {
-  a:'а', b:'б', v:'в', g:'г', d:'д', e:'е', z:'з', i:'и', k:'к', l:'л',
-  m:'м', n:'н', o:'о', p:'п', r:'р', s:'с', t:'т', u:'у', f:'ф', c:'ц',
-  "'":'ь'
-};
-
-function bassToText(text) {
-  let result = '';
-  let i = 0;
-  while (i < text.length) {
-    const three = text.substr(i, 3).toLowerCase();
-    if (BASS_THREE_REV[three]) {
-      const original = text.substr(i, 3);
-      const lettersOnly = original.replace(/'/g, '');
-      const isUpper = lettersOnly.length > 0 &&
-        lettersOnly === lettersOnly.toUpperCase() &&
-        lettersOnly !== lettersOnly.toLowerCase();
-      result += isUpper ? BASS_THREE_REV[three].toUpperCase() : BASS_THREE_REV[three];
-      i += 3;
-      continue;
-    }
-    const two = text.substr(i, 2).toLowerCase();
-    if (BASS_TWO_REV[two]) {
-      const original = text.substr(i, 2);
-      const isUpper = /^[A-Z]+$/.test(original);
-      result += isUpper ? BASS_TWO_REV[two].toUpperCase() : BASS_TWO_REV[two];
-      i += 2;
-      continue;
-    }
-    const one = text[i].toLowerCase();
-    if (BASS_ONE_REV[one]) {
-      const original = text[i];
-      const isUpper = original === original.toUpperCase() && original !== original.toLowerCase();
-      result += isUpper ? BASS_ONE_REV[one].toUpperCase() : BASS_ONE_REV[one];
-      i += 1;
-      continue;
-    }
-    result += text[i];
-    i += 1;
-  }
-  return result;
-}
-
-/* ================= МУРИНСКИЙ: обратный перевод (приблизительно) ================= */
-const MURIN_REVERSE_EXCEPTIONS = {
-  'ч': 'я',
-  'дод': 'дед',
-  'додус': 'дед',
-  'друн': 'друг',
-  'друнность': 'друг',
-  'батч': 'батя',
-  'кьо': 'кто',
-  'кто': 'кто',
-  'жинка': 'жена',
-  'сыр': 'сын',
-  'доч': 'дочь',
-  'чекунец': 'чекунец',
-  'чекушка': 'чекушка'
-};
-
-function murinWordReverse(token) {
-  const m = token.match(/^([^а-яёА-ЯЁ]*)([а-яёА-ЯЁ]+)([^а-яёА-ЯЁ]*)$/);
-  if (!m) return token;
-  const [, prefix, core, suffix] = m;
-  const lower = core.toLowerCase();
-  let resultCore;
-
-  if (Object.prototype.hasOwnProperty.call(MURIN_REVERSE_EXCEPTIONS, lower)) {
-    resultCore = MURIN_REVERSE_EXCEPTIONS[lower];
-  } else if (lower.endsWith('лды') && lower.length > 3) {
-    resultCore = lower.slice(0, -3) + 'льно';
-  } else if (lower.endsWith('ость') && lower.length > 4) {
-    resultCore = lower.slice(0, -4);
-  } else {
-    resultCore = lower;
-  }
-
-  const firstOrig = core.charAt(0);
-  if (firstOrig === firstOrig.toUpperCase() && firstOrig !== firstOrig.toLowerCase()) {
-    resultCore = resultCore.charAt(0).toUpperCase() + resultCore.slice(1);
-  }
-  return prefix + resultCore + suffix;
-}
-
-function murinToText(text) {
-  return text.split(/(\s+)/).map(token => {
-    if (token === '' || /^\s+$/.test(token)) return token;
-    return murinWordReverse(token);
+  PIKMI_INTERJECTIONS.forEach(w => { result = result.replaceAll(w, ''); });
+  PIKMI_ENDING_PHRASES.forEach(p => { result = result.replaceAll(p.trim(), ''); });
+  result = result.replace(/~~/g, '').replace(/[💕💖💗💞🥰😍🥺☺️🤭🫣✨🎀🌸🌷🍓🧸🍬⭐🤒😖🤧😔😩😫😿😭💔]/gu, '');
+  // сворачиваем растянутые гласные: приветииик -> приветик (оставляем одну букву)
+  result = result.replace(/([аеёиоуыэюяАЕЁИОУЫЭЮЯ])\1{1,}/g, '$1');
+  // убираем заикание в начале слов, например "п-приветик" -> "приветик"
+  result = result.split(/(\s+)/).map(tok => {
+    const m = tok.match(/^([а-яёА-ЯЁa-zA-Z])-([а-яёА-ЯЁa-zA-Z].*)$/);
+    if (m && m[2].toLowerCase().startsWith(m[1].toLowerCase())) return m[2];
+    return tok;
   }).join('');
-}
-
-const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:', pikmi: 'Пикми:', mogger: 'MOGGерский:' };
-const LANG_PLACEHOLDERS = {
-  t9: 'Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4',
-  murin: 'Например: Ч люблю фуррость',
-  bass: 'Например: ya lyublyu furri',
-  pikmi: 'Например: бруза настоящий п-п-п-п-п-писюняра 🥺☺️🤭🫣😝',
-  mogger: 'Например: Мое CHADо едет в TRUE HAMMAM в MOGGскве'
-};
-
-function setLang(lang) {
-  currentLang = lang;
-  document.querySelectorAll('.lang-option').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === lang);
+  Object.keys(PIKMI_DIMINUTIVES).forEach(key => {
+    const val = PIKMI_DIMINUTIVES[key];
+    const re = new RegExp(val, 'gi');
+    result = result.replace(re, key);
   });
-  document.getElementById('outputLabel').textContent = LANG_LABELS[lang];
-  document.getElementById('codeInput').placeholder = LANG_PLACEHOLDERS[lang];
-  document.querySelectorAll('.hint-panel').forEach(h => {
-    h.style.display = (h.dataset.hint === lang) ? '' : 'none';
-  });
+  return result.replace(/\s{2,}/g, ' ').trim();
 }
 
-function translateForward() {
-  const text = document.getElementById('textInput').value;
-  let result = '';
-  if (currentLang === 't9') result = computeT9(text);
-  else if (currentLang === 'murin') result = textToMurin(text);
-  else if (currentLang === 'bass') result = textToBass(text);
-  else if (currentLang === 'pikmi') result = textToPikmi(text);
-  else if (currentLang === 'mogger') result = textToMogger(text);
-  document.getElementById('codeInput').value = result;
+/* ================= ЦИФЕРНЫЙ T9 ================= */
+const LAYOUT = { '2': 'АБВГ', '3': 'ДЕЁЖЗ', '4': 'ИЙКЛ', '5': 'МНОП', '6': 'РСТУ', '7': 'ФХЦЧ', '8': 'ШЩЪЫ', '9': 'ЬЭЮЯ' };
+const CHAR_TO_CODE = {};
+for (const [key, letters] of Object.entries(LAYOUT)) {
+  for (let i = 0; i < letters.length; i++) CHAR_TO_CODE[letters[i]] = key.repeat(i + 1);
 }
 
-function reverseTranslate() {
-  const code = document.getElementById('codeInput').value;
-  let result = '';
-  if (currentLang === 't9') result = computeT9Reverse(code);
-  else if (currentLang === 'murin') result = murinToText(code);
-  else if (currentLang === 'bass') result = bassToText(code);
-  else if (currentLang === 'pikmi') result = pikmiToText(code);
-  else if (currentLang === 'mogger') result = moggerToText(code);
-  document.getElementById('textInput').value = result;
+function computeT9(text) {
+  let result = '', digitMode = false, lastWasLetter = false, capsMode = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '{') { result += '{'; capsMode = true; lastWasLetter = false; continue; }
+    if (ch === '}') { result += '}'; capsMode = false; lastWasLetter = false; continue; }
+    if (ch === ' ') { result += '#'; lastWasLetter = false; continue; }
+    if (ch === '.') { result += '+'; lastWasLetter = false; continue; }
+    if (ch === '!') { result += '%'; lastWasLetter = false; continue; }
+    if (ch === '?') { result += '('; lastWasLetter = false; continue; }
+    if (ch === '(') { result += '['; lastWasLetter = false; continue; }
+    if (ch === ')') { result += ']'; lastWasLetter = false; continue; }
+    if (ch >= '0' && ch <= '9') {
+      if (!digitMode) { result += '*1*'; digitMode = true; }
+      result += ch; lastWasLetter = false; continue;
+    }
+    const upperCh = ch.toUpperCase();
+    if (CHAR_TO_CODE[upperCh]) {
+      if (digitMode) { result += '*1*'; digitMode = false; }
+      const isCapital = ch !== ch.toLowerCase();
+      let needShift = (!capsMode && isCapital) || (capsMode && !isCapital);
+      if (needShift) result += '√';
+      if (lastWasLetter) result += '*';
+      result += CHAR_TO_CODE[upperCh]; lastWasLetter = true; continue;
+    }
+  }
+  return result;
 }
 
 function computeT9Reverse(code) {
-  let result = '';
-  let digitMode = false;
-  let capsMode = false;
-  let shiftNext = false;
-  let i = 0;
-
+  let result = '', digitMode = false, capsMode = false, shiftNext = false, i = 0;
   while (i < code.length) {
     const ch = code[i];
-
     if (ch === '*' && code[i + 1] === '1' && code[i + 2] === '*') { digitMode = !digitMode; i += 3; continue; }
     if (ch === '#') { result += ' '; i++; continue; }
     if (ch === '{') { result += '{'; capsMode = true; i++; continue; }
@@ -1397,220 +942,438 @@ function computeT9Reverse(code) {
     if (ch === '(' || ch === ')') { result += '?'; i++; continue; }
     if (ch === '[') { result += '('; i++; continue; }
     if (ch === ']') { result += ')'; i++; continue; }
-
     if (digitMode && ch >= '0' && ch <= '9') { result += ch; i++; continue; }
     if (ch === '*') { i++; continue; }
-
     if (ch >= '2' && ch <= '9') {
-      let j = i;
-      while (j < code.length && code[j] === ch) j++;
-      const count = j - i;
-      const letters = LAYOUT[ch];
-
+      let j = i; while (j < code.length && code[j] === ch) j++;
+      const count = j - i, letters = LAYOUT[ch];
       let lettersOut = [];
-      if (count <= letters.length) {
-        lettersOut.push(letters[count - 1]);
-      } else {
-        let remaining = count;
-        while (remaining > 0) {
-          const take = Math.min(remaining, letters.length);
-          lettersOut.push(letters[take - 1]);
-          remaining -= take;
-        }
+      if (count <= letters.length) lettersOut.push(letters[count - 1]);
+      else {
+        let rem = count;
+        while (rem > 0) { const take = Math.min(rem, letters.length); lettersOut.push(letters[take - 1]); rem -= take; }
       }
-
       for (let letter of lettersOut) {
-        let isUpper = capsMode;
-        if (shiftNext) { isUpper = !isUpper; shiftNext = false; }
+        let isUpper = capsMode; if (shiftNext) { isUpper = !isUpper; shiftNext = false; }
         result += isUpper ? letter.toUpperCase() : letter.toLowerCase();
       }
-
-      i = j;
-      continue;
+      i = j; continue;
     }
-
     i++;
   }
+  return result;
+}
+
+/* ================= МУРИНСКИЙ ================= */
+const MURIN_DICT = {
+  'я': 'ч',
+  'друг': 'друн',
+  'подруга': 'подруня',
+  'брат': 'брата',
+  'папа': 'батч',
+  'батя': 'батч',
+  'дед': 'дод',
+  'жена': 'жинка',
+  'сын': 'сыр',
+  'кто': 'кьо',
+  'это': 'этость',
+  'учитель': 'учиха',
+  'физрук': 'физрун',
+  'туман': 'фог',
+  'кот': 'котость',
+  'собака': 'собака-бурмалдака',
+  'заяц': 'заяц-бурмалдаяц',
+  'сова': 'сова-бурмалда'
+};
+
+// слова, к которым суффикс не добавляется, хотя они не в словаре замен
+// (служебные части речи: предлоги, союзы, частицы, местоимения, наречия)
+const MURIN_NO_SUFFIX_WORDS = new Set([
+  'хорошо', 'вместе', 'мной', 'тобой', 'собой', 'нами', 'вами', 'ними',
+  'мне', 'тебе', 'ему', 'ней', 'нам', 'вам', 'им', 'него', 'неё', 'них',
+  'меня', 'тебя', 'его', 'её', 'их', 'нас', 'вас', 'себя',
+  'эта', 'этот', 'эти', 'эту', 'тот', 'та', 'те', 'всё', 'все',
+  'тут', 'там', 'здесь', 'сюда', 'туда', 'очень', 'просто', 'именно',
+  'только', 'уже', 'ещё', 'опять', 'снова', 'всегда', 'никогда', 'иногда'
+]);
+
+// гласные буквы, после которых конечная буква отбрасывается перед добавлением "-ность"
+const MURIN_VOWELS = 'аеёиоуыэюя';
+
+// грубое определение «это похоже на глагол» по типичным окончаниям
+function isMurinVerbLike(word) {
+  if (/(ться|тся|ть)$/.test(word)) return true;
+  if (word.length > 2 && /(ла|ло|ли|л)$/.test(word)) return true;
+  if (word.length > 3 && /(ешь|ете|ишь|ите|ют|ят|ем|им|ут|ит)$/.test(word)) return true;
+  // глаголы 1-го лица ед.ч. на "-у"/"-ю" (иду, ползу, бегу, могу...)
+  if (word.length > 3 && /(у|ю)$/.test(word)) return true;
+  return false;
+}
+
+// короткие служебные слова (предлоги, союзы, частицы) длиной 1-2 буквы —
+// суффикс к ним не добавляется (и, а, но, да, ли, бы, не, ни, у, о, от, до, из, на, по, со, с, в, во, за, при...)
+function isMurinShortFunctionWord(word) {
+  return word.length <= 2;
+}
+
+function textToMurin(text) {
+  if (!text.trim()) return '';
+  return text.split(/(\s+)/).map(token => {
+    if (!token.trim()) return token;
+    let match = token.match(/^([^\wа-яёА-ЯЁ]*)([а-яёА-ЯЁ]+)(.*)$/u);
+    if (!match) return token;
+    let prefix = match[1];
+    let word = match[2];
+    let suffix = match[3];
+    let lower = word.toLowerCase();
+
+    if (MURIN_DICT[lower]) {
+      let repl = MURIN_DICT[lower];
+      if (word[0] === word[0].toUpperCase()) {
+        repl = repl.charAt(0).toUpperCase() + repl.slice(1);
+      }
+      return prefix + repl + suffix;
+    }
+
+    if (lower.endsWith('ность') || lower.endsWith('ость')) {
+      return prefix + word + suffix;
+    }
+
+    if (MURIN_NO_SUFFIX_WORDS.has(lower) || isMurinVerbLike(lower) || isMurinShortFunctionWord(lower)) {
+      return prefix + word + suffix;
+    }
+
+    const lastChar = lower.slice(-1);
+    let stem;
+    if (lastChar === 'й' || MURIN_VOWELS.includes(lastChar)) {
+      // слово оканчивается на гласную или "й" — отбрасываем последнюю букву и добавляем "-ность"
+      stem = word.slice(0, -1);
+    } else {
+      // слово оканчивается на согласную — добавляем "-ность" напрямую
+      stem = word;
+    }
+    return prefix + stem + 'ность' + suffix;
+  }).join('');
+}
+
+function murinToText(text) {
+  if (!text.trim()) return '';
+  let result = text;
+  
+  const revMurin = [
+    ['собака-бурмалдака', 'собака'],
+    ['заяц-бурмалдаяц', 'заяц'],
+    ['сова-бурмалда', 'сова'],
+    ['подруня', 'подруга'],
+    ['котость', 'кот'],
+    ['этость', 'это'],
+    ['учиха', 'учитель'],
+    ['физрун', 'физрук'],
+    ['жинка', 'жена'],
+    ['брата', 'брат'],
+    ['батч', 'папа'],
+    ['друн', 'друг'],
+    ['дод', 'дед'],
+    ['сыр', 'сын'],
+    ['кьо', 'кто'],
+    ['фог', 'туман'],
+    ['ч', 'я']
+  ];
+
+  revMurin.forEach(([from, to]) => {
+    const re = new RegExp('\\b' + from + '\\b', 'gi');
+    result = result.replace(re, (m) => {
+      if (m[0] === m[0].toUpperCase()) {
+        return to.charAt(0).toUpperCase() + to.slice(1);
+      }
+      return to;
+    });
+  });
+
+  // сначала снимаем более длинный суффикс "-ность" (важно делать это раньше "-ость",
+  // так как "ность" оканчивается на "ость")
+  result = result.replace(/([а-яёА-ЯЁ]+?)ность\b/g, '$1');
+  // затем снимаем старый формат суффикса "-ость", если он где-то остался
+  result = result.replace(/([а-яёА-ЯЁ]{2,})ость\b/g, '$1');
 
   return result;
 }
 
+/* ================= BASS ================= */
+const BASS_MAP = {
+  'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ё':'yo', 'ж':'zh', 'з':'z',
+  'и':'i', 'й':'i', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o', 'п':'p', 'р':'r',
+  'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'х':'kh', 'ц':'c', 'ч':'ch', 'ш':'sh',
+  'щ':"sh'", 'ь':"'", 'ъ':"'", 'э':'e', 'ю':'yu', 'я':'ya'
+};
+
+function textToBass(text) {
+  let res = '';
+  for (let ch of text) {
+    let lower = ch.toLowerCase();
+    if (BASS_MAP[lower] !== undefined) {
+      let trans = BASS_MAP[lower];
+      if (ch === ch.toUpperCase()) {
+        trans = trans.toUpperCase();
+      }
+      res += trans;
+    } else {
+      res += ch;
+    }
+  }
+  return res;
+}
+
+function bassToText(text) {
+  let res = text;
+  const revMap = [
+    ["sh'", 'щ'], ["SH'", 'Щ'], ["Sh'", 'Щ'],
+    ['sh', 'ш'], ['SH', 'Ш'], ['Sh', 'Ш'],
+    ['ch', 'ч'], ['CH', 'Ч'], ['Ch', 'Ч'],
+    ['kh', 'х'], ['KH', 'Х'], ['Kh', 'Х'],
+    ['zh', 'ж'], ['ZH', 'Ж'], ['Zh', 'Ж'],
+    ['yo', 'ё'], ['YO', 'Ё'], ['Yo', 'Ё'],
+    ['yu', 'ю'], ['YU', 'Ю'], ['Yu', 'Ю'],
+    ['ya', 'я'], ['YA', 'Я'], ['Ya', 'Я'],
+    ['a', 'а'], ['b', 'б'], ['v', 'в'], ['g', 'г'], ['d', 'д'], ['e', 'е'], ['z', 'з'],
+    ['i', 'и'], ['k', 'к'], ['l', 'л'], ['m', 'м'], ['n', 'н'], ['o', 'о'], ['p', 'п'],
+    ['r', 'р'], ['s', 'с'], ['t', 'т'], ['u', 'у'], ['f', 'ф'], ['c', 'ц'], ["'", 'ь']
+  ];
+
+  revMap.forEach(([from, to]) => {
+    res = res.replaceAll(from, to);
+  });
+  return res;
+}
+
+/* ================= MOGGER ================= */
+const MOGGER_CITIES = { 'москва': 'MOGGсква', 'питер': 'CHADерборг', 'парень': 'Mogger', 'девушка': 'Stacy' };
+function textToMogger(text) {
+  if (!text.trim()) return '';
+  let res = text;
+  Object.keys(MOGGER_CITIES).forEach(k => { res = res.replace(new RegExp(k, 'gi'), MOGGER_CITIES[k]); });
+  return res + ' [MOGGED]';
+}
+function moggerToText(text) {
+  let res = text.replace(/\[MOGGED\]/g, '');
+  Object.keys(MOGGER_CITIES).forEach(k => { res = res.replace(new RegExp(MOGGER_CITIES[k], 'gi'), k); });
+  return res.trim();
+}
+
+/* ================= ДВОИЧНЫЙ КОД ================= */
+function textToBinary(text) {
+  const bytes = new TextEncoder().encode(text);
+  return Array.from(bytes).map(b => b.toString(2).padStart(8, '0')).join(' ');
+}
+
+function binaryToText(code) {
+  const parts = code.trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return '';
+  const bytes = new Uint8Array(parts.map(p => parseInt(p, 2) || 0));
+  try {
+    return new TextDecoder('utf-8', { fatal: false }).decode(bytes);
+  } catch (e) {
+    return '';
+  }
+}
+
+/* ================= ЯЗЫК «ААААААА» ================= */
+function randomAaaChunk() {
+  const len = 1 + Math.floor(Math.random() * 10); // случайно от 1 до 10
+  return 'А'.repeat(len);
+}
+
+function textToAAA(text) {
+  if (!text.trim()) return '';
+  // разбиваем на слова и пробелы, чтобы вставлять "ААА"-вставки в любом месте текста,
+  // а не только в конце предложений
+  const tokens = text.split(/(\s+)/);
+  let result = '';
+  tokens.forEach(tok => {
+    result += tok;
+    if (tok.trim() && Math.random() < 0.35) {
+      result += ' ' + randomAaaChunk() + ' ';
+    }
+  });
+  return result.replace(/\s+/g, ' ').trim();
+}
+
+function aaaToText(text) {
+  // убираем «слова», целиком состоящие из заглавной буквы «А» (длиной 1-10)
+  const tokens = text.split(/(\s+)/);
+  const filtered = tokens.filter(tok => !/^А{1,10}$/.test(tok));
+  return filtered.join('').replace(/\s{2,}/g, ' ').trim();
+}
+
+let currentLang = 't9';
+const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:', pikmi: 'Пикми:', mogger: 'MOGGерский:', tsundere: 'Тсундере:', binary: 'Двоичный код:', aaaa: 'ААААААА:' };
+const LANG_PLACEHOLDERS = {
+  t9: 'Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4',
+  murin: 'Например: Ч отдал друна фогу',
+  bass: 'Например: ya liubliu furri',
+  pikmi: 'Например: приветик ~~ 🥺☺️🤭',
+  mogger: 'Например: Мой Mogger едет в MOGGскву [MOGGED]',
+  tsundere: 'Например: Ты дурачок ! хммф😖😡',
+  binary: 'Например: 01001000 01101001 (= Hi)',
+  aaaa: 'Например: Привет. АААА Как дела?'
+};
+
+function setLang(lang, skipThemeSync) {
+  playClickSound();
+  currentLang = lang;
+  document.querySelectorAll('.lang-option').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  document.getElementById('outputLabel').textContent = LANG_LABELS[lang];
+  document.getElementById('codeInput').placeholder = LANG_PLACEHOLDERS[lang];
+  document.querySelectorAll('.hint-panel').forEach(h => h.style.display = (h.dataset.hint === lang) ? '' : 'none');
+
+  if (!skipThemeSync) {
+    const activeTheme = localStorage.getItem('translatorTheme') || 'standard';
+    if (lang === 'tsundere' && activeTheme !== 'tsundere') applyTheme('tsundere');
+    else if (lang !== 'tsundere' && activeTheme === 'tsundere') applyTheme('standard');
+  }
+}
+
+function translateForward() {
+  playClickSound();
+  const text = document.getElementById('textInput').value;
+  let result = '';
+  if (currentLang === 't9') result = computeT9(text);
+  else if (currentLang === 'murin') result = textToMurin(text);
+  else if (currentLang === 'bass') result = textToBass(text);
+  else if (currentLang === 'pikmi') result = textToPikmi(text);
+  else if (currentLang === 'mogger') result = textToMogger(text);
+  else if (currentLang === 'tsundere') result = textToTsundere(text);
+  else if (currentLang === 'binary') result = textToBinary(text);
+  else if (currentLang === 'aaaa') result = textToAAA(text);
+  document.getElementById('codeInput').value = result;
+}
+
+function reverseTranslate() {
+  playClickSound();
+  const code = document.getElementById('codeInput').value;
+  let result = '';
+  if (currentLang === 't9') result = computeT9Reverse(code);
+  else if (currentLang === 'murin') result = murinToText(code);
+  else if (currentLang === 'bass') result = bassToText(code);
+  else if (currentLang === 'pikmi') result = pikmiToText(code);
+  else if (currentLang === 'mogger') result = moggerToText(code);
+  else if (currentLang === 'tsundere') result = tsundereToText(code);
+  else if (currentLang === 'binary') result = binaryToText(code);
+  else if (currentLang === 'aaaa') result = aaaToText(code);
+  document.getElementById('textInput').value = result;
+}
+
 function clearAll() {
+  playClickSound();
   document.getElementById('textInput').value = '';
   document.getElementById('codeInput').value = '';
 }
 
 function showToast(msg, duration) {
   const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
+  toast.textContent = msg; toast.classList.add('show');
   clearTimeout(showToast._t);
   showToast._t = setTimeout(() => toast.classList.remove('show'), duration || 1200);
 }
 
-async function copyText(value) {
-  if (!value) return false;
+async function copyField(id) {
+  playClickSound();
+  const field = document.getElementById(id);
+  const value = field.value;
+  if (!value) { showToast('Нечего копировать'); return; }
   try {
     await navigator.clipboard.writeText(value);
-    return true;
-  } catch (e) {}
-
-  try {
-    const tmp = document.createElement('textarea');
-    tmp.value = value;
-    tmp.style.position = 'fixed';
-    tmp.style.opacity = '0';
-    document.body.appendChild(tmp);
-    tmp.focus();
-    tmp.select();
-    const ok = document.execCommand('copy');
-    document.body.removeChild(tmp);
-    if (ok) return true;
-  } catch (e) {}
-
-  if (navigator.share) {
-    try {
-      await navigator.share({ text: value });
-      return true;
-    } catch (e) {}
+    showToast('Скопировано!');
+  } catch (e) {
+    field.focus(); field.select();
+    document.execCommand('copy') ? showToast('Скопировано!') : showToast('Не удалось скопировать', 3000);
   }
-  return false;
 }
 
 async function copyCardNumber() {
+  playClickSound();
   const card = '2202 2084 9642 9649';
-  const ok = await copyText(card);
-  showToast(ok ? 'Номер карты скопирован!' : 'Не удалось скопировать — номер выше, скопируй вручную', ok ? 1200 : 3000);
-}
-
-async function copyField(id) {
-  const field = document.getElementById(id);
-  const value = field.value;
-  if (!value) {
-    showToast('Нечего копировать');
-    return;
-  }
-
-  let success = false;
-
-  // способ 1: современный Clipboard API
   try {
-    await navigator.clipboard.writeText(value);
-    success = true;
+    await navigator.clipboard.writeText(card);
+    showToast('Номер карты скопирован!', 1200);
   } catch (e) {
-    success = false;
+    showToast('Ошибка копирования', 1200);
   }
-
-  // способ 2: старый execCommand, если способ 1 не сработал
-  if (!success) {
-    try {
-      field.focus();
-      field.select();
-      field.setSelectionRange(0, value.length);
-      success = document.execCommand('copy');
-    } catch (e) {
-      success = false;
-    }
-  }
-
-  if (success) {
-    showToast('Скопировано!');
-    return;
-  }
-
-  // способ 3: нативное меню "Поделиться" — часто работает,
-  // даже если скриптовое копирование заблокировано
-  if (navigator.share) {
-    try {
-      await navigator.share({ text: value });
-      return;
-    } catch (e) {
-      // пользователь закрыл меню или share не сработал — идём дальше
-    }
-  }
-
-  // ничего не получилось скопировать автоматически —
-  // честно оставляем текст выделенным, чтобы скопировать вручную
-  field.focus();
-  field.select();
-  field.setSelectionRange(0, value.length);
-  showToast('Не удалось скопировать. Текст выделен — зажми его и выбери «Копировать»', 4000);
 }
 
-/* ================= МЕНЮ ТЕМ ================= */
-const THEME_CLASSES = ['theme-pink', 'theme-melstroy', 'theme-zahir', 'theme-poop', 'theme-ocean'];
+const THEME_CLASSES = ['theme-pink', 'theme-melstroy', 'theme-zahir', 'theme-poop', 'theme-ocean', 'theme-tsundere'];
 
 function applyTheme(theme) {
   document.body.classList.remove(...THEME_CLASSES);
-  if (theme === 'pink') document.body.classList.add('theme-pink');
-  if (theme === 'melstroy') document.body.classList.add('theme-melstroy');
-  if (theme === 'zahir') document.body.classList.add('theme-zahir');
-  if (theme === 'poop') document.body.classList.add('theme-poop');
-  if (theme === 'ocean') document.body.classList.add('theme-ocean');
-
+  if (THEME_CLASSES.includes(`theme-${theme}`)) {
+    document.body.classList.add(`theme-${theme}`);
+  }
   document.querySelectorAll('.theme-option[data-theme]').forEach(opt => {
     opt.classList.toggle('active', opt.dataset.theme === theme);
   });
-
   localStorage.setItem('translatorTheme', theme);
+  playMusicForCurrentTheme();
 }
 
-function selectTheme(theme) {
-  applyTheme(theme);
-  closeMenu();
+function selectTheme(theme) { 
+  playClickSound();
+  applyTheme(theme); 
+  if (theme === 'tsundere' && currentLang !== 'tsundere') setLang('tsundere', true);
+  else if (theme !== 'tsundere' && currentLang === 'tsundere') setLang('t9', true);
+  closeMenu(); 
 }
 
 function showPanel(name) {
+  playClickSound();
   document.getElementById('panelMain').style.display = (name === 'main') ? '' : 'none';
   document.getElementById('panelLang').style.display = (name === 'lang') ? '' : 'none';
   document.getElementById('panelTheme').style.display = (name === 'theme') ? '' : 'none';
 }
 
 function toggleMenu() {
+  playClickSound();
   const dropdown = document.getElementById('themeDropdown');
   const opening = !dropdown.classList.contains('open');
   dropdown.classList.toggle('open');
   if (opening) showPanel('main');
 }
-function closeMenu() {
-  document.getElementById('themeDropdown').classList.remove('open');
-  showPanel('main');
-}
+function closeMenu() { document.getElementById('themeDropdown').classList.remove('open'); showPanel('main'); }
+function openSupportModal() { closeMenu(); document.getElementById('supportModal').classList.add('open'); }
+function closeSupportModal() { document.getElementById('supportModal').classList.remove('open'); }
+function openWhatsNewModal() { closeMenu(); document.getElementById('whatsNewModal').classList.add('open'); }
+function closeWhatsNewModal() { document.getElementById('whatsNewModal').classList.remove('open'); }
 
-function openSupportModal() {
-  closeMenu();
-  document.getElementById('supportModal').classList.add('open');
-}
-function closeSupportModal(e) {
-  document.getElementById('supportModal').classList.remove('open');
-}
-
-function openWhatsNewModal() {
-  closeMenu();
-  document.getElementById('whatsNewModal').classList.add('open');
-}
-function closeWhatsNewModal(e) {
-  document.getElementById('whatsNewModal').classList.remove('open');
-}
-
-// закрывать меню при клике вне его
 document.addEventListener('click', function(e) {
   const wrap = document.querySelector('.theme-menu-wrap');
-  if (!wrap.contains(e.target)) closeMenu();
+  if (wrap && !wrap.contains(e.target)) closeMenu();
 });
 
-/* ================= ДЕКОР: генерация дождя, пузырьков и котов ================= */
-function buildPoopRain() {
-  const container = document.getElementById('poopRain');
+function buildTsundereCats() {
+  const container = document.getElementById('tsundereCats');
   if (!container || container.childElementCount) return;
-  const emojis = ['💩', '💩', '💩', '🤢', '💨'];
-  for (let i = 0; i < 28; i++) {
+  const emojis = ['😡', '😖', '🐈', '🎀', '😤', '😳'];
+  for (let i = 0; i < 20; i++) {
     const span = document.createElement('span');
     span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     span.style.left = Math.random() * 100 + '%';
-    span.style.fontSize = (16 + Math.random() * 18) + 'px';
-    span.style.animationDuration = (4 + Math.random() * 6) + 's';
-    span.style.animationDelay = (Math.random() * 8) + 's';
+    span.style.top = Math.random() * 100 + '%';
+    span.style.animationDuration = (4 + Math.random() * 4) + 's';
+    span.style.animationDelay = (Math.random() * -5) + 's';
+    container.appendChild(span);
+  }
+}
+
+function buildPoopRain() {
+  const container = document.getElementById('poopRain');
+  if (!container || container.childElementCount) return;
+  const emojis = ['💩', '🧻', '🪰', '🚽', '💩'];
+  for (let i = 0; i < 25; i++) {
+    const span = document.createElement('span');
+    span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    span.style.left = Math.random() * 100 + '%';
+    span.style.animationDuration = (3 + Math.random() * 4) + 's';
+    span.style.animationDelay = (Math.random() * -5) + 's';
+    span.style.fontSize = (18 + Math.random() * 20) + 'px';
     container.appendChild(span);
   }
 }
@@ -1618,29 +1381,14 @@ function buildPoopRain() {
 function buildOceanBubbles() {
   const container = document.getElementById('oceanBubbles');
   if (!container || container.childElementCount) return;
-  for (let i = 0; i < 24; i++) {
+  for (let i = 0; i < 30; i++) {
     const span = document.createElement('span');
-    const size = 8 + Math.random() * 26;
-    span.style.left = Math.random() * 100 + '%';
+    const size = 8 + Math.random() * 22;
     span.style.width = size + 'px';
     span.style.height = size + 'px';
-    span.style.animationDuration = (5 + Math.random() * 7) + 's';
-    span.style.animationDelay = (Math.random() * 8) + 's';
-    container.appendChild(span);
-  }
-}
-
-function buildZahirCats() {
-  const container = document.getElementById('zahirCats');
-  if (!container || container.childElementCount) return;
-  const phrases = ['Мяууу🥵', 'Муррр😈', '😎🐱', '😼🕶️', 'Мяууу🥵', '😎🐈‍⬛', 'Муррр😈', '😻🕶️'];
-  for (let i = 0; i < 18; i++) {
-    const span = document.createElement('span');
-    span.textContent = phrases[i % phrases.length];
-    span.style.top = Math.random() * 100 + '%';
-    span.style.left = Math.random() * 90 + '%';
-    span.style.fontSize = (14 + Math.random() * 16) + 'px';
-    span.style.transform = 'rotate(' + (Math.random() * 40 - 20) + 'deg)';
+    span.style.left = Math.random() * 100 + '%';
+    span.style.animationDuration = (4 + Math.random() * 6) + 's';
+    span.style.animationDelay = (Math.random() * -6) + 's';
     container.appendChild(span);
   }
 }
@@ -1648,16 +1396,15 @@ function buildZahirCats() {
 function buildOceanSealife() {
   const container = document.getElementById('oceanSealife');
   if (!container || container.childElementCount) return;
-  const creatures = ['🐟', '🐠', '🐡', '🦈', '🐬', '🐙', '🦑', '🦀', '🐢', '🪼', '🐳'];
-  for (let i = 0; i < 22; i++) {
+  const creatures = ['🐟', '🐠', '🐡', '🦈', '🐙', '🐬', '🦑', '🦀'];
+  for (let i = 0; i < 15; i++) {
     const span = document.createElement('span');
     span.textContent = creatures[Math.floor(Math.random() * creatures.length)];
-    const goingRight = Math.random() < 0.5;
-    span.className = goingRight ? 'swim-right' : 'swim-left';
-    span.style.top = (35 + Math.random() * 58) + '%';
-    span.style.fontSize = (16 + Math.random() * 22) + 'px';
-    span.style.animationDuration = (10 + Math.random() * 18) + 's';
-    span.style.animationDelay = (Math.random() * -20) + 's';
+    const isRight = Math.random() > 0.5;
+    span.className = isRight ? 'swim-right' : 'swim-left';
+    span.style.top = (10 + Math.random() * 75) + '%';
+    span.style.animationDuration = (8 + Math.random() * 12) + 's';
+    span.style.animationDelay = (Math.random() * -10) + 's';
     container.appendChild(span);
   }
 }
@@ -1665,17 +1412,33 @@ function buildOceanSealife() {
 function buildOceanSeaweed() {
   const container = document.getElementById('oceanSeaweed');
   if (!container || container.childElementCount) return;
-  const plants = ['🌿', '🪸', '🌱', '🪨'];
-  for (let i = 0; i < 16; i++) {
+  const seaweeds = ['🌿', '🪸', '🌱'];
+  for (let i = 0; i < 18; i++) {
     const span = document.createElement('span');
-    span.textContent = plants[Math.floor(Math.random() * plants.length)];
-    span.style.left = (i * (100 / 16) + Math.random() * 3) + '%';
-    span.style.fontSize = (20 + Math.random() * 16) + 'px';
-    span.style.animationDelay = (Math.random() * -3.5) + 's';
+    span.textContent = seaweeds[Math.floor(Math.random() * seaweeds.length)];
+    span.style.left = (i * 5.8) + '%';
+    span.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+    span.style.animationDelay = (Math.random() * -3) + 's';
     container.appendChild(span);
   }
 }
 
+function buildZahirCats() {
+  const container = document.getElementById('zahirCats');
+  if (!container || container.childElementCount) return;
+  const items = ['💃', '🕺', '🪩', '✨', '🎉', '🦄', '⚡'];
+  for (let i = 0; i < 20; i++) {
+    const span = document.createElement('span');
+    span.textContent = items[Math.floor(Math.random() * items.length)];
+    span.style.left = Math.random() * 100 + '%';
+    span.style.top = Math.random() * 100 + '%';
+    span.style.animationDuration = (2 + Math.random() * 3) + 's';
+    span.style.animationDelay = (Math.random() * -3) + 's';
+    container.appendChild(span);
+  }
+}
+
+buildTsundereCats();
 buildPoopRain();
 buildOceanBubbles();
 buildOceanSealife();
@@ -1683,10 +1446,14 @@ buildOceanSeaweed();
 buildZahirCats();
 
 (function initTheme() {
-  const saved = localStorage.getItem('translatorTheme') || 'standard';
-  applyTheme(saved);
+  const savedTheme = localStorage.getItem('translatorTheme') || 'standard';
+  if (savedTheme === 'tsundere') {
+    setLang('tsundere');
+  } else {
+    applyTheme(savedTheme);
+  }
 })();
 </script>
 
 </body>
-      </html>
+  </html>
