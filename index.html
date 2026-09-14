@@ -180,6 +180,17 @@ body.theme-zahir .zahir-cats { display: block; }
   animation: floatTsundere 4s ease-in-out infinite alternate;
 }
 
+.zahir-wip {
+  display: none; position: fixed; inset: 0; z-index: 3; pointer-events: none;
+  align-items: center; justify-content: center; text-align: center;
+}
+body.theme-zahir .zahir-wip { display: flex; }
+.zahir-wip span {
+  font-family: 'Comic Sans MS', 'Segoe UI', sans-serif; font-weight: bold; font-size: 26px;
+  color: #fff; background: rgba(20,0,40,0.55); border: 2px dashed #00ffe1; border-radius: 16px;
+  padding: 14px 22px; text-shadow: 0 0 10px #ff00c8, 0 0 20px #00ffe1;
+}
+
 /* ===== КАКАХИ ===== */
 body.theme-poop {
   --bg-color: #4a2f18;
@@ -267,6 +278,39 @@ body.theme-ocean .ocean-sealife { display: block; }
 body.theme-ocean .ocean-seaweed { display: block; }
 .ocean-seaweed span { position: absolute; bottom: 0; font-size: 32px; opacity: 0.75; transform-origin: bottom center; animation: seaweedSway 3.5s ease-in-out infinite alternate; }
 @keyframes seaweedSway { 0% { transform: rotate(-10deg); } 100% { transform: rotate(10deg); } }
+
+/* ===== МАТРИЦА ===== */
+body.theme-matrix {
+  --bg-color: #000000;
+  --bg-gradient: linear-gradient(180deg, #000000 0%, #001a00 100%);
+  --text: #00ff41;
+  --accent: #00ff41;
+  --card-bg: rgba(0, 10, 0, 0.72);
+  --card-border: #00ff41;
+  --input-bg: #000a00;
+  --input-border: #008f11;
+  --placeholder: #007a1f;
+  --btn-primary-bg: linear-gradient(135deg, #00ff41, #008f11);
+  --btn-primary-text: #000;
+  --btn-primary-shadow: #003b00;
+  --btn-secondary-bg: #001a00;
+  --btn-secondary-text: #00ff41;
+  --btn-secondary-shadow: #000;
+  --btn-danger-bg: #032f03;
+  --btn-danger-text: #00ff41;
+  --btn-danger-shadow: #000;
+  --toast-bg: linear-gradient(135deg, #00ff41, #008f11);
+  --toast-text: #000;
+  --font: 'Courier New', monospace;
+  --row-radius: 4px;
+  --decor-display: block;
+  --title-glow: 0 0 6px #00ff41, 0 0 16px #00ff41;
+}
+body.theme-matrix .row::before { content: "01"; position: absolute; top: -10px; right: 10px; font-size: 14px; color: #00ff41; font-family: 'Courier New', monospace; }
+
+.matrix-rain { display: none; position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; background: transparent; }
+body.theme-matrix .matrix-rain { display: block; }
+.matrix-rain canvas { display: block; width: 100%; height: 100%; }
 
 body {
   font-family: var(--font); margin: 0; padding: 15px;
@@ -390,6 +434,7 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 <!-- Декор Захир -->
 <div class="bg-decor deco-zahir" style="top:10%; left:6%;">🕺</div>
 <div class="zahir-cats" id="zahirCats"></div>
+<div class="zahir-wip"><span>🚧 В разработке 🚧</span></div>
 
 <!-- Декор Какахи -->
 <div class="bg-decor deco-poop" style="top:12%; left:10%;">🤢</div>
@@ -400,6 +445,9 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 <div class="ocean-bubbles" id="oceanBubbles"></div>
 <div class="ocean-sealife" id="oceanSealife"></div>
 <div class="ocean-seaweed" id="oceanSeaweed"></div>
+
+<!-- Декор Матрица -->
+<div class="matrix-rain" id="matrixRain"><canvas id="matrixCanvas"></canvas></div>
 
 <!-- Шапка -->
 <div class="header-bar">
@@ -432,25 +480,25 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
           <span>‹ Назад</span>
         </div>
         <div class="theme-option lang-option active" data-lang="t9" onclick="setLang('t9'); closeMenu();">
-          <span>Циферный</span><span class="check">✓</span>
+          <span>1. Циферный</span><span class="check">✓</span>
         </div>
         <div class="theme-option lang-option" data-lang="murin" onclick="setLang('murin'); closeMenu();">
-          <span>Муринский</span><span class="check">✓</span>
+          <span>2. Муринский (в разработке)</span><span class="check">✓</span>
         </div>
         <div class="theme-option lang-option" data-lang="bass" onclick="setLang('bass'); closeMenu();">
-          <span>Bass</span><span class="check">✓</span>
+          <span>3. Bass</span><span class="check">✓</span>
         </div>
         <div class="theme-option lang-option" data-lang="pikmi" onclick="setLang('pikmi'); closeMenu();">
-          <span>Пикми</span><span class="check">✓</span>
+          <span>4. Пикми</span><span class="check">✓</span>
         </div>
         <div class="theme-option lang-option" data-lang="mogger" onclick="setLang('mogger'); closeMenu();">
-          <span>MOGGерский</span><span class="check">✓</span>
+          <span>5. MOGGерский (в разработке)</span><span class="check">✓</span>
         </div>
         <div class="theme-option lang-option" data-lang="binary" onclick="setLang('binary'); closeMenu();">
-          <span>Двоичный</span><span class="check">✓</span>
+          <span>6. Двоичный</span><span class="check">✓</span>
         </div>
         <div class="theme-option lang-option" data-lang="aaaa" onclick="setLang('aaaa'); closeMenu();">
-          <span>ААААААА</span><span class="check">✓</span>
+          <span>7. ААААААА</span><span class="check">✓</span>
         </div>
       </div>
 
@@ -468,13 +516,16 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
           <span>3. Богатый</span><span class="check">✓</span>
         </div>
         <div class="theme-option" data-theme="zahir" onclick="selectTheme('zahir')">
-          <span>4. Захир</span><span class="check">✓</span>
+          <span>4. Захир (в разработке)</span><span class="check">✓</span>
         </div>
         <div class="theme-option" data-theme="poop" onclick="selectTheme('poop')">
           <span>5. Какахи 💩</span><span class="check">✓</span>
         </div>
         <div class="theme-option" data-theme="ocean" onclick="selectTheme('ocean')">
           <span>6. Океан 🌊</span><span class="check">✓</span>
+        </div>
+        <div class="theme-option" data-theme="matrix" onclick="selectTheme('matrix')">
+          <span>7. Матрица 💻</span><span class="check">✓</span>
         </div>
       </div>
 
@@ -514,6 +565,7 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 </div>
 <div class="hint hint-panel" data-hint="murin" style="display:none;">
   <b>🏢 Правила Муринского языка (Бурмалда):</b><br>
+  🚧 <b>Этот язык в разработке.</b> Правила и словарь замен ещё дорабатываются, возможны неточности перевода.<br><br>
   • <b>Словарные замены:</b> «я» → «ч», «друг» → «друн», «папа»/«батя» → «батч», «дед» → «дод», «сын» → «сыр», «кто» → «кьо», «учитель» → «учиха», «физрук» → «физрун», «туман» → «фог», «кот» → «котость», «собака» → «собака-бурмалдака», «заяц» → «заяц-бурмалдаяц».<br>
   • <b>Суффиксы:</b> К остальным существительным прибавляется суффикс <b>«-ность»</b> (со сбросом конечной гласной/«й»): «стене» → «стенность», а к словам на согласную суффикс «-ность» добавляется напрямую: «паук» → «паукность».<br>
   • <b>Исключения:</b> к глаголам (пришёл, гуляет, буду) и словам вроде «хорошо» суффикс не добавляется.
@@ -530,14 +582,14 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 </div>
 <div class="hint hint-panel" data-hint="mogger" style="display:none;">
   <b>🗿 Правила MOGGерского языка:</b><br>
+  🚧 <b>Этот язык в разработке.</b> Правила и список замен ещё дорабатываются, возможны неточности перевода.<br><br>
   • Автоматическая замена названий городов и обращений (<i>«Москва»</i> → <i>«MOGGсква»</i>, <i>«парень»</i> → <i>«Mogger»</i>).<br>
   • Каждая фраза получает статус верховного самца <b>[MOGGED]</b>.
 </div>
 <div class="hint hint-panel" data-hint="tsundere" style="display:none;">
   <b>🌸 Правила Тсундере:</b><br>
   • Превращает обычный текст в эмоциональные фразы с заиканием и милой агрессией!<br>
-  • Больше словарных замен, случайное заикание у любых слов и множество разных тсундере-концовок (<i>«Не то чтобы мне это нравилось! 😤»</i>).<br>
-  • <b>🎵 Своя музыка:</b> положите файл <code>tsundere-music.mp3</code> (или <code>.ogg</code>) рядом с <code>index.html</code> в репозитории — заиграет автоматически при включённой музыке.
+  • Больше словарных замен, случайное заикание у любых слов и множество разных тсундере-концовок (<i>«Не то чтобы мне это нравилось! 😤»</i>).
 </div>
 <div class="hint hint-panel" data-hint="binary" style="display:none;">
   <b>0️⃣1️⃣ Правила Двоичного кода:</b><br>
@@ -555,13 +607,12 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
 <!-- Модальное окно "Что нового?" -->
 <div class="modal-overlay" id="whatsNewModal" onclick="closeWhatsNewModal(event)">
   <div class="modal-card" onclick="event.stopPropagation()">
-    <h2>🆕 Что нового в BETA 0.1.0?</h2>
-    <p>• <b>🏢 Муринский язык:</b> Полная поддержка словарных замен (ч, друн, батч, дод, сыр, фог, бурмалда) + -ность!<br>
-       • <b>🔊 Обновленный Bass:</b> Использование точного алфавита (ц=c, щ=sh', ь=', й=i).<br>
-       • <b>🌸 Режим Тсундере:</b> Особый переводчик + стильное оформление!<br>
-       • <b>🎵 Процедурная музыка:</b> Синтез фоновой музыки под текущую тему.<br>
-       • <b>🌊 Тема «Океан»:</b> Анимированные рыбки, пузыри, водоросли и подводная музыка.<br>
-       • <b>💩 Тема «Какахи»:</b> Настоящий дождь из какашек!
+    <h2>🆕 Что нового в BETA 0.2.0?</h2>
+    <p>• <b>💻 Тема «Матрица»:</b> Чёрный фон и бегущие зелёные строки, как в кино про взлом!<br>
+       • <b>💩 Обновлённая тема «Какахи»:</b> Музыка стала энергичнее и веселее, добавлены звуки «пуков».<br>
+       • <b>🚧 Захир, Муринский и MOGGерский:</b> Помечены как «в разработке» — доводим до ума.<br>
+       • <b>🔢 Нумерация языков:</b> Теперь языки пронумерованы так же, как темы.<br>
+       • <b>🌸 Тсундере:</b> Убран внешний аудиофайл, теперь своя мелодия синтезируется прямо в приложении.
     </p>
     <button class="action-btn" onclick="closeWhatsNewModal()">Понятно 👍</button>
   </div>
@@ -580,18 +631,9 @@ button.action-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(-
   </div>
 </div>
 
-<div class="version-tag">BETA 0.1.0</div>
+<div class="version-tag">BETA 0.2.0</div>
 <div class="toast" id="toast"></div>
 
-<!--
-  МУЗЫКА ДЛЯ ТЕМЫ ТСУНДЕРЕ:
-  Чтобы подставить свою музыку — просто положите файл рядом с index.html
-  в репозитории на GitHub и назовите его ровно так:
-    tsundere-music.mp3   (или)   tsundere-music.ogg
-  Можно оставить оба файла сразу — браузер сам выберет поддерживаемый.
-  Если файла нет — при включении темы Тсундере просто ничего не заиграет
-  (в остальных темах по-прежнему звучит встроенная синтезированная музыка).
--->
 <audio id="tsundereAudio" loop preload="none">
   <source src="tsundere-music.mp3" type="audio/mpeg">
   <source src="tsundere-music.ogg" type="audio/ogg">
@@ -618,14 +660,45 @@ function playClickSound() {
   } catch (e) {}
 }
 
+// синтезированный звук "пука" для темы Какахи
+function playFartSound() {
+  try {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const bufferSize = audioCtx.sampleRate * 0.35;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(220 + Math.random() * 120, audioCtx.currentTime);
+    filter.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.3);
+    filter.Q.setValueAtTime(4, audioCtx.currentTime);
+
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.16, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+    noise.start();
+    noise.stop(audioCtx.currentTime + 0.35);
+  } catch (e) {}
+}
+
 let bgMusicInterval = null;
+let poopFartInterval = null;
 let isMusicPlaying = false;
 const tsundereAudioEl = document.getElementById('tsundereAudio');
 
-// если файл tsundere-music.mp3/ogg отсутствует в репозитории — молча предупреждаем один раз
 tsundereAudioEl.addEventListener('error', () => {
   if (isMusicPlaying && (localStorage.getItem('translatorTheme') || 'standard') === 'tsundere') {
-    showToast('⚠️ Добавьте tsundere-music.mp3 (или .ogg) рядом с index.html', 3000);
+    showToast('⚠️ Не удалось загрузить tsundere-music.mp3/.ogg', 3000);
   }
 }, true);
 
@@ -633,7 +706,11 @@ const MELODIES = {
   ocean: [261.63, 329.63, 392.00, 493.88, 392.00, 329.63, 440.00, 329.63],
   melstroy: [130.81, 164.81, 196.00, 164.81, 130.81, 146.83],
   zahir: [440.00, 554.37, 659.25, 830.61, 659.25, 554.37],
-  standard: [329.63, 392.00, 440.00, 523.25, 440.00, 392.00]
+  standard: [329.63, 392.00, 440.00, 523.25, 440.00, 392.00],
+  tsundere: [392.00, 349.23, 392.00, 440.00, 523.25, 440.00, 392.00, 349.23],
+  matrix: [220.00, 261.63, 220.00, 196.00, 246.94, 220.00, 174.61, 196.00],
+  // более энергичная, весёлая и "прыгучая" мелодия для темы Какахи
+  poop: [196.00, 246.94, 261.63, 246.94, 293.66, 261.63, 220.00, 196.00, 246.94, 293.66, 329.63, 293.66]
 };
 
 // на теме Тсундере вместо синтезатора играет настоящий аудиофайл (см. <audio id="tsundereAudio">)
@@ -643,7 +720,7 @@ function playTsundereAudioFile() {
     const playPromise = tsundereAudioEl.play();
     if (playPromise && playPromise.catch) {
       playPromise.catch(() => {
-        showToast('⚠️ Добавьте tsundere-music.mp3 (или .ogg) рядом с index.html', 3000);
+        showToast('⚠️ Не удалось загрузить tsundere-music.mp3/.ogg', 3000);
       });
     }
   } catch (e) {}
@@ -653,8 +730,8 @@ function startBgSynthMusic() {
   stopBgSynthMusic();
   if (!isMusicPlaying) return;
 
-  const currentTheme = localStorage.getItem('translatorTheme') || 'standard';
-  if (currentTheme === 'tsundere') {
+  const currentThemeAtStart = localStorage.getItem('translatorTheme') || 'standard';
+  if (currentThemeAtStart === 'tsundere') {
     playTsundereAudioFile();
     return;
   }
@@ -662,34 +739,42 @@ function startBgSynthMusic() {
   if (audioCtx.state === 'suspended') audioCtx.resume();
 
   let step = 0;
+  const isPoop = (currentThemeAtStart === 'poop');
+  const noteInterval = isPoop ? 260 : 450; // веселее и энергичнее — темп выше
+
   bgMusicInterval = setInterval(() => {
     const theme = localStorage.getItem('translatorTheme') || 'standard';
     const notes = MELODIES[theme] || MELODIES.standard;
     const freq = notes[step % notes.length];
     const isOcean = (theme === 'ocean');
-    const noteLength = isOcean ? 0.55 : 0.35;
+    const isMatrix = (theme === 'matrix');
+    const isPoopNow = (theme === 'poop');
+    const noteLength = isOcean ? 0.55 : (isPoopNow ? 0.18 : 0.35);
 
     try {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-      osc.type = isOcean ? 'sine' : (theme === 'tsundere' ? 'triangle' : 'square');
+      osc.type = isOcean ? 'sine' : (isMatrix ? 'sawtooth' : (isPoopNow ? 'square' : 'square'));
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
       if (isOcean) {
-        // лёгкое "подводное" покачивание высоты тона
         osc.frequency.linearRampToValueAtTime(freq * 0.985, audioCtx.currentTime + noteLength);
-
         const filter = audioCtx.createBiquadFilter();
         filter.type = 'lowpass';
         filter.Q.setValueAtTime(3, audioCtx.currentTime);
         filter.frequency.setValueAtTime(1400, audioCtx.currentTime);
         filter.frequency.linearRampToValueAtTime(350, audioCtx.currentTime + noteLength);
-
         gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + noteLength);
-
         osc.connect(filter);
         filter.connect(gain);
+        gain.connect(audioCtx.destination);
+      } else if (isPoopNow) {
+        // весёлый "прыгающий" звук с лёгким вибрато
+        osc.frequency.linearRampToValueAtTime(freq * 1.08, audioCtx.currentTime + noteLength);
+        gain.gain.setValueAtTime(0.09, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + noteLength);
+        osc.connect(gain);
         gain.connect(audioCtx.destination);
       } else {
         gain.gain.setValueAtTime(0.07, audioCtx.currentTime);
@@ -703,13 +788,24 @@ function startBgSynthMusic() {
     } catch(e) {}
 
     step++;
-  }, 450);
+  }, noteInterval);
+
+  // отдельные случайные звуки "пука" поверх мелодии темы Какахи
+  if (isPoop) {
+    poopFartInterval = setInterval(() => {
+      if (Math.random() < 0.55) playFartSound();
+    }, 900);
+  }
 }
 
 function stopBgSynthMusic() {
   if (bgMusicInterval) {
     clearInterval(bgMusicInterval);
     bgMusicInterval = null;
+  }
+  if (poopFartInterval) {
+    clearInterval(poopFartInterval);
+    poopFartInterval = null;
   }
   if (tsundereAudioEl && !tsundereAudioEl.paused) {
     tsundereAudioEl.pause();
@@ -792,7 +888,6 @@ function tsundereToText(text) {
     const re = new RegExp(val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
     result = result.replace(re, key);
   });
-  // убираем случайное заикание в начале слов, например "п-привет" -> "привет"
   result = result.split(/(\s+)/).map(tok => {
     const m = tok.match(/^([а-яёА-ЯЁ])-([а-яёА-ЯЁ].*)$/);
     if (m && m[2].toLowerCase().startsWith(m[1].toLowerCase())) return m[2];
@@ -834,7 +929,6 @@ function pikmiShuffledEmojiString(pool) {
 }
 
 function pikmiElongateVowels(word) {
-  // растягивает последнюю гласную буквы слова, чтобы было милее: "привет" -> "привееет"
   const vowels = 'аеёиоуыэюя';
   for (let i = word.length - 1; i >= 0; i--) {
     const ch = word[i];
@@ -876,9 +970,7 @@ function pikmiToText(text) {
   PIKMI_INTERJECTIONS.forEach(w => { result = result.replaceAll(w, ''); });
   PIKMI_ENDING_PHRASES.forEach(p => { result = result.replaceAll(p.trim(), ''); });
   result = result.replace(/~~/g, '').replace(/[💕💖💗💞🥰😍🥺☺️🤭🫣✨🎀🌸🌷🍓🧸🍬⭐🤒😖🤧😔😩😫😿😭💔]/gu, '');
-  // сворачиваем растянутые гласные: приветииик -> приветик (оставляем одну букву)
   result = result.replace(/([аеёиоуыэюяАЕЁИОУЫЭЮЯ])\1{1,}/g, '$1');
-  // убираем заикание в начале слов, например "п-приветик" -> "приветик"
   result = result.split(/(\s+)/).map(tok => {
     const m = tok.match(/^([а-яёА-ЯЁa-zA-Z])-([а-яёА-ЯЁa-zA-Z].*)$/);
     if (m && m[2].toLowerCase().startsWith(m[1].toLowerCase())) return m[2];
@@ -986,8 +1078,6 @@ const MURIN_DICT = {
   'сова': 'сова-бурмалда'
 };
 
-// слова, к которым суффикс не добавляется, хотя они не в словаре замен
-// (служебные части речи: предлоги, союзы, частицы, местоимения, наречия)
 const MURIN_NO_SUFFIX_WORDS = new Set([
   'хорошо', 'вместе', 'мной', 'тобой', 'собой', 'нами', 'вами', 'ними',
   'мне', 'тебе', 'ему', 'ней', 'нам', 'вам', 'им', 'него', 'неё', 'них',
@@ -997,21 +1087,16 @@ const MURIN_NO_SUFFIX_WORDS = new Set([
   'только', 'уже', 'ещё', 'опять', 'снова', 'всегда', 'никогда', 'иногда'
 ]);
 
-// гласные буквы, после которых конечная буква отбрасывается перед добавлением "-ность"
 const MURIN_VOWELS = 'аеёиоуыэюя';
 
-// грубое определение «это похоже на глагол» по типичным окончаниям
 function isMurinVerbLike(word) {
   if (/(ться|тся|ть)$/.test(word)) return true;
   if (word.length > 2 && /(ла|ло|ли|л)$/.test(word)) return true;
   if (word.length > 3 && /(ешь|ете|ишь|ите|ют|ят|ем|им|ут|ит)$/.test(word)) return true;
-  // глаголы 1-го лица ед.ч. на "-у"/"-ю" (иду, ползу, бегу, могу...)
   if (word.length > 3 && /(у|ю)$/.test(word)) return true;
   return false;
 }
 
-// короткие служебные слова (предлоги, союзы, частицы) длиной 1-2 буквы —
-// суффикс к ним не добавляется (и, а, но, да, ли, бы, не, ни, у, о, от, до, из, на, по, со, с, в, во, за, при...)
 function isMurinShortFunctionWord(word) {
   return word.length <= 2;
 }
@@ -1046,10 +1131,8 @@ function textToMurin(text) {
     const lastChar = lower.slice(-1);
     let stem;
     if (lastChar === 'й' || MURIN_VOWELS.includes(lastChar)) {
-      // слово оканчивается на гласную или "й" — отбрасываем последнюю букву и добавляем "-ность"
       stem = word.slice(0, -1);
     } else {
-      // слово оканчивается на согласную — добавляем "-ность" напрямую
       stem = word;
     }
     return prefix + stem + 'ность' + suffix;
@@ -1059,7 +1142,7 @@ function textToMurin(text) {
 function murinToText(text) {
   if (!text.trim()) return '';
   let result = text;
-  
+
   const revMurin = [
     ['собака-бурмалдака', 'собака'],
     ['заяц-бурмалдаяц', 'заяц'],
@@ -1090,10 +1173,7 @@ function murinToText(text) {
     });
   });
 
-  // сначала снимаем более длинный суффикс "-ность" (важно делать это раньше "-ость",
-  // так как "ность" оканчивается на "ость")
   result = result.replace(/([а-яёА-ЯЁ]+?)ность\b/g, '$1');
-  // затем снимаем старый формат суффикса "-ость", если он где-то остался
   result = result.replace(/([а-яёА-ЯЁ]{2,})ость\b/g, '$1');
 
   return result;
@@ -1179,14 +1259,12 @@ function binaryToText(code) {
 
 /* ================= ЯЗЫК «ААААААА» ================= */
 function randomAaaChunk() {
-  const len = 1 + Math.floor(Math.random() * 10); // случайно от 1 до 10
+  const len = 1 + Math.floor(Math.random() * 10);
   return 'А'.repeat(len);
 }
 
 function textToAAA(text) {
   if (!text.trim()) return '';
-  // разбиваем на слова и пробелы, чтобы вставлять "ААА"-вставки в любом месте текста,
-  // а не только в конце предложений
   const tokens = text.split(/(\s+)/);
   let result = '';
   tokens.forEach(tok => {
@@ -1199,14 +1277,13 @@ function textToAAA(text) {
 }
 
 function aaaToText(text) {
-  // убираем «слова», целиком состоящие из заглавной буквы «А» (длиной 1-10)
   const tokens = text.split(/(\s+)/);
   const filtered = tokens.filter(tok => !/^А{1,10}$/.test(tok));
   return filtered.join('').replace(/\s{2,}/g, ' ').trim();
 }
 
 let currentLang = 't9';
-const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский:', bass: 'Bass:', pikmi: 'Пикми:', mogger: 'MOGGерский:', tsundere: 'Тсундере:', binary: 'Двоичный код:', aaaa: 'ААААААА:' };
+const LANG_LABELS = { t9: 'Циферный код:', murin: 'Муринский (в разработке):', bass: 'Bass:', pikmi: 'Пикми:', mogger: 'MOGGерский (в разработке):', tsundere: 'Тсундере:', binary: 'Двоичный код:', aaaa: 'ААААААА:' };
 const LANG_PLACEHOLDERS = {
   t9: 'Например: √9999#4444*999*22*4444*999#√7*6666*6*6*4',
   murin: 'Например: Ч отдал друна фогу',
@@ -1301,7 +1378,7 @@ async function copyCardNumber() {
   }
 }
 
-const THEME_CLASSES = ['theme-pink', 'theme-melstroy', 'theme-zahir', 'theme-poop', 'theme-ocean', 'theme-tsundere'];
+const THEME_CLASSES = ['theme-pink', 'theme-melstroy', 'theme-zahir', 'theme-poop', 'theme-ocean', 'theme-tsundere', 'theme-matrix'];
 
 function applyTheme(theme) {
   document.body.classList.remove(...THEME_CLASSES);
@@ -1313,6 +1390,7 @@ function applyTheme(theme) {
   });
   localStorage.setItem('translatorTheme', theme);
   playMusicForCurrentTheme();
+  if (theme === 'matrix') startMatrixRain(); else stopMatrixRain();
 }
 
 function selectTheme(theme) { 
@@ -1438,6 +1516,59 @@ function buildZahirCats() {
   }
 }
 
+/* ================= МАТРИЦА: дождь из символов ================= */
+let matrixAnimId = null;
+let matrixDrops = [];
+const MATRIX_CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+function startMatrixRain() {
+  const wrap = document.getElementById('matrixRain');
+  const canvas = document.getElementById('matrixCanvas');
+  if (!wrap || !canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    matrixDrops = new Array(columns).fill(1);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  startMatrixRain._resize = resize;
+
+  const fontSize = 16;
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ff41';
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < matrixDrops.length; i++) {
+      const char = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+      ctx.fillText(char, i * fontSize, matrixDrops[i] * fontSize);
+      if (matrixDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        matrixDrops[i] = 0;
+      }
+      matrixDrops[i]++;
+    }
+    matrixAnimId = requestAnimationFrame(draw);
+  }
+  if (matrixAnimId) cancelAnimationFrame(matrixAnimId);
+  matrixAnimId = requestAnimationFrame(draw);
+}
+
+function stopMatrixRain() {
+  if (matrixAnimId) {
+    cancelAnimationFrame(matrixAnimId);
+    matrixAnimId = null;
+  }
+  if (startMatrixRain._resize) {
+    window.removeEventListener('resize', startMatrixRain._resize);
+  }
+}
+
 buildTsundereCats();
 buildPoopRain();
 buildOceanBubbles();
@@ -1456,4 +1587,4 @@ buildZahirCats();
 </script>
 
 </body>
-  </html>
+                </html>
